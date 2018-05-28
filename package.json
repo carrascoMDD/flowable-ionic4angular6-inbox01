@@ -1,0 +1,44 @@
+{
+  "name": "flowable-ionic4angular6-inbox01",
+  "version": "0.0.1",
+  "description": "Single-page-application and hybrid Android/iOS app playground with Ionic3 Angularx6 on  Flowable REST API as Spring Boot Java application.",
+  "keywords": [
+    "flowable",
+    "ionic",
+    "angular",
+    "inbox",
+    "single page application",
+    "android",
+    "iOS"
+  ],
+  "homepage": "http://github.com/carrascoMDD/flowable-ionic4angular6-inbox01",
+  "bugs": {
+    "url": "http://github.com/carrascoMDD/flowable-ionic4angular6-inbox01/issues"
+  },
+  "license": "EUPL-1.1",
+  "author": {
+    "name": "Antonio Carrasco Valero",
+    "email": "carrascomdd@gmail.com"
+  },
+  "files": [],
+  "main": null,
+  "bin": {},
+  "man": null,
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/carrascoMDD/flowable-ionic4angular6-inbox01.git"
+  },
+  "scripts": {},
+  "config": {},
+  "dependencies": {
+    "cordova": "^8.0.0",
+    "ionic": "^3.20.0"
+  },
+  "devDependencies": {},
+  "maintainers": [
+    {
+      "name": "Antonio Carrasco Valero",
+      "email": "carrascomdd@gmail.com"
+    }
+  ]
+}
