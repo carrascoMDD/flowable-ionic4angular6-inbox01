@@ -14,12 +14,14 @@ export class TemplateDetailPage {
   constructor(
     public templatesProvider : TemplatesProvider,
     public navParams: NavParams
-  ) {}
+  ) {
+    console.log( "TemplateDetailPage constructor");
+  }
 
   ionViewWillEnter() {
     this.templatesProvider.load().subscribe(( theTemplatespecs:  Templatespec[]) => {
       for ( const aTemplatespec of theTemplatespecs) {
-        if ( aTemplatespec && aTemplatespec.id === this.navParams.data.templateId) {
+        if ( aTemplatespec && aTemplatespec.key === this.navParams.data.key) {
           this.template = aTemplatespec;
           break;
         }

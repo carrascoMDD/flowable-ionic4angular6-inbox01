@@ -105,11 +105,11 @@ export class TemplatesPage {
 
   }
 
-  goToTemplateDetail(sessionData: any) {
+  goToTemplateDetail(theTemplatespec: Templatespec) {
     // go to the session detail page
     // and pass in the session data
 
-    this.navCtrl.push(TemplateDetailPage, { sessionId: sessionData.id, name: sessionData.name });
+    this.navCtrl.push(TemplateDetailPage, { templatespec: theTemplatespec, name: theTemplatespec.name, key: theTemplatespec.key });
   }
 
   addFavorite(slidingItem: ItemSliding, sessionData: any) {
