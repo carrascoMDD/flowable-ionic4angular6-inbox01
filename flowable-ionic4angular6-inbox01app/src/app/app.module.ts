@@ -1,5 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
+
 import { NgModule, ErrorHandler } from '@angular/core';
 
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
@@ -26,16 +28,17 @@ import { TabsPage } from '../pages/tabs-page/tabs-page';
 import { TutorialPage } from '../pages/tutorial/tutorial';
 import { SupportPage } from '../pages/support/support';
 
+import { ConferenceData } from '../providers/conference-data';
+import { UserData } from '../providers/user-data';
+
+
 import { FlowTabsPage } from '../pages/flow/flowtabs-page/flowtabs-page';
 import { InboxPage } from '../pages/flow/inbox/inbox';
 import { DraftsPage } from "../pages/flow/drafts/drafts";
 import { ArchivedPage } from '../pages/flow/archived/archived';
 import { TemplatesPage } from "../pages/flow/templates/templates";
 import { OutboxPage } from "../pages/flow/outbox/outbox";
-
-import { ConferenceData } from '../providers/conference-data';
-import { UserData } from '../providers/user-data';
-
+import { TemplatesProvider } from "../providers/templatesprovider";
 
 
 @NgModule({
@@ -65,6 +68,7 @@ import { UserData } from '../providers/user-data';
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     HttpModule,
     IonicModule.forRoot(ConferenceApp, {}, {
       links: [
@@ -122,7 +126,9 @@ import { UserData } from '../providers/user-data';
     ConferenceData,
     UserData,
     InAppBrowser,
-    SplashScreen
+    SplashScreen,
+
+    TemplatesProvider
   ]
 })
 export class AppModule { }
