@@ -15,7 +15,19 @@
     </ion-header>
 
     <ion-content class="outer-content">
-
+  
+      <!-- ACV OJO added BEGIN note disabled styling because not logged in -->
+      <ion-list>
+        <ion-list-header>
+          Work (flow) - please login
+        </ion-list-header>
+        <button disabled ion-item menuClose *ngFor="let p of flowPages" (click)="openPage(p)">
+          <ion-icon item-start [name]="p.icon" [color]="isActive(p)"></ion-icon>
+          {{p.title}}
+        </button>
+      </ion-list>
+      <!-- ACV OJO added END -->
+  
       <ion-list>
         <ion-list-header>
           Navigate
@@ -68,7 +80,7 @@
       <!-- ACV OJO added BEGIN -->
       <ion-list>
         <ion-list-header>
-          Work
+          Work (flow)
         </ion-list-header>
         <button ion-item menuClose *ngFor="let p of flowPages" (click)="openPage(p)">
           <ion-icon item-start [name]="p.icon" [color]="isActive(p)"></ion-icon>

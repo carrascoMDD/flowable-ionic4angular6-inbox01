@@ -16,6 +16,15 @@ import { SchedulePage } from '../pages/schedule/schedule';
 import { SpeakerListPage } from '../pages/speaker-list/speaker-list';
 import { SupportPage } from '../pages/support/support';
 
+import { FlowTabsPage } from '../pages/flow/flowtabs-page/flowtabs-page';
+import { InboxPage } from '../pages/flow/inbox/inbox';
+import { DraftsPage} from "../pages/flow/drafts/drafts";
+import { ArchivedPage} from "../pages/flow/archived/archived";
+import { TemplatesPage} from "../pages/flow/templates/templates";
+import { OutboxPage} from "../pages/flow/outbox/outbox";
+
+
+
 import { ConferenceData } from '../providers/conference-data';
 import { UserData } from '../providers/user-data';
 
@@ -40,10 +49,11 @@ export class ConferenceApp {
 
   /* ACV OJO extra menu section BEGIN */
   flowPages: PageInterface[] = [
-    { title: 'Pending', name: 'TabsPage', component: TabsPage, tabComponent: SchedulePage, index: 0, icon: 'mail' },
-    { title: 'Now doing', name: 'TabsPage', component: TabsPage, tabComponent: SpeakerListPage, index: 1, icon: 'mail-open' },
-    { title: 'Done', name: 'TabsPage', component: TabsPage, tabComponent: MapPage, index: 2, icon: 'done-all' },
-    { title: 'Start', name: 'TabsPage', component: TabsPage, tabComponent: AboutPage, index: 3, icon: 'send' }
+    { title: 'Inbox', name: 'FlowTabsPage', component: FlowTabsPage, tabComponent: InboxPage, index: 0, icon: 'mail' },
+    { title: 'Drafts', name: 'FlowTabsPage', component: FlowTabsPage, tabComponent: DraftsPage, index: 1, icon: 'mail-open' },
+    { title: 'Archived', name: 'FlowTabsPage', component: FlowTabsPage, tabComponent: ArchivedPage, index: 2, icon: 'done-all' },
+    { title: 'Templates', name: 'FlowTabsPage', component: FlowTabsPage, tabComponent: TemplatesPage, index: 3, icon: 'create' },
+    { title: 'Outbox', name: 'FlowTabsPage', component: FlowTabsPage, tabComponent: OutboxPage, index: 4, icon: 'send' }
   ];
   /* ACV OJO extra menu section BEGIN */
 
@@ -68,6 +78,7 @@ export class ConferenceApp {
   ];
   rootPage: any;
 
+
   constructor(
     public events: Events,
     public userData: UserData,
@@ -82,7 +93,7 @@ export class ConferenceApp {
     this.storage.get('hasSeenTutorial')
       .then((hasSeenTutorial) => {
         if (hasSeenTutorial) {
-          this.rootPage = TabsPage;
+          this.rootPage = FlowTabsPage; // TabsPage ;
         } else {
           this.rootPage = TutorialPage;
         }
@@ -111,17 +122,47 @@ export class ConferenceApp {
       params = { tabIndex: page.index };
     }
 
+    let aHasNavigated = false;
+
+    /* New case with two top level tabs-kind pages: tabs and flowTabs
+    if( ( page.name === "FlowTabsPage") || ( page.name === "TabsPage")) {
+      let someNavs = this.nav.getActiveChildNavs();
+      if( someNavs.length > 0) {
+
+        let aCurrentNav = someNavs[ 0];
+        if( !( aCurrentNav.name === page.name)) {
+          aHasNavigated = true;
+          const aThis = this;
+          (function() {
+            const aThis_here = aThis;
+            aThis.nav.setRoot(page.name, params)
+            .then( () => {
+              aThis_here.nav.getActiveChildNavs()[0].select(page.index);
+            })
+            .catch((err: any) => {
+              console.log(`Didn't set nav root: ${err}`);
+            });
+          })();
+        }
+      }
+    }
+*/
+
+
     // If we are already on tabs just change the selected tab
     // don't setRoot again, this maintains the history stack of the
     // tabs even if changing them from the menu
-    if (this.nav.getActiveChildNavs().length && page.index != undefined) {
-      this.nav.getActiveChildNavs()[0].select(page.index);
-    } else {
-      // Set the root of the nav with params if it's a tab index
-      this.nav.setRoot(page.name, params).catch((err: any) => {
-        console.log(`Didn't set nav root: ${err}`);
-      });
+    if( !aHasNavigated) {
+      if (this.nav.getActiveChildNavs().length && page.index != undefined) {
+        this.nav.getActiveChildNavs()[0].select(page.index);
+      } else {
+        // Set the root of the nav with params if it's a tab index
+        this.nav.setRoot(page.name, params).catch((err: any) => {
+          console.log(`Didn't set nav root: ${err}`);
+        });
+      }
     }
+
 
     if (page.logsOut === true) {
       // Give the menu time to close before changing to logged out

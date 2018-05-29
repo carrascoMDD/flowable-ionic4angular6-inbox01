@@ -26,8 +26,16 @@ import { TabsPage } from '../pages/tabs-page/tabs-page';
 import { TutorialPage } from '../pages/tutorial/tutorial';
 import { SupportPage } from '../pages/support/support';
 
+import { FlowTabsPage } from '../pages/flow/flowtabs-page/flowtabs-page';
+import { InboxPage } from '../pages/flow/inbox/inbox';
+import { DraftsPage } from "../pages/flow/drafts/drafts";
+import { ArchivedPage } from '../pages/flow/archived/archived';
+import { TemplatesPage } from "../pages/flow/templates/templates";
+import { OutboxPage } from "../pages/flow/outbox/outbox";
+
 import { ConferenceData } from '../providers/conference-data';
 import { UserData } from '../providers/user-data';
+
 
 
 @NgModule({
@@ -46,7 +54,14 @@ import { UserData } from '../providers/user-data';
     SpeakerListPage,
     TabsPage,
     TutorialPage,
-    SupportPage
+    SupportPage,
+
+    FlowTabsPage,
+    InboxPage,
+    DraftsPage,
+    ArchivedPage,
+    TemplatesPage,
+    OutboxPage
   ],
   imports: [
     BrowserModule,
@@ -65,7 +80,14 @@ import { UserData } from '../providers/user-data';
         { component: SupportPage, name: 'SupportPage', segment: 'support' },
         { component: LoginPage, name: 'LoginPage', segment: 'login' },
         { component: AccountPage, name: 'AccountPage', segment: 'account' },
-        { component: SignupPage, name: 'SignupPage', segment: 'signup' }
+        { component: SignupPage, name: 'SignupPage', segment: 'signup' },
+
+        { component: FlowTabsPage, name: 'FlowTabsPage', segment: 'flowtabs-page' },
+        { component: InboxPage, name: 'Inbox', segment: 'inbox' },
+        { component: DraftsPage, name: 'Drafts', segment: 'drafts' },
+        { component: ArchivedPage, name: 'Archived', segment: 'archived' },
+        { component: TemplatesPage, name: 'Templates', segment: 'templates' },
+        { component: OutboxPage, name: 'Outbox', segment: 'outbox' }
       ]
     }),
     IonicStorageModule.forRoot()
@@ -86,7 +108,14 @@ import { UserData } from '../providers/user-data';
     SpeakerListPage,
     TabsPage,
     TutorialPage,
-    SupportPage
+    SupportPage,
+
+    FlowTabsPage,
+    InboxPage,
+    DraftsPage,
+    ArchivedPage,
+    TemplatesPage,
+    OutboxPage
   ],
   providers: [
     { provide: ErrorHandler, useClass: IonicErrorHandler },
