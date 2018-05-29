@@ -38,6 +38,15 @@ export class ConferenceApp {
   // @ViewChild(Nav) gets a reference to the app's root nav
   @ViewChild(Nav) nav: Nav;
 
+  /* ACV OJO extra menu section BEGIN */
+  flowPages: PageInterface[] = [
+    { title: 'Pending', name: 'TabsPage', component: TabsPage, tabComponent: SchedulePage, index: 0, icon: 'mail' },
+    { title: 'Now doing', name: 'TabsPage', component: TabsPage, tabComponent: SpeakerListPage, index: 1, icon: 'mail-open' },
+    { title: 'Done', name: 'TabsPage', component: TabsPage, tabComponent: MapPage, index: 2, icon: 'done-all' },
+    { title: 'Start', name: 'TabsPage', component: TabsPage, tabComponent: AboutPage, index: 3, icon: 'send' }
+  ];
+  /* ACV OJO extra menu section BEGIN */
+
   // List of pages that can be navigated to from the left menu
   // the left menu only works after login
   // the login page disables the left menu

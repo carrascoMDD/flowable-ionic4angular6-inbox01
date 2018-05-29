@@ -1,10 +1,15 @@
-<ion-split-pane>
+<!-- OJO ACV Not in sidemenu: removed to have the menu show and hide <ion-split-pane> -->
 
   <!-- logged out menu -->
   <ion-menu id="loggedOutMenu" [content]="content">
 
     <ion-header>
       <ion-toolbar>
+        <!-- ACV OJO from sidemenu BEGIN -->
+        <button ion-button menuToggle>
+          <ion-icon name="menu"></ion-icon>
+        </button>
+        <!-- ACV OJO from sidemenu END -->
         <ion-title>Menu</ion-title>
       </ion-toolbar>
     </ion-header>
@@ -49,12 +54,30 @@
 
     <ion-header>
       <ion-toolbar>
+        <!-- ACV OJO from sidemenu BEGIN -->
+        <button ion-button menuToggle>
+          <ion-icon name="menu"></ion-icon>
+        </button>
+        <!-- ACV OJO from sidemenu END -->
         <ion-title>Menu</ion-title>
       </ion-toolbar>
     </ion-header>
 
     <ion-content class="outer-content">
-
+  
+      <!-- ACV OJO added BEGIN -->
+      <ion-list>
+        <ion-list-header>
+          Work
+        </ion-list-header>
+        <button ion-item menuClose *ngFor="let p of flowPages" (click)="openPage(p)">
+          <ion-icon item-start [name]="p.icon" [color]="isActive(p)"></ion-icon>
+          {{p.title}}
+        </button>
+      </ion-list>
+      <!-- ACV OJO added END -->
+  
+  
       <ion-list>
         <ion-list-header>
           Navigate
@@ -92,4 +115,4 @@
   <!-- main navigation -->
   <ion-nav [root]="rootPage" #content swipeBackEnabled="false" main name="app"></ion-nav>
 
-</ion-split-pane>
+<!-- OJO ACV Not in sidemenu: removed to have the menu show and hide </ion-split-pane> -->
