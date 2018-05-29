@@ -37,6 +37,7 @@ import { InboxPage } from '../pages/flow/inbox/inbox';
 import { DraftsPage } from "../pages/flow/drafts/drafts";
 import { ArchivedPage } from '../pages/flow/archived/archived';
 import { TemplatesPage } from "../pages/flow/templates/templates";
+import { TemplateDetailPage } from '../pages/flow/template-detail/template-detail';
 import { OutboxPage } from "../pages/flow/outbox/outbox";
 import { TemplatesProvider } from "../providers/templatesprovider";
 
@@ -64,6 +65,7 @@ import { TemplatesProvider } from "../providers/templatesprovider";
     DraftsPage,
     ArchivedPage,
     TemplatesPage,
+    TemplateDetailPage,
     OutboxPage
   ],
   imports: [
@@ -91,6 +93,7 @@ import { TemplatesProvider } from "../providers/templatesprovider";
         { component: DraftsPage, name: 'Drafts', segment: 'drafts' },
         { component: ArchivedPage, name: 'Archived', segment: 'archived' },
         { component: TemplatesPage, name: 'Templates', segment: 'templates' },
+        { component: TemplateDetailPage, name: 'TemplateDetail', segment: 'templateDetail/:templateKey' },
         { component: OutboxPage, name: 'Outbox', segment: 'outbox' }
       ]
     }),
@@ -119,6 +122,7 @@ import { TemplatesProvider } from "../providers/templatesprovider";
     DraftsPage,
     ArchivedPage,
     TemplatesPage,
+    TemplateDetailPage,
     OutboxPage
   ],
   providers: [

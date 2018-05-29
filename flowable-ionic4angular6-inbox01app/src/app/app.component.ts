@@ -93,7 +93,7 @@ export class ConferenceApp {
     this.storage.get('hasSeenTutorial')
       .then((hasSeenTutorial) => {
         if (hasSeenTutorial) {
-          this.rootPage = FlowTabsPage; // TabsPage ;
+          this.rootPage = FlowTabsPage; // FlowTabsPage TabsPage
         } else {
           this.rootPage = TutorialPage;
         }

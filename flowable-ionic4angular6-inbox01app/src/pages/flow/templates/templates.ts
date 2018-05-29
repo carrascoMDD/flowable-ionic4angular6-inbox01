@@ -30,7 +30,7 @@ export class TemplatesPage {
 
   dayIndex = 0;
   queryText = '';
-  segment = 'templates';
+  segment = 'all';
   excludeTracks: any = [];
   shownTemplates: any = [];
   groups: any = [];
@@ -66,13 +66,30 @@ export class TemplatesPage {
     /* this.templatesProvider.getTemplatespecs( this.queryText); */
     this.templatesProvider.getTemplatespecs( this.queryText).subscribe(( theTemplatespecs:  Templatespec[]) => {
       this.templatespecs = theTemplatespecs;
+      this.shownTemplates = this.templatespecs;
       console.log( "templates.ts updateTemplates theTemplatespecs=\n" + JSON.stringify( theTemplatespecs));
-      /*
-      this.shownTemplates = data.shownTemplates;
-      this.groups = data.groups;
-      */
     });
+  }
 
+
+  doRefresh(refresher: Refresher) {
+    this.templatesProvider.getTemplatespecs( this.queryText).subscribe(( theTemplatespecs:  Templatespec[]) => {
+      this.templatespecs = theTemplatespecs;
+      this.shownTemplates = this.templatespecs;
+      console.log( "templates.ts doRefresh theTemplatespecs=\n" + JSON.stringify( theTemplatespecs));
+
+      // simulate a network request that would take longer
+      // than just pulling from out local json file
+      setTimeout(() => {
+        refresher.complete();
+
+        const toast = this.toastCtrl.create({
+          message: 'Templates have been updated.',
+          duration: 3000
+        });
+        toast.present();
+      }, 1000);
+    });
   }
 
   presentFilter() {
@@ -163,22 +180,4 @@ export class TemplatesPage {
     loading.present();
   }
 
-  doRefresh(refresher: Refresher) {
-    this.confData.getTimeline(this.dayIndex, this.queryText, this.excludeTracks, this.segment).subscribe((data: any) => {
-      this.shownTemplates = data.shownTemplates;
-      this.groups = data.groups;
-
-      // simulate a network request that would take longer
-      // than just pulling from out local json file
-      setTimeout(() => {
-        refresher.complete();
-
-        const toast = this.toastCtrl.create({
-          message: 'Templates have been updated.',
-          duration: 3000
-        });
-        toast.present();
-      }, 1000);
-    });
-  }
 }

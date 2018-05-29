@@ -40,7 +40,15 @@
   </ion-refresher>
 
   <ion-list #scheduleList [hidden]="shownTemplates === 0">
-
+  
+    <ion-item-group *ngFor="let aI of [ 1]" >
+    
+      <ion-item-divider sticky>
+        <ion-label>
+          {{aI}}
+        </ion-label>
+      </ion-item-divider>
+      
     <ion-item-sliding *ngFor="let aTemplatespec of templatespecs" #slidingItem [attr.track]="aTemplatespec.key | lowercase" [hidden]="aTemplatespec.hide">
 
       <button ion-item (click)="goToTemplateDetail(aTemplatespec)">
@@ -60,6 +68,7 @@
       </ion-item-options>
 
     </ion-item-sliding>
+  </ion-item-group>
 
 
   </ion-list>
