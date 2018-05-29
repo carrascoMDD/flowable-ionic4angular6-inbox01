@@ -1,53 +1,31 @@
 import { Component } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
-import { IonicPage, NavController, ToastController } from 'ionic-angular';
+import { NgForm } from '@angular/forms';
 
-import { User } from '../../providers';
-import { MainPage } from '../';
+import { NavController } from 'ionic-angular';
 
-@IonicPage()
+import { UserData } from '../../providers/user-data';
+
+import { UserOptions } from '../../interfaces/user-options';
+
+import { TabsPage } from '../tabs-page/tabs-page';
+
+
 @Component({
-  selector: 'page-signup',
+  selector: 'page-user',
   templateUrl: 'signup.html'
 })
 export class SignupPage {
-  // The account fields for the login form.
-  // If you're using the username field with or without email, make
-  // sure to add it to the type
-  account: { name: string, email: string, password: string } = {
-    name: 'Test Human',
-    email: 'test@example.com',
-    password: 'test'
-  };
+  signup: UserOptions = { username: '', password: '' };
+  submitted = false;
 
-  // Our translated text strings
-  private signupErrorString: string;
+  constructor(public navCtrl: NavController, public userData: UserData) {}
 
-  constructor(public navCtrl: NavController,
-    public user: User,
-    public toastCtrl: ToastController,
-    public translateService: TranslateService) {
+  onSignup(form: NgForm) {
+    this.submitted = true;
 
-    this.translateService.get('SIGNUP_ERROR').subscribe((value) => {
-      this.signupErrorString = value;
-    })
-  }
-
-  doSignup() {
-    // Attempt to login in through our User service
-    this.user.signup(this.account).subscribe((resp) => {
-      this.navCtrl.push(MainPage);
-    }, (err) => {
-
-      this.navCtrl.push(MainPage);
-
-      // Unable to sign up
-      let toast = this.toastCtrl.create({
-        message: this.signupErrorString,
-        duration: 3000,
-        position: 'top'
-      });
-      toast.present();
-    });
+    if (form.valid) {
+      this.userData.signup(this.signup.username);
+      this.navCtrl.push(TabsPage);
+    }
   }
 }

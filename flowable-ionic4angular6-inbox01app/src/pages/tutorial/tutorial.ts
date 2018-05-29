@@ -1,64 +1,39 @@
-import { Component } from '@angular/core';
-import { IonicPage, MenuController, NavController, Platform } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
 
-import { TranslateService } from '@ngx-translate/core';
+import { MenuController, NavController, Slides } from 'ionic-angular';
 
-export interface Slide {
-  title: string;
-  description: string;
-  image: string;
-}
+import { Storage } from '@ionic/storage';
 
-@IonicPage()
+import { TabsPage } from '../tabs-page/tabs-page';
+
 @Component({
   selector: 'page-tutorial',
   templateUrl: 'tutorial.html'
 })
-export class TutorialPage {
-  slides: Slide[];
-  showSkip = true;
-  dir: string = 'ltr';
 
-  constructor(public navCtrl: NavController, public menu: MenuController, translate: TranslateService, public platform: Platform) {
-    this.dir = platform.dir();
-    translate.get(["TUTORIAL_SLIDE1_TITLE",
-      "TUTORIAL_SLIDE1_DESCRIPTION",
-      "TUTORIAL_SLIDE2_TITLE",
-      "TUTORIAL_SLIDE2_DESCRIPTION",
-      "TUTORIAL_SLIDE3_TITLE",
-      "TUTORIAL_SLIDE3_DESCRIPTION",
-    ]).subscribe(
-      (values) => {
-        console.log('Loaded values', values);
-        this.slides = [
-          {
-            title: values.TUTORIAL_SLIDE1_TITLE,
-            description: values.TUTORIAL_SLIDE1_DESCRIPTION,
-            image: 'assets/img/ica-slidebox-img-1.png',
-          },
-          {
-            title: values.TUTORIAL_SLIDE2_TITLE,
-            description: values.TUTORIAL_SLIDE2_DESCRIPTION,
-            image: 'assets/img/ica-slidebox-img-2.png',
-          },
-          {
-            title: values.TUTORIAL_SLIDE3_TITLE,
-            description: values.TUTORIAL_SLIDE3_DESCRIPTION,
-            image: 'assets/img/ica-slidebox-img-3.png',
-          }
-        ];
-      });
-  }
+export class TutorialPage {
+  showSkip = true;
+
+	@ViewChild('slides') slides: Slides;
+
+  constructor(
+    public navCtrl: NavController,
+    public menu: MenuController,
+    public storage: Storage
+  ) { }
 
   startApp() {
-    this.navCtrl.setRoot('WelcomePage', {}, {
-      animate: true,
-      direction: 'forward'
-    });
+    this.navCtrl.push(TabsPage).then(() => {
+      this.storage.set('hasSeenTutorial', 'true');
+    })
   }
 
-  onSlideChangeStart(slider) {
+  onSlideChangeStart(slider: Slides) {
     this.showSkip = !slider.isEnd();
+  }
+
+  ionViewWillEnter() {
+    this.slides.update();
   }
 
   ionViewDidEnter() {
@@ -66,7 +41,7 @@ export class TutorialPage {
     this.menu.enable(false);
   }
 
-  ionViewWillLeave() {
+  ionViewDidLeave() {
     // enable the root left menu when leaving the tutorial page
     this.menu.enable(true);
   }
