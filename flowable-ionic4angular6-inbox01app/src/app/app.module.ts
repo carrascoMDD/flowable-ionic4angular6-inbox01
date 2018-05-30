@@ -40,6 +40,7 @@ import {AuthenticationProvider} from '../providers/authentication-provider';
 import {LoginsProvider} from "../providers/logins-provider";
 import {ApplicationsProvider} from "../providers/applications-provider";
 import {TemplatesProvider} from "../providers/templates-provider";
+import {TemplatesFilter} from "../filters/templates-filter";
 
 
 @NgModule({
@@ -135,7 +136,8 @@ import {TemplatesProvider} from "../providers/templates-provider";
         LoginsProvider,
         AuthenticationProvider,
         ApplicationsProvider,
-        TemplatesProvider
+        TemplatesProvider,
+        TemplatesFilter
     ]
 })
 export class AppModule {

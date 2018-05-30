@@ -56,16 +56,16 @@ export class ApplicationsProvider {
 
 
 
-    parseApplications( theSrcApplicationsAccess: any): IApplication[] {
+    parseApplications( theSrcApplications: any): IApplication[] {
         console.log(">>> ApplicationsProvider parseApplications");
 
         this.applications = [ ];
 
-        if( !theSrcApplicationsAccess) {
+        if( !theSrcApplications) {
             return;
         }
 
-        for( let aSrcApplication of theSrcApplicationsAccess) {
+        for( let aSrcApplication of theSrcApplications) {
             if(aSrcApplication) {
 
                 const anApplication = new Application(

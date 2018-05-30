@@ -7,18 +7,9 @@ import {ActiveFilter} from './active-filter';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of';
 import { IApplication } from "../interfaces/flow-iapplications";
-import { Application, Group, Identity } from "../interfaces/flow-applications";
-
-
-// const URL_SCHEMEHOSTPORT_realhost = "http://localhost:8080";
-// const URL_APPLICATIONS_realhost	= "";
-
-const URL_SCHEMEHOSTPORT_samehost = "";
-const URL_APPLICATIONS_samehost = "assets/flow/flow-applications-static.json";
-
-const URL_SCHEMEHOSTPORT = URL_SCHEMEHOSTPORT_samehost;
-const URL_APPLICATIONS = URL_APPLICATIONS_samehost;
-
+import {Templatespec} from "../interfaces/flow-templatespecs";
+import {TemplatesProvider} from "../providers/templates-provider";
+import {IIdentityActivation} from "../interfaces/flow-iidentityactivation";
 
 
 
@@ -29,10 +20,57 @@ export abstract class TemplatesFilter extends ActiveFilter{
 
 
 
-    constructor( public user: UserData, public applicationsProvider: ApplicationsProvider) {
-        super( user, applicationsProvider);
-        console.log("ActiveFilter constructor");
+    constructor(
+        public userData: UserData,
+        public applicationsProvider: ApplicationsProvider,
+        public templatesProvider: TemplatesProvider) {
+        super( userData, applicationsProvider);
+        console.log("TemplatesFilter constructor");
     }
+
+
+
+
+    getTemplatespecs( queryText = '' ) : Observable<Templatespec[]> {
+
+        console.log( "TemplatesFilter getTemplatespecs queryText" + JSON.stringify(queryText));
+
+        return new Observable<Templatespec[]>(( theObserver) => {
+
+            console.log( "TemplatesFilter getTemplatespecs observable subscribe. Delivering after observing templatesProvider and applications provider promise is resolved.");
+
+            this.templatesProvider.getTemplatespecs().subscribe(
+
+                ( theTemplatespecs: Templatespec[]) => {
+                    console.log( "TemplatesFilter getTemplatespecs received this.templatesProvider.getTemplatespecs() theTemplatespecs.length=" + ( !theTemplatespecs ? 0 : theTemplatespecs.length));
+
+                    this.userData.getIdentityActivations().then( ( theIdentityActivations: IIdentityActivation[]) => {
+
+                        console.log( "TemplatesFilter getTemplatespecs received this.userData.getIdentityActivations() theIdentityActivations.length=" + ( !theIdentityActivations ? 0 : theIdentityActivations.length));
+
+                        if( theIdentityActivations){}/*CQT*/
+                        let someFilteredTemplatespecs = theTemplatespecs.slice();
+
+                        theObserver.next( someFilteredTemplatespecs);
+                        theObserver.complete();
+                    });
+                },
+                ( theError: any) => {
+                    console.log( "TemplatesFilter getTemplatespecs theError=" + JSON.stringify( theError));
+                    theObserver.error( theError);
+                    theObserver.complete();
+                }
+            );
+
+            // When the consumer unsubscribes, clean up data ready for next subscription.
+            return {
+                unsubscribe() {
+                    console.log( "TemplatesFilter getTemplatespecs observable unsubscribe");
+                }
+            };
+        });
+    }
+
 
 
 

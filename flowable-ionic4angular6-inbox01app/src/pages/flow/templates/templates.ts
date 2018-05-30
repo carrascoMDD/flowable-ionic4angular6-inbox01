@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 
-import { AlertController, App, FabContainer, ItemSliding, List, ModalController, NavController, ToastController, LoadingController, Refresher } from 'ionic-angular';
+import { AlertController, App, FabContainer, /* ItemSliding, */ List, ModalController, NavController, ToastController, LoadingController, Refresher } from 'ionic-angular';
 
 /*
   To learn how to use third party libs in an
@@ -15,7 +15,7 @@ import { TemplateDetailPage } from '../template-detail/template-detail';
 import { ScheduleFilterPage } from '../../schedule-filter/schedule-filter';
 
 import { Templatespec } from '../../../interfaces/flow-templatespecs';
-import {TemplatesProvider} from "../../../providers/templates-provider";
+import {TemplatesFilter} from "../../../filters/templates-filter";
 
 @Component({
   selector: 'page-templates',
@@ -48,7 +48,7 @@ export class TemplatesPage {
     public toastCtrl: ToastController,
     public confData: ConferenceData,
     public user: UserData,
-    public templatesProvider : TemplatesProvider
+    public templatesFilter : TemplatesFilter
   ) {
     this.templatespecs = [];
     console.info( "xx");
@@ -63,8 +63,7 @@ export class TemplatesPage {
     // Close any open sliding items when the schedule updates
     this.scheduleList && this.scheduleList.closeSlidingItems();
 
-    /* this.templatesProvider.getTemplatespecs( this.queryText); */
-    this.templatesProvider.getTemplatespecs( this.queryText).subscribe(( theTemplatespecs:  Templatespec[]) => {
+    this.templatesFilter.getTemplatespecs( this.queryText).subscribe(( theTemplatespecs:  Templatespec[]) => {
       this.templatespecs = theTemplatespecs;
       this.shownTemplates = this.templatespecs;
       console.log( "templates.ts updateTemplates theTemplatespecs=\n" + JSON.stringify( theTemplatespecs));
@@ -73,7 +72,7 @@ export class TemplatesPage {
 
 
   doRefresh(refresher: Refresher) {
-    this.templatesProvider.getTemplatespecs( this.queryText).subscribe(( theTemplatespecs:  Templatespec[]) => {
+    this.templatesFilter.getTemplatespecs( this.queryText).subscribe(( theTemplatespecs:  Templatespec[]) => {
       this.templatespecs = theTemplatespecs;
       this.shownTemplates = this.templatespecs;
       console.log( "templates.ts doRefresh theTemplatespecs=\n" + JSON.stringify( theTemplatespecs));
@@ -105,6 +104,9 @@ export class TemplatesPage {
 
   }
 
+
+
+
   goToTemplateDetail(theTemplatespec: Templatespec) {
     // go to the session detail page
     // and pass in the session data
@@ -112,6 +114,9 @@ export class TemplatesPage {
     this.navCtrl.push(TemplateDetailPage, { templatespec: theTemplatespec, name: theTemplatespec.name, key: theTemplatespec.key });
   }
 
+
+
+/*
   addFavorite(slidingItem: ItemSliding, sessionData: any) {
 
     if (this.user.hasFavorite(sessionData.name)) {
@@ -168,7 +173,7 @@ export class TemplatesPage {
     // now present the alert on top of all other content
     alert.present();
   }
-
+*/
   openSocial(network: string, fab: FabContainer) {
     let loading = this.loadingCtrl.create({
       content: `Posting to ${network}`,
