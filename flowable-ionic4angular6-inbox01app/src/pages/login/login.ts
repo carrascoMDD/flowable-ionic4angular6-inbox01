@@ -43,7 +43,7 @@ export class LoginPage {
                 this.logins = theLogins;
             },
             ( theError) => {
-                console.log( "LoginPage ionViewDidLoad loginsProvider.getAllLogins ERROR: " + JSON.stringify( theError));
+                console.log( "LoginPage ionViewDidLoad loginsProvider.getAllLogins ERROR: " + theError);
             });
     }
 

@@ -1,6 +1,6 @@
-import {Itemplatespec, Ivariablespec, IvariableType} from "./flow-itemplatespecs"
+import {ITemplatespec, IVariablespec, IVariableType} from "./flow-itemplatespecs"
 
-export class Templatespec implements Itemplatespec {
+export class Templatespec implements ITemplatespec {
 
   public hide : Boolean;
 
@@ -26,10 +26,10 @@ export class Templatespec implements Itemplatespec {
     this.hide = false;
   };
 
-  variables: Ivariablespec[];
-  transientVariables: Ivariablespec[];
+  variables: IVariablespec[];
+  transientVariables: IVariablespec[];
 
-  addVariablespec( theVariableSpec : Ivariablespec) {
+  addVariablespec( theVariableSpec : IVariablespec) {
     if( !theVariableSpec) {
       return;
     }
@@ -37,7 +37,7 @@ export class Templatespec implements Itemplatespec {
     this.variables.push( theVariableSpec);
   }
 
-  addTransientVariablespec( theVariableSpec : Ivariablespec) {
+  addTransientVariablespec( theVariableSpec : IVariablespec) {
     if( !theVariableSpec) {
       return;
     }
@@ -49,9 +49,9 @@ export class Templatespec implements Itemplatespec {
 
 
 
-export class Variablespec implements Ivariablespec {
+export class Variablespec implements IVariablespec {
 
-  constructor( public name: string, public type: IvariableType) {};
+  constructor( public name: string, public type: IVariableType) {};
 
 }
 

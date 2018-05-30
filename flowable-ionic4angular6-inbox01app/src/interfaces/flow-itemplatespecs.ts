@@ -1,7 +1,7 @@
 
 
-export interface Ispecsreport {
-  data: Itemplatespec[],
+export interface ISpecsreport {
+  data: ITemplatespec[],
   total: number, // 2,
   start: number, // 0,
   sort: string, // "name",
@@ -11,7 +11,7 @@ export interface Ispecsreport {
 
 
 
-export interface Itemplatespec {
+export interface ITemplatespec {
   id: string, // "flowableplay01:1:a43d814f-6314-11e8-8c3e-227d0f96bf59",
   url: string, // "http://localhost:49586/process-api/repository/process-definitions/flowableplay01:1:a43d814f-6314-11e8-8c3e-227d0f96bf59",
   key: string, // "flowableplay01",
@@ -27,20 +27,20 @@ export interface Itemplatespec {
   graphicalNotationDefined: boolean, // false,
   suspended: boolean, //false,
   startFormDefined: boolean, //false,
-  variables: Ivariablespec[],
-  transientVariables: Ivariablespec[]
+  variables: IVariablespec[],
+  transientVariables: IVariablespec[]
 }
 
 
 
 
-export interface Ivariablespec {
+export interface IVariablespec {
   name: string,
-  type: IvariableType
+  type: IVariableType
 }
 
 
-export enum IvariableType {
+export enum IVariableType {
   Vstring   = "string",
   Vnumber   = "number",
   Vboolean  = "boolean",

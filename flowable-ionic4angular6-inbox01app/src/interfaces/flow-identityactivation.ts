@@ -9,15 +9,16 @@ export class IdentityActivation extends Typed implements IIdentityActivation {
     constructor(
         public applicationKey: string,
         public identityKey: string,
-        public active: boolean = false) {
+        public isActive: boolean = false) {
+
         super();
     };
 
-    setActive( theActive: boolean) {
-        this.active = theActive === true;
+    setActive( theIsActive: boolean) {
+        this.isActive = theIsActive === true;
     }
 
     getActive(): boolean {
-        return this.active;
+        return this.isActive === true;
     }
 }

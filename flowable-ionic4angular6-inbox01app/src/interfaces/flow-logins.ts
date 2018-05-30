@@ -8,7 +8,11 @@ export class Login extends Typed  implements ILogin {
 
     loginApplications: ILoginApplication[];
 
-    constructor( public login: string, public name: string, public familyName: string) {
+    constructor(
+        public login: string,
+        public name: string,
+        public familyName: string) {
+
         super();
         this.loginApplications = [];
     };
@@ -29,7 +33,11 @@ export class LoginApplication implements ILoginApplication {
 
     _v_Type = "LoginApplication";
 
-    constructor( public applicationKey: string, public identityKeys: string[]) {
+    constructor(
+        public login: ILogin,
+        public applicationKey: string,
+        public identityKeys: string[] ) {
+
         console.log( "LoginApplication applicationKey=" + applicationKey, " identityKeys=" + identityKeys.toString())
     };
 }

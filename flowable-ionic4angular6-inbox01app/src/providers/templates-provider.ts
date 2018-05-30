@@ -35,14 +35,14 @@ export class TemplatesProvider {
     templatespecs: Templatespec[];
 
     constructor( public httpc: HttpClient, public user: UserData) {
-        console.log("yy");
+        console.log("TemplatesProvider constructor");
     }
 
 
 
 
     getTemplatespecs(queryText = ''): Observable<Templatespec[]> {
-        console.log("template getTemplatespecs queryText" + queryText);
+        console.log("TemplatesProvider getTemplatespecs queryText" + queryText);
         return this.load();
     };
 
@@ -54,7 +54,7 @@ export class TemplatesProvider {
         } else {
             this.templatespecs = null;
             let aURL = URL_SCHEMEHOSTPORT + URL_PROCESSDEFINITIONS;
-            return this.httpc.get(aURL).map(this.parseProcessSpec);
+            return this.httpc.get(aURL).map(this.parseProcessSpec, this);
 
             /*
              this.httpc.get(aURL)

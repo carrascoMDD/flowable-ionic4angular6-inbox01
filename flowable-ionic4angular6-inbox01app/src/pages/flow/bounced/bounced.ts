@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 
-import { AlertController, App, FabContainer, /* ItemSliding, */ List, ModalController, NavController, ToastController, LoadingController, Refresher } from 'ionic-angular';
+import { AlertController, App, FabContainer, ItemSliding, List, ModalController, NavController, ToastController, LoadingController, Refresher } from 'ionic-angular';
 
 /*
   To learn how to use third party libs in an
@@ -11,17 +11,15 @@ import { AlertController, App, FabContainer, /* ItemSliding, */ List, ModalContr
 import { ConferenceData } from '../../../providers/conference-data';
 import { UserData } from '../../../providers/user-data';
 
-import { TemplateDetailPage } from '../template-detail/template-detail';
+import { SessionDetailPage } from '../../session-detail/session-detail';
 import { ScheduleFilterPage } from '../../schedule-filter/schedule-filter';
 
-import { Templatespec } from '../../../interfaces/flow-templatespecs';
-import {TemplatesFilter} from "../../../filters/templates-filter";
 
 @Component({
-  selector: 'page-templates',
-  templateUrl: 'templates.html'
+  selector: 'page-archived',
+  templateUrl: 'bounced.html'
 })
-export class TemplatesPage {
+export class BouncedPage {
   // the list is a child of the schedule page
   // @ViewChild('scheduleList') gets a reference to the list
   // with the variable #scheduleList, `read: List` tells it to return
@@ -30,14 +28,11 @@ export class TemplatesPage {
 
   dayIndex = 0;
   queryText = '';
-  segment = 'all';
+  segment = 'inbox';
   excludeTracks: any = [];
-  shownTemplates: any = [];
+  shownSessions: any = [];
   groups: any = [];
   confDate: string;
-
-
-  public templatespecs: Templatespec[];
 
   constructor(
     public alertCtrl: AlertController,
@@ -48,46 +43,20 @@ export class TemplatesPage {
     public toastCtrl: ToastController,
     public confData: ConferenceData,
     public user: UserData,
-    public templatesFilter : TemplatesFilter
-  ) {
-    this.templatespecs = [];
-    console.info( "xx");
-  }
+  ) {}
 
   ionViewDidLoad() {
-    this.app.setTitle('Templates');
-    this.updateTemplates();
+    this.app.setTitle('Inbox');
+    this.updateSchedule();
   }
 
-  updateTemplates() {
+  updateSchedule() {
     // Close any open sliding items when the schedule updates
     this.scheduleList && this.scheduleList.closeSlidingItems();
 
-    this.templatesFilter.getTemplatespecs( this.queryText).subscribe(( theTemplatespecs:  Templatespec[]) => {
-      this.templatespecs = theTemplatespecs;
-      this.shownTemplates = this.templatespecs;
-      console.log( "templates.ts updateTemplates theTemplatespecs.length=\n" + ( theTemplatespecs.length ? theTemplatespecs.length : 0));
-    });
-  }
-
-
-  doRefresh(refresher: Refresher) {
-    this.templatesFilter.getTemplatespecs( this.queryText).subscribe(( theTemplatespecs:  Templatespec[]) => {
-      this.templatespecs = theTemplatespecs;
-      this.shownTemplates = this.templatespecs;
-      console.log( "templates.ts doRefresh theTemplatespecs.length=\n" + ( theTemplatespecs.length ? theTemplatespecs.length : 0));
-
-      // simulate a network request that would take longer
-      // than just pulling from out local json file
-      setTimeout(() => {
-        refresher.complete();
-
-        const toast = this.toastCtrl.create({
-          message: 'Templates have been updated.',
-          duration: 3000
-        });
-        toast.present();
-      }, 1000);
+    this.confData.getTimeline(this.dayIndex, this.queryText, this.excludeTracks, this.segment).subscribe((data: any) => {
+      this.shownSessions = data.shownSessions;
+      this.groups = data.groups;
     });
   }
 
@@ -98,25 +67,19 @@ export class TemplatesPage {
     modal.onWillDismiss((data: any[]) => {
       if (data) {
         this.excludeTracks = data;
-        this.updateTemplates();
+        this.updateSchedule();
       }
     });
 
   }
 
-
-
-
-  goToTemplateDetail(theTemplatespec: Templatespec) {
+  goToSessionDetail(sessionData: any) {
     // go to the session detail page
     // and pass in the session data
 
-    this.navCtrl.push(TemplateDetailPage, { templatespec: theTemplatespec, name: theTemplatespec.name, key: theTemplatespec.key });
+    this.navCtrl.push(SessionDetailPage, { sessionId: sessionData.id, name: sessionData.name });
   }
 
-
-
-/*
   addFavorite(slidingItem: ItemSliding, sessionData: any) {
 
     if (this.user.hasFavorite(sessionData.name)) {
@@ -162,7 +125,7 @@ export class TemplatesPage {
           handler: () => {
             // they want to remove this session from their favorites
             this.user.removeFavorite(sessionData.name);
-            this.updateTemplates();
+            this.updateSchedule();
 
             // close the sliding item and hide the option buttons
             slidingItem.close();
@@ -173,7 +136,7 @@ export class TemplatesPage {
     // now present the alert on top of all other content
     alert.present();
   }
-*/
+
   openSocial(network: string, fab: FabContainer) {
     let loading = this.loadingCtrl.create({
       content: `Posting to ${network}`,
@@ -185,4 +148,22 @@ export class TemplatesPage {
     loading.present();
   }
 
+  doRefresh(refresher: Refresher) {
+    this.confData.getTimeline(this.dayIndex, this.queryText, this.excludeTracks, this.segment).subscribe((data: any) => {
+      this.shownSessions = data.shownSessions;
+      this.groups = data.groups;
+
+      // simulate a network request that would take longer
+      // than just pulling from out local json file
+      setTimeout(() => {
+        refresher.complete();
+
+        const toast = this.toastCtrl.create({
+          message: 'Sessions have been updated.',
+          duration: 3000
+        });
+        toast.present();
+      }, 1000);
+    });
+  }
 }

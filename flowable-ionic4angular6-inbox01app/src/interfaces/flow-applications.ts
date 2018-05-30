@@ -1,5 +1,5 @@
 import {Typed} from "./flow-typed"
-import { IApplication, ISpec, IProcessSpec, IGroup, IIdentity} from "./flow-iapplications"
+import {IApplication, ISpec, IProcessSpec, IGroup, IIdentity, IProcessInitiator} from "./flow-iapplications"
 
 
 export class Application extends Typed implements IApplication {
@@ -8,25 +8,37 @@ export class Application extends Typed implements IApplication {
 
     processSpecs: IProcessSpec[];
 
+    specs: ISpec[];
     groups: IGroup[];
     identities: IIdentity[];
 
-    constructor( public name: string, public key: string) {
+    constructor(
+        public name: string,
+        public key: string,
+        public isDisabled : boolean = false) {
+
         super();
+
+        this.specs      = [ ];
+        this.groups     = [ ];
+        this.identities = [ ];
     }
 
-    _v_Success: boolean;
-    _v_Condition?: string;
-    _v_Message?: string;
-    _v_Details?: any;
 
+    setDisabled( theIsDisabled: boolean) {
+        this.isDisabled = theIsDisabled === true;
+    }
+
+    getDisabled(): boolean {
+        return this.isDisabled === true;
+    }
 
     addProcessSpec( theProcessSpec: IProcessSpec) {
         if ( !theProcessSpec) {
             return;
         }
 
-        this.processSpecs.push( theProcessSpec);
+        this.specs.push( theProcessSpec);
     }
 
 
@@ -47,7 +59,41 @@ export class Application extends Typed implements IApplication {
 
         this.identities.push( theIdentity);
     }
+
+
+    getAllSpecs() : ISpec[] {
+        if( !this.specs) {
+            return null;
+        }
+        return this.specs.slice();
+    }
+
+
+
+    getProcessSpecs() : IProcessSpec[] {
+        if( !this.specs) {
+            return null;
+        }
+
+        const someProcessSpecs : IProcessSpec[] = [ ];
+        for( let aSpec of this.specs) {
+            if( !aSpec) {
+                continue;
+            }
+
+            if( !( aSpec._v_Type === "ProcessSpec")) {
+                continue;
+            }
+
+            someProcessSpecs.push( aSpec);
+        }
+
+        return someProcessSpecs;
+    }
+
 }
+
+
 
 
 
@@ -55,11 +101,13 @@ export abstract class Spec extends Typed implements ISpec {
 
     _v_Type = "Spec";
 
+    constructor(
+        public application: IApplication,
+        public name: string,
+        public key: string) {
 
-    constructor( public name: string) {
         super();
     }
-
 }
 
 
@@ -69,33 +117,62 @@ export class ProcessSpec extends Spec implements IProcessSpec {
 
     _v_Type = "ProcessSpec";
 
-    constructor( theName: string, public key: string) {
-        super( theName);
+    constructor( theApplication: IApplication,
+                 theName: string,
+                 theKey: string) {
+
+        super( theApplication, theName, theKey);
     }
 }
 
 
 
 
+export class ProcessInitiator extends Typed implements IProcessInitiator {
 
-export class Group extends Typed implements IGroup {
+    _v_Type = "ProcessInitiator";
 
-    _v_Type = "Group";
+    constructor(
+        public initiableProcessKeys: string[],
+        public participedProcessKeys: string[]) {
 
-    constructor( public name: string, public key: string) {
         super();
     };
 }
 
 
 
+export class Group extends ProcessInitiator implements IGroup {
 
-export class Identity extends Typed implements IIdentity {
+    _v_Type = "Group";
+
+    constructor(
+        public application: IApplication,
+        public initiableProcessKeys: string[],
+        public participedProcessKeys: string[],
+        public name: string,
+        public key: string,
+        public isVirtual: boolean = false) {
+
+        super( initiableProcessKeys, participedProcessKeys);
+    };
+}
+
+
+
+
+export class Identity extends ProcessInitiator implements IIdentity {
 
     _v_Type = "Identity";
 
-    constructor( public key: string, public groupKeys: string[]) {
-        super();
+    constructor(
+        public application: IApplication,
+        public initiableProcessKeys: string[],
+        public participedProcessKeys: string[],
+        public key: string,
+        public groupKeys: string[]) {
+
+        super( initiableProcessKeys, participedProcessKeys);
     };
 }
 

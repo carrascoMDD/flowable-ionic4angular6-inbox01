@@ -1,9 +1,16 @@
 import {Injectable} from '@angular/core';
 import {UserData} from '../providers/user-data';
-import {ApplicationsProvider} from '../providers/applications-provider';
 
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of';
+import {ApplicationsProvider} from '../providers/applications-provider';
+
+import {IApplication, IProcessSpec} from "../interfaces/flow-iapplications";
+import {IIdentityActivation} from "../interfaces/flow-iidentityactivation";
+import {IIdentity} from "../interfaces/flow-iapplications";
+import {IGroup} from "../interfaces/flow-iapplications";
+import {Observable} from "rxjs/Observable";
+
 
 
 
@@ -16,6 +23,257 @@ export abstract class ActiveFilter {
         console.log("ActiveFilter constructor");
     }
 
+    applicationsKeyed : Map<string, ApplicationKeyed>;
+
+
+
+    getAllApplicationsKeyed() : Observable<Map<string, ApplicationKeyed>>  {
+
+        console.log( "ActiveFilter getAllApplicationsKeyed");
+
+        return new Observable<Map<string, ApplicationKeyed>>(( theObserver) => {
+
+            if( this.applicationsKeyed) {
+                theObserver.next( this.applicationsKeyed);
+                theObserver.complete();
+                return;
+            }
+
+            this.applicationsKeyed = new Map<string, ApplicationKeyed>();
+
+            this.applicationsProvider.getAllApplications().subscribe(
+                (theApplications: IApplication[]) => {
+                    console.log("ActiveFilter getAllApplicationsKeyed this.applicationsProvider.getAllApplications().subscribe theApplications.length=" + (!theApplications ? 0 : theApplications.length));
+
+                    if (!theApplications || !theApplications.length) {
+                        console.log("TemplatesFilter no or empty theApplications from this.applicationsProvider.getAllApplications().subscribe(");
+                        theObserver.next(null);
+                        theObserver.complete();
+                        return;
+                    }
+
+                    for (let anApplication of theApplications) {
+                        if (!anApplication || !anApplication.key) {
+                            continue;
+                        }
+                        this.applicationsKeyed[anApplication.key] = new ApplicationKeyed(anApplication);
+                    }
+                    theObserver.next(this.applicationsKeyed);
+                    theObserver.complete();
+                },
+
+                (theError: any) => {
+                    theObserver.error(theError);
+                    theObserver.complete();
+                }
+            );
+
+            // When the consumer unsubscribes, clean up data ready for next subscription.
+            return {
+                unsubscribe() {
+                    console.log( "TemplatesFilter getTemplatespecs observable unsubscribe");
+                }
+            };
+        });
+
+    }
+
+
+
+
+    acceptableProcessSpecs( theIdentityActivations: IIdentityActivation[]) : IProcessSpec[] {
+
+        if( !theIdentityActivations) {
+            return null;
+        }
+
+        if( !theIdentityActivations.length) {
+            return null;
+        }
+
+        if( !this.applicationsKeyed) {
+            return null;
+        }
+
+
+        // Shall collect process keys for each application which has any of them
+        const someProcessSpecs : IProcessSpec[] = [ ];
+
+        // Iterate over Identity Activations
+        for( let anIdentityActivation of theIdentityActivations) {
+            if(    !anIdentityActivation
+                || !anIdentityActivation.applicationKey
+                || !anIdentityActivation.identityKey
+                || !anIdentityActivation.isActive) {
+                continue;
+            }
+
+
+            // Lookup an application by its key.
+            let anApplicationKeyed = this.applicationsKeyed[ anIdentityActivation.applicationKey];
+            if( !anApplicationKeyed) {
+                // Login's LoginApplications refer to an unknown application key
+                continue;
+            }
+
+            // Acceptable process keys for the application shall be among the ones from process specs in the application
+            if( !anApplicationKeyed.processpecsByKey || !anApplicationKeyed.processpecsByKey.size()) {
+                // The application refered by the IdentityActivation does not hold any process specs
+                continue;
+            }
+
+            if( !anApplicationKeyed.identitiesByKey) {
+                // The application refered by the IdentityActivation does not hold any identities
+                continue;
+            }
+
+            let anIdentity = anApplicationKeyed.identitiesByKey[ anIdentityActivation.identityKey];
+            if( !anIdentity) {
+                // The application refered by the IdentityActivation does not hold the identity refered by its key from the identity activation
+                continue;
+            }
+
+            // Collect ProcessSpecs with keys as refered by the identity initiableProcessKeys
+            if( anIdentity.initiableProcessKeys) {
+                this.processSpecsByKeyInto( anApplicationKeyed, anIdentity.initiableProcessKeys, someProcessSpecs);
+            }
+
+            // Collect ProcessSpecs with keys as refered by the identity participedProcessKeys
+            if( anIdentity.participedProcessKeys) {
+                this.processSpecsByKeyInto( anApplicationKeyed, anIdentity.participedProcessKeys, someProcessSpecs);
+            }
+
+            // Collect ProcessSpecs from each of the groups refered by the identity group keys
+            if( anIdentity.groupKeys) {
+                for( let aGroupKey of anIdentity.groupKeys) {
+                    if( !aGroupKey) {
+                        continue;
+                    }
+
+                    let aGroup = anApplicationKeyed.groupsByKey[ aGroupKey];
+                    if( !aGroup) {
+                        continue;
+                    }
+
+                    // Collect ProcessSpecs with keys as refered by the group initiableProcessKeys
+                    if( aGroup.initiableProcessKeys) {
+                        this.processSpecsByKeyInto( anApplicationKeyed, aGroup.initiableProcessKeys, someProcessSpecs);
+                    }
+
+                    // Collect ProcessSpecs with keys as refered by the group participedProcessKeys
+                    if( aGroup.participedProcessKeys) {
+                        this.processSpecsByKeyInto( anApplicationKeyed, aGroup.participedProcessKeys, someProcessSpecs);
+                    }
+                }
+            }
+        }
+
+        return someProcessSpecs;
+    }
+
+
+    processSpecsByKeyInto(
+        theApplicationKeyed: ApplicationKeyed,
+        theProcessKeys: string[],
+        theProcessSpecs: IProcessSpec[]) {
+
+        if( !theApplicationKeyed) {
+            return;
+        }
+
+        if( !theProcessKeys || !theProcessKeys.length) {
+            return;
+        }
+
+        if( !theProcessSpecs) {
+            return;
+        }
+
+        for( let aProcessKey of theProcessKeys) {
+            if( !aProcessKey) {
+                continue;
+            }
+
+            let aProcessSpec = theApplicationKeyed.processpecsByKey[ aProcessKey];
+            if( aProcessSpec) {
+                if( theProcessSpecs.indexOf( aProcessSpec) < 0) {
+                    theProcessSpecs.push( aProcessSpec);
+                }
+            }
+        }
+    }
+
+
+
+}
+
+
+
+
+
+class ApplicationKeyed {
+
+    identitiesByKey:    Map<string, IIdentity>;
+    groupsByKey:        Map<string, IGroup>;
+    processpecsByKey:   Map<string, IProcessSpec>;
+
+    constructor( public application: IApplication) {
+
+        this.identitiesByKey  = new Map<string, IIdentity>();
+        this.groupsByKey      = new Map<string, IGroup>();
+        this.processpecsByKey = new Map<string, IProcessSpec>();
+
+        this.initFromApplication();
+    }
+
+
+
+    initFromApplication()  {
+        if( !this.application) {
+            return;
+        }
+
+        let someSpecs = this.application.getProcessSpecs();
+        if( someSpecs) {
+            for( let aProcessSpec of someSpecs) {
+                if( !aProcessSpec || !aProcessSpec.key) {
+                    continue;
+                }
+
+                this.processpecsByKey[ aProcessSpec.key] = aProcessSpec;
+            }
+        }
+
+        if( this.application.groups) {
+            for( let aGroup of this.application.groups) {
+                if( !aGroup || !aGroup.key) {
+                    continue;
+                }
+
+                this.groupsByKey[ aGroup.key] = aGroup;
+            }
+        }
+
+        if( this.application.identities) {
+            for( let anIdentity of this.application.identities) {
+                if( !anIdentity || !anIdentity.key) {
+                    continue;
+                }
+
+                this.identitiesByKey[ anIdentity.key] = anIdentity;
+            }
+        }
+
+        if( this.application.groups) {
+            for( let aGroup of this.application.groups) {
+                if( !aGroup || !aGroup.key) {
+                    continue;
+                }
+
+                this.groupsByKey[ aGroup.key] = aGroup;
+            }
+        }
+    }
 
 
 }

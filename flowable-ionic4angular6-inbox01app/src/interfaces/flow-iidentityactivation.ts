@@ -4,9 +4,9 @@ import { ITyped } from './flow-ityped';
 export interface IIdentityActivation extends ITyped {
     applicationKey: string;
     identityKey: string;
-    active: boolean;
+    isActive: boolean;
 
-    setActive( theActive: boolean);
+    setActive( theIsActive: boolean);
     getActive(): boolean;
 }
 

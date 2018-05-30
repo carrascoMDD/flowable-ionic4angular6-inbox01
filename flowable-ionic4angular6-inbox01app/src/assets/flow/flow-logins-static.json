@@ -9,14 +9,14 @@
                 "_v_Type": "LoginApplication",
                 "applicationKey": "flowableplay01",
                 "identityKeys": [
-                    "userEmployee", "userManager"
+                    "userEmployee", "userManager", "userVirtualGroupAllProcessKeys"
                 ]
             },
             {
                 "_v_Type": "LoginApplication",
                 "applicationKey": "proc_ShippingExchange_AnnouncePayload",
                 "identityKeys": [
-                    "userClient", "userSupplier", "userRegistrar"
+                    "userClient", "userSupplier", "userRegistrar", "userVirtualGroupAllProcessKeys"
                 ]
             }
         ]
@@ -54,6 +54,36 @@
                 "applicationKey": "flowableplay01",
                 "identityKeys": [
                     "userManager"
+                ]
+            }
+        ]
+    },
+    {
+        "_v_Type": "Login",
+        "login": "Hansolo@stars.war",
+        "name": "Hanso",
+        "familyName": "Lo",
+        "loginApplications": [
+            {
+                "_v_Type": "LoginApplication",
+                "applicationKey": "flowableplay01",
+                "identityKeys": [
+                    "userVirtualGroupAllProcessKeys"
+                ]
+            }
+        ]
+    },
+    {
+        "_v_Type": "Login",
+        "login": "Chby@hai.ry",
+        "name": "Chub",
+        "familyName": "Bytheway",
+        "loginApplications": [
+            {
+                "_v_Type": "LoginApplication",
+                "applicationKey": "proc_ShippingExchange_AnnouncePayload",
+                "identityKeys": [
+                    "userVirtualGroupAllProcessKeys"
                 ]
             }
         ]

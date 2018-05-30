@@ -1,29 +1,31 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 
-import { NavParams } from 'ionic-angular';
+import {NavParams} from 'ionic-angular';
 
-import { InboxPage } from '../inbox/inbox';
-import { ArchivedPage} from "../archived/archived";
-import { DraftsPage} from "../drafts/drafts";
-import { OutboxPage} from "../outbox/outbox";
-import { TemplatesPage} from "../templates/templates";
+import {InboxPage} from '../inbox/inbox';
+import {DraftsPage} from "../drafts/drafts";
+import {ArchivedPage} from "../archived/archived";
+import {BouncedPage} from "../bounced/bounced";
+import {TemplatesPage} from "../templates/templates";
+import {OutboxPage} from "../outbox/outbox";
 
 
 @Component({
-  templateUrl: 'flowtabs-page.html'
+    templateUrl: 'flowtabs-page.html'
 })
 export class FlowTabsPage {
-  // set the root pages for each tab
-  tab1Root: any = InboxPage;
-  tab2Root: any = DraftsPage;
-  tab3Root: any = ArchivedPage;
-  tab4Root: any = TemplatesPage;
-  tab5Root: any = OutboxPage;
+    // set the root pages for each tab
+    tab1Root: any = InboxPage;
+    tab2Root: any = DraftsPage;
+    tab3Root: any = ArchivedPage;
+    tab4Root: any = BouncedPage;
+    tab5Root: any = TemplatesPage;
+    tab6Root: any = OutboxPage;
 
-  mySelectedIndex: number;
+    mySelectedIndex: number;
 
-  constructor(navParams: NavParams) {
-    this.mySelectedIndex = navParams.data.tabIndex || 0;
-  }
+    constructor(navParams: NavParams) {
+        this.mySelectedIndex = navParams.data.tabIndex || 0;
+    }
 
 }

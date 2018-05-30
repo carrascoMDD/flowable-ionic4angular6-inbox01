@@ -9,7 +9,7 @@ import {HttpClient} from '@angular/common/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of';
 import { IApplication } from "../interfaces/flow-iapplications";
-import { Application, Group, Identity } from "../interfaces/flow-applications";
+import {Application, Group, Identity, ProcessSpec} from "../interfaces/flow-applications";
 
 
 // const URL_SCHEMEHOSTPORT_realhost = "http://localhost:8080";
@@ -48,9 +48,34 @@ export class ApplicationsProvider {
             return Observable.of(this.applications);
         } else {
             this.applications = null;
-            return  this.httpc.get(URL_SCHEMEHOSTPORT + URL_APPLICATIONS).map( this.parseApplications);
+            return  this.httpc.get(URL_SCHEMEHOSTPORT + URL_APPLICATIONS).map( this.parseApplications, this);
         }
     }
+
+
+
+
+
+    sliceOrNull( theStrings: string[]) : string[] {
+        if( !theStrings) {
+            return null;
+        }
+
+        if( typeof theStrings === "undefined") {
+            return null;
+        }
+
+        if( !( typeof theStrings.length === "number")) {
+            return null;
+        }
+
+        if( !theStrings.length) {
+            return [];
+        }
+
+        return theStrings.slice();
+    }
+
 
 
 
@@ -66,7 +91,7 @@ export class ApplicationsProvider {
         }
 
         for( let aSrcApplication of theSrcApplications) {
-            if(aSrcApplication) {
+            if(aSrcApplication && ( aSrcApplication._v_Type === "Application")) {
 
                 const anApplication = new Application(
                     aSrcApplication.name,
@@ -78,7 +103,11 @@ export class ApplicationsProvider {
                         if(!aSrcProcessSpec) {
                             continue;
                         }
-                        const aProcessSpec = new Group(aSrcProcessSpec.name, aSrcProcessSpec.key);
+                        const aProcessSpec = new ProcessSpec(
+                            anApplication,
+                            aSrcProcessSpec.name,
+                            aSrcProcessSpec.key
+                        );
                         anApplication.addProcessSpec(aProcessSpec);
                     }
                 }
@@ -89,7 +118,13 @@ export class ApplicationsProvider {
                         if(!aSrcGroup) {
                             continue;
                         }
-                        const aGroup = new Group(aSrcGroup.name, aSrcGroup.groupKeys);
+                        const aGroup = new Group(
+                            anApplication,
+                            this.sliceOrNull( aSrcGroup.initiableProcessKeys),
+                            this.sliceOrNull( aSrcGroup.participedProcessKeys),
+                            aSrcGroup.name,
+                            aSrcGroup.key
+                        );
                         anApplication.addGroup(aGroup);
                     }
                 }
@@ -99,7 +134,13 @@ export class ApplicationsProvider {
                         if(!aSrcIdentity) {
                             continue;
                         }
-                        const anIdentity = new Identity(aSrcIdentity.key, aSrcIdentity.groups);
+                        const anIdentity = new Identity(
+                            anApplication,
+                            this.sliceOrNull( aSrcIdentity.initiableProcessKeys),
+                            this.sliceOrNull( aSrcIdentity.participedProcessKeys),
+                            aSrcIdentity.key,
+                            this.sliceOrNull( aSrcIdentity.groups)
+                        );
                         anApplication.addIdentity(anIdentity);
                     }
                 }

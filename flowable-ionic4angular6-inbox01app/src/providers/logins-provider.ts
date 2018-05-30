@@ -33,20 +33,53 @@ export class LoginsProvider {
 
 
 
+
+
     getAllLogins(): Observable<ILogin[]> {
         return this.load();
     }
 
 
 
+
+
+
     load(): Observable<ILogin[]> {
         if(this.logins) {
             return Observable.of(this.logins);
-        } else {
+        }
+        else {
             this.logins = null;
-            return  this.httpc.get(URL_SCHEMEHOSTPORT + URL_LOGINS).map( this.parseLogins);
+            return this.httpc.get(URL_SCHEMEHOSTPORT + URL_LOGINS).map( this.parseLogins, this);
         }
     }
+
+
+
+
+
+
+    sliceOrNull( theStrings: string[]) : string[] {
+        if( !theStrings) {
+            return null;
+        }
+
+        if( typeof theStrings === "undefined") {
+            return null;
+        }
+
+        if( !( typeof theStrings.length === "number")) {
+            return null;
+        }
+
+        if( !theStrings.length) {
+            return [];
+        }
+
+        return theStrings.slice();
+    }
+
+
 
 
 
@@ -76,8 +109,10 @@ export class LoginsProvider {
                             continue;
                         }
                         const aLoginApplication = new LoginApplication(
+                            aLogin,
                             aSrcLoginApplication.applicationKey,
-                            aSrcLoginApplication.identityKeys ? aSrcLoginApplication.identityKeys.slice() : null);
+                            this.sliceOrNull( aSrcLoginApplication.identityKeys)
+                        );
                         aLogin.addLoginApplication(aLoginApplication);
                     }
                 }
@@ -90,6 +125,5 @@ export class LoginsProvider {
 
         return this.logins;
     }
-
 
 }

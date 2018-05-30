@@ -41,6 +41,7 @@ import {LoginsProvider} from "../providers/logins-provider";
 import {ApplicationsProvider} from "../providers/applications-provider";
 import {TemplatesProvider} from "../providers/templates-provider";
 import {TemplatesFilter} from "../filters/templates-filter";
+import {BouncedPage} from "../pages/flow/bounced/bounced";
 
 
 @NgModule({
@@ -65,6 +66,7 @@ import {TemplatesFilter} from "../filters/templates-filter";
         InboxPage,
         DraftsPage,
         ArchivedPage,
+        BouncedPage,
         TemplatesPage,
         TemplateDetailPage,
         OutboxPage
@@ -93,6 +95,7 @@ import {TemplatesFilter} from "../filters/templates-filter";
                 {component: InboxPage, name: 'Inbox', segment: 'inbox'},
                 {component: DraftsPage, name: 'Drafts', segment: 'drafts'},
                 {component: ArchivedPage, name: 'Archived', segment: 'archived'},
+                {component: BouncedPage, name: 'Bounced', segment: 'bounced'},
                 {component: TemplatesPage, name: 'Templates', segment: 'templates'},
                 {component: TemplateDetailPage, name: 'TemplateDetail', segment: 'templateDetail/:templateKey'},
                 {component: OutboxPage, name: 'Outbox', segment: 'outbox'}
