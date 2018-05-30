@@ -1,6 +1,7 @@
 # flowable-ionic4angular6-inbox01
 Local installs of cordova and ionic to avoid breaking this or other ionic apps upon any update of global install (it's known to happen).
 
+In support and containing a Single-page-application and hybrid Android/iOS app playground with Ionic3 Angularx6 on  Flowable REST API as Spring Boot Java application.
 The real app is inside a nested directory 
 **flowable-ionic4angular6-inbox01app**.
 
