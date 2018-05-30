@@ -15,7 +15,7 @@ import { ScheduleFilterPage } from '../../schedule-filter/schedule-filter';
 
 
 @Component({
-  selector: 'page-archived',
+  selector: 'page-bounced',
   templateUrl: 'bounced.html'
 })
 export class BouncedPage {
@@ -44,7 +44,7 @@ export class BouncedPage {
   ) {}
 
   ionViewDidLoad() {
-    this.app.setTitle('Inbox');
+    this.app.setTitle('Bounced');
     this.updateSchedule();
   }
 

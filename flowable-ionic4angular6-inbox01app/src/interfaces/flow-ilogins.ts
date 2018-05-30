@@ -10,7 +10,6 @@ export interface ILogin extends ITyped {
 
 
 export interface ILoginApplication extends ITyped {
-    login: ILogin;
     applicationKey: string;
     identityKeys: string[];
 }

@@ -34,10 +34,8 @@ export class LoginApplication implements ILoginApplication {
     _v_Type = "LoginApplication";
 
     constructor(
-        public login: ILogin,
         public applicationKey: string,
         public identityKeys: string[] ) {
-
         console.log( "LoginApplication applicationKey=" + applicationKey, " identityKeys=" + identityKeys.toString())
     };
 }

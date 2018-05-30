@@ -109,7 +109,6 @@ export class LoginsProvider {
                             continue;
                         }
                         const aLoginApplication = new LoginApplication(
-                            aLogin,
                             aSrcLoginApplication.applicationKey,
                             this.sliceOrNull( aSrcLoginApplication.identityKeys)
                         );

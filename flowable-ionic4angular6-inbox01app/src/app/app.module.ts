@@ -30,6 +30,7 @@ import {FlowTabsPage} from '../pages/flow/flowtabs-page/flowtabs-page';
 import {InboxPage} from '../pages/flow/inbox/inbox';
 import {DraftsPage} from "../pages/flow/drafts/drafts";
 import {ArchivedPage} from '../pages/flow/archived/archived';
+import {BouncedPage} from "../pages/flow/bounced/bounced";
 import {TemplatesPage} from "../pages/flow/templates/templates";
 import {TemplateDetailPage} from '../pages/flow/template-detail/template-detail';
 import {OutboxPage} from "../pages/flow/outbox/outbox";
@@ -39,7 +40,6 @@ import {LoginsProvider} from "../providers/logins-provider";
 import {ApplicationsProvider} from "../providers/applications-provider";
 import {TemplatesProvider} from "../providers/templates-provider";
 import {TemplatesFilter} from "../filters/templates-filter";
-import {BouncedPage} from "../pages/flow/bounced/bounced";
 
 
 @NgModule({
@@ -122,6 +122,7 @@ import {BouncedPage} from "../pages/flow/bounced/bounced";
         InboxPage,
         DraftsPage,
         ArchivedPage,
+        BouncedPage,
         TemplatesPage,
         TemplateDetailPage,
         OutboxPage

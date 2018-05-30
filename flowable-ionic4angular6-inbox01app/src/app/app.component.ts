@@ -1,8 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
-
 import { Events, MenuController, Nav, Platform } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
-
 import { Storage } from '@ionic/storage';
 
 import { AboutPage } from '../pages/about/about';
@@ -20,6 +18,7 @@ import { FlowTabsPage } from '../pages/flow/flowtabs-page/flowtabs-page';
 import { InboxPage } from '../pages/flow/inbox/inbox';
 import { DraftsPage} from "../pages/flow/drafts/drafts";
 import { ArchivedPage} from "../pages/flow/archived/archived";
+import { BouncedPage} from "../pages/flow/bounced/bounced";
 import { TemplatesPage} from "../pages/flow/templates/templates";
 import { OutboxPage} from "../pages/flow/outbox/outbox";
 
@@ -50,8 +49,9 @@ export class ConferenceApp {
     { title: 'Inbox', name: 'FlowTabsPage', component: FlowTabsPage, tabComponent: InboxPage, index: 0, icon: 'mail' },
     { title: 'Drafts', name: 'FlowTabsPage', component: FlowTabsPage, tabComponent: DraftsPage, index: 1, icon: 'mail-open' },
     { title: 'Archived', name: 'FlowTabsPage', component: FlowTabsPage, tabComponent: ArchivedPage, index: 2, icon: 'done-all' },
-    { title: 'Templates', name: 'FlowTabsPage', component: FlowTabsPage, tabComponent: TemplatesPage, index: 3, icon: 'create' },
-    { title: 'Outbox', name: 'FlowTabsPage', component: FlowTabsPage, tabComponent: OutboxPage, index: 4, icon: 'send' }
+    { title: 'Bounced', name: 'FlowTabsPage', component: FlowTabsPage, tabComponent: BouncedPage, index: 3, icon: 'undo' },
+    { title: 'Templates', name: 'FlowTabsPage', component: FlowTabsPage, tabComponent: TemplatesPage, index: 4, icon: 'create' },
+    { title: 'Outbox', name: 'FlowTabsPage', component: FlowTabsPage, tabComponent: OutboxPage, index: 5, icon: 'send' }
   ];
   /* ACV OJO extra menu section BEGIN */
 
