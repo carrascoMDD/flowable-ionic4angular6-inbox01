@@ -9,7 +9,6 @@ import {
 } from 'ionic-angular';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 
-import { ConferenceData } from '../../providers/conference-data';
 
 import { SessionDetailPage } from '../session-detail/session-detail';
 import { SpeakerDetailPage } from '../speaker-detail/speaker-detail';
@@ -21,7 +20,7 @@ export interface ActionSheetButton {
   icon?: string;
   cssClass?: string;
   handler?: () => boolean|void;
-};
+}
 
 @Component({
   selector: 'page-speaker-list',
@@ -34,15 +33,16 @@ export class SpeakerListPage {
   constructor(
     public actionSheetCtrl: ActionSheetController,
     public navCtrl: NavController,
-    public confData: ConferenceData,
     public config: Config,
     public inAppBrowser: InAppBrowser
   ) {}
 
   ionViewDidLoad() {
+      /*
     this.confData.getSpeakers().subscribe((speakers: any[]) => {
       this.speakers = speakers;
     });
+    */
   }
 
   goToSessionDetail(session: any) {

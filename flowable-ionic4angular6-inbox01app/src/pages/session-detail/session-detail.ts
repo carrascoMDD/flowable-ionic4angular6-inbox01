@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { NavParams } from 'ionic-angular';
 
-import { ConferenceData } from '../../providers/conference-data';
 
 @Component({
   selector: 'page-session-detail',
@@ -11,11 +10,11 @@ export class SessionDetailPage {
   session: any;
 
   constructor(
-    public dataProvider: ConferenceData,
     public navParams: NavParams
   ) {}
 
   ionViewWillEnter() {
+      /*
     this.dataProvider.load().subscribe((data: any) => {
       if (
         data &&
@@ -35,5 +34,6 @@ export class SessionDetailPage {
         }
       }
     });
+    */
   }
 }

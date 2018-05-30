@@ -5,7 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { Storage } from '@ionic/storage';
 
-// import { AboutPage } from '../pages/about/about';
+import { AboutPage } from '../pages/about/about';
 import { AccountPage } from '../pages/account/account';
 import { LoginPage } from '../pages/login/login';
 // import { MapPage } from '../pages/map/map';
@@ -24,8 +24,6 @@ import { TemplatesPage} from "../pages/flow/templates/templates";
 import { OutboxPage} from "../pages/flow/outbox/outbox";
 
 
-
-import { ConferenceData } from '../providers/conference-data';
 import { UserData } from '../providers/user-data';
 
 export interface PageInterface {
@@ -65,13 +63,13 @@ export class ConferenceApp {
     { title: 'Schedule', name: 'TabsPage', component: TabsPage, tabComponent: SchedulePage, index: 0, icon: 'calendar' },
     { title: 'Speakers', name: 'TabsPage', component: TabsPage, tabComponent: SpeakerListPage, index: 1, icon: 'contacts' },
     { title: 'Map', name: 'TabsPage', component: TabsPage, tabComponent: MapPage, index: 2, icon: 'map' },
-    { title: 'About', name: 'TabsPage', component: TabsPage, tabComponent: AboutPage, index: 3, icon: 'information-circle' }
   ];
    */
   loggedInPages: PageInterface[] = [
     { title: 'Account', name: 'AccountPage', component: AccountPage, icon: 'person' },
     { title: 'Support', name: 'SupportPage', component: SupportPage, icon: 'help' },
-    { title: 'Logout', name: 'TabsPage', component: TabsPage, icon: 'log-out', logsOut: true }
+  { title: 'About', name: 'TabsPage', component: TabsPage, tabComponent: AboutPage, index: 3, icon: 'information-circle' },
+  { title: 'Logout', name: 'TabsPage', component: TabsPage, icon: 'log-out', logsOut: true }
   ];
   loggedOutPages: PageInterface[] = [
     { title: 'Login', name: 'LoginPage', component: LoginPage, icon: 'log-in' },
@@ -86,7 +84,6 @@ export class ConferenceApp {
     public userData: UserData,
     public menu: MenuController,
     public platform: Platform,
-    public confData: ConferenceData,
     public storage: Storage,
     public splashScreen: SplashScreen
   ) {
@@ -103,7 +100,7 @@ export class ConferenceApp {
       });
 
     // load the conference data
-    confData.load();
+      // confData.load();
 
     // decide which menu items should be hidden by current login status stored in local storage
     this.userData.hasLoggedIn().then((hasLoggedIn) => {

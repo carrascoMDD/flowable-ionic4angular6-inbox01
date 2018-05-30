@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
-import { ConferenceData } from '../../providers/conference-data';
 
 @Component({
   selector: 'page-speaker-detail',
@@ -10,10 +9,11 @@ import { ConferenceData } from '../../providers/conference-data';
 export class SpeakerDetailPage {
   speaker: any;
 
-  constructor(public dataProvider: ConferenceData, public navCtrl: NavController, public navParams: NavParams) {
+  constructor( public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewWillEnter() {
+      /*
     this.dataProvider.load().subscribe((data: any) => {
       if (data && data.speakers) {
         for (const speaker of data.speakers) {
@@ -24,7 +24,7 @@ export class SpeakerDetailPage {
         }
       }
     });
-
+    */
   }
 
   goToSessionDetail(session: any) {

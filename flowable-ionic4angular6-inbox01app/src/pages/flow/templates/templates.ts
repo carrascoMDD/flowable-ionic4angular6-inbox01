@@ -8,7 +8,6 @@ import { AlertController, App, FabContainer, /* ItemSliding, */ List, ModalContr
 */
 // import moment from 'moment';
 
-import { ConferenceData } from '../../../providers/conference-data';
 import { UserData } from '../../../providers/user-data';
 
 import { TemplateDetailPage } from '../template-detail/template-detail';
@@ -46,7 +45,6 @@ export class TemplatesPage {
     public modalCtrl: ModalController,
     public navCtrl: NavController,
     public toastCtrl: ToastController,
-    public confData: ConferenceData,
     public user: UserData,
     public templatesFilter : TemplatesFilter
   ) {

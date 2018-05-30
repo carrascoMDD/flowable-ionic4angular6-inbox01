@@ -1,5 +1,4 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {HttpModule} from '@angular/http';
 import {HttpClientModule} from '@angular/common/http';
 import {NgModule, ErrorHandler} from '@angular/core';
 import {IonicApp, IonicModule, IonicErrorHandler} from 'ionic-angular';
@@ -24,7 +23,6 @@ import {TabsPage} from '../pages/tabs-page/tabs-page';
 import {TutorialPage} from '../pages/tutorial/tutorial';
 import {SupportPage} from '../pages/support/support';
 
-import {ConferenceData} from '../providers/conference-data';
 import {UserData} from '../providers/user-data';
 
 
@@ -74,7 +72,6 @@ import {BouncedPage} from "../pages/flow/bounced/bounced";
     imports: [
         BrowserModule,
         HttpClientModule,
-        HttpModule,
         IonicModule.forRoot(ConferenceApp, {}, {
             links: [
                 {component: TabsPage, name: 'TabsPage', segment: 'tabs-page'},
@@ -131,7 +128,6 @@ import {BouncedPage} from "../pages/flow/bounced/bounced";
     ],
     providers: [
         {provide: ErrorHandler, useClass: IonicErrorHandler},
-        ConferenceData,
         UserData,
         InAppBrowser,
         SplashScreen,
