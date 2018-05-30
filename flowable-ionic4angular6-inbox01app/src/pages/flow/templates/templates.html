@@ -39,7 +39,7 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <ion-list #scheduleList [hidden]="shownTemplates === 0">
+  <ion-list #scheduleList [hidden]="!templatespecs || ( templatespecs.length === 0)">
     
     <ion-item-sliding *ngFor="let aTemplatespec of templatespecs" #slidingItem [attr.track]="aTemplatespec.key | lowercase" [hidden]="aTemplatespec.hide">
 
@@ -64,7 +64,7 @@
 
   </ion-list>
 
-  <ion-list-header [hidden]="shownTemplates.length > 0">
+  <ion-list-header [hidden]="templatespecs && templatespecs.length > 0">
       No Templates Found
   </ion-list-header>
 

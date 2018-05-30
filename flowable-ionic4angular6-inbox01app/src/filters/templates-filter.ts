@@ -81,7 +81,12 @@ export class TemplatesFilter extends ActiveFilter{
                                     console.log( "TemplatesFilter about to  actually filter templatespecs against initiable or participed processSpecKeys of active identities in applications (according to selectors and loginApplications)");
 
                                     let someAcceptableProcessSpecs = this.acceptableProcessSpecs( theIdentityActivations);
-
+                                    if( !someAcceptableProcessSpecs) {
+                                        console.log( "TemplatesFilter no or empty this.acceptableProcessSpecs(");
+                                        theObserver.next( null);
+                                        theObserver.complete();
+                                        return;
+                                    }
                                     const someAcceptableProcessKeys : string[] = [ ];
 
                                     for( let aProcessSpec of someAcceptableProcessSpecs) {

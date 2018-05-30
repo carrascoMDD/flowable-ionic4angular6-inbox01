@@ -64,7 +64,7 @@ export class TemplatesPage {
     this.templatesFilter.getTemplatespecs( this.queryText).subscribe(( theTemplatespecs:  Templatespec[]) => {
       this.templatespecs = theTemplatespecs;
       this.shownTemplates = this.templatespecs;
-      console.log( "templates.ts updateTemplates theTemplatespecs.length=\n" + ( theTemplatespecs.length ? theTemplatespecs.length : 0));
+      console.log( "templates.ts updateTemplates theTemplatespecs.length=\n" + ( ( theTemplatespecs && theTemplatespecs.length) ? theTemplatespecs.length : 0));
     });
   }
 
@@ -73,7 +73,7 @@ export class TemplatesPage {
     this.templatesFilter.getTemplatespecs( this.queryText).subscribe(( theTemplatespecs:  Templatespec[]) => {
       this.templatespecs = theTemplatespecs;
       this.shownTemplates = this.templatespecs;
-      console.log( "templates.ts doRefresh theTemplatespecs.length=\n" + ( theTemplatespecs.length ? theTemplatespecs.length : 0));
+      console.log( "templates.ts doRefresh theTemplatespecs.length=\n" + ( ( theTemplatespecs && theTemplatespecs.length) ? theTemplatespecs.length : 0));
 
       // simulate a network request that would take longer
       // than just pulling from out local json file
