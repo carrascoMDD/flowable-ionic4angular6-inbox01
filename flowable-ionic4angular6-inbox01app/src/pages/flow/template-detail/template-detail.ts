@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavParams } from 'ionic-angular';
 
-import { TemplatesProvider } from '../../../providers/templatesprovider';
+import { TemplatesProvider } from '../../../providers/templates-provider';
 import {Templatespec} from "../../../interfaces/flow-templatespecs";
 
 @Component({

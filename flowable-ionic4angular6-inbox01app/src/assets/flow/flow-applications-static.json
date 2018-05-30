@@ -1,0 +1,88 @@
+[
+    {
+        "_v_Type": "Application",
+        "name": "Flowable Play 01",
+        "processSpecs": [
+            {
+                "_v_Type": "ProcessSpec",
+                "name": "Flowable Play 01",
+                "key": "flowableplay01"
+            }
+        ],
+        "groups": [
+            {
+                "_v_Type": "ApplicationGroup",
+                "name": "Employees",
+                "key": "employees"
+            },
+            {
+                "_v_Type": "ApplicationGroup",
+                "name": "Managers",
+                "key": "managers"
+            }
+        ],
+        "identities": [
+            {
+                "_v_Type": "ApplicationIdentity",
+                "user": "userEmployee",
+                "groupKeys": [ "employees"]
+            },
+            {
+                "_v_Type": "ApplicationIdentity",
+                "user": "userManager",
+                "groupKeys": [ "managers", "employees"]
+            }
+        ]
+    },
+    {
+        "_v_Type": "Application",
+        "name": "Shipping Exchange",
+        "processSpecs": [
+            {
+                "_v_Type": "ProcessSpec",
+                "name": "Shipping Exchange Announce Payload",
+                "key": "proc_ShippingExchange_AnnouncePayload"
+            }
+        ],
+        "key": "proc_ShippingExchange_AnnouncePayload",
+        "groups": [
+            {
+                "_v_Type": "ApplicationGroup",
+                "name": "Shipping Clients",
+                "key": "shippingClients"
+            },
+            {
+                "_v_Type": "ApplicationGroup",
+                "name": "Shipping Suppliers",
+                "key": "shippingSuppliers"
+            },
+            {
+                "_v_Type": "ApplicationGroup",
+                "name": "Registrars",
+                "key": "registrars"
+            }
+        ],
+        "identities": [
+            {
+                "_v_Type": "ApplicationIdentity",
+                "key": "userClientSupplierRegistrar",
+                "groupKeys": [ "shippingClients", "shippingSuppliers", "registrars"]
+            },
+            {
+                "_v_Type": "ApplicationIdentity",
+                "key": "userClient",
+                "groupKeys": [ "shippingClients"]
+            },
+            {
+                "_v_Type": "ApplicationIdentity",
+                "key": "userSupplier",
+                "groupKeys": [ "shippingSuppliers"]
+            },
+            {
+                "_v_Type": "ApplicationIdentity",
+                "key": "userRegistrar",
+                "groupKeys": [ "registrars"]
+            }
+        ]
+    }
+]

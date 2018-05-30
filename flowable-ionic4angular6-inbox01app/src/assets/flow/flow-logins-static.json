@@ -1,0 +1,62 @@
+[
+    {
+        "_v_Type": "Login",
+        "login": "jcbs@acme.com",
+        "name": "John Carlos",
+        "familyName": "Bauer Sanchez",
+        "loginApplications": [
+            {
+                "_v_Type": "LoginApplication",
+                "applicationKey": "flowableplay01",
+                "identityKeys": [
+                    "userEmployee", "userManager"
+                ]
+            },
+            {
+                "_v_Type": "LoginApplication",
+                "applicationKey": "proc_ShippingExchange_AnnouncePayload",
+                "identityKeys": [
+                    "userClient", "userSupplier", "userRegistrar"
+                ]
+            }
+        ]
+    },
+    {
+        "_v_Type": "Login",
+        "login": "lbs@nasa.com",
+        "name": "Luis Brandon",
+        "familyName": "Smith",
+        "loginApplications": [
+            {
+                "_v_Type": "LoginApplication",
+                "applicationKey": "flowableplay01",
+                "identityKeys": [
+                    "userEmployee"
+                ]
+            },
+            {
+                "_v_Type": "LoginApplication",
+                "applicationKey": "proc_ShippingExchange_AnnouncePayload",
+                "identityKeys": [
+                    "userRegistrar"
+                ]
+            }
+        ]
+    },
+    {
+        "_v_Type": "Login",
+        "login": "LiChi@hu.com",
+        "name": "Chi",
+        "familyName": "Li",
+        "loginApplications": [
+            {
+                "_v_Type": "LoginApplication",
+                "applicationKey": "flowableplay01",
+                "identityKeys": [
+                    "userManager"
+                ]
+            }
+        ]
+    }
+]
+

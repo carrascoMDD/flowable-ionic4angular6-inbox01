@@ -15,7 +15,7 @@ import { TemplateDetailPage } from '../template-detail/template-detail';
 import { ScheduleFilterPage } from '../../schedule-filter/schedule-filter';
 
 import { Templatespec } from '../../../interfaces/flow-templatespecs';
-import {TemplatesProvider} from "../../../providers/templatesprovider";
+import {TemplatesProvider} from "../../../providers/templates-provider";
 
 @Component({
   selector: 'page-templates',
