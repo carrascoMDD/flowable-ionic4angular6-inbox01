@@ -169,7 +169,7 @@ export class Identity extends ProcessInitiator implements IIdentity {
         public application: IApplication,
         public initiableProcessKeys: string[],
         public participedProcessKeys: string[],
-        public key: string,
+        public user: string,
         public groupKeys: string[]) {
 
         super( initiableProcessKeys, participedProcessKeys);

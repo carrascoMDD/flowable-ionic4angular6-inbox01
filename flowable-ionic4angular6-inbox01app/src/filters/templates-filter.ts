@@ -3,6 +3,7 @@ import {Observable} from 'rxjs/Observable';
 import {UserData} from '../providers/user-data';
 import {ApplicationsProvider} from '../providers/applications-provider';
 import {ActiveFilter} from './active-filter';
+import {ApplicationKeyed} from './active-filter';
 
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of';
@@ -52,13 +53,12 @@ export class TemplatesFilter extends ActiveFilter{
                     }
                     console.log( "TemplatesFilter about to this.applicationsProvider.getAllApplications().subscribe");
 
-                    this.applicationsProvider.getAllApplications().subscribe(
+                    this.getAllApplicationsKeyed().subscribe(
+                        ( theApplicationsKeyedMap: Map<string, ApplicationKeyed>) => {
+                            console.log( "TemplatesFilter getTemplatespecs received this.getAllApplicationsKeyed().subscribe theApplicationsKeyedMap.length=" + ( !theApplicationsKeyedMap ? 0 : theApplicationsKeyedMap.size));
 
-                        ( theApplications: IApplication[]) => {
-                            console.log( "TemplatesFilter getTemplatespecs received this.templatesProvider.getAllApplications() theApplications.length=" + ( !theApplications ? 0 : theApplications.length));
-
-                            if( !theApplications || !theApplications.length) {
-                                console.log( "TemplatesFilter no or empty theApplications from this.applicationsProvider.getAllApplications().subscribe(");
+                            if( !theApplicationsKeyedMap || ( theApplicationsKeyedMap.size < 1))  {
+                                console.log( "TemplatesFilter no or empty theApplications from this.getAllApplicationsKeyed().subscribe(");
                                 theObserver.next( null);
                                 theObserver.complete();
                                 return;

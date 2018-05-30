@@ -138,7 +138,7 @@ export class ApplicationsProvider {
                             anApplication,
                             this.sliceOrNull( aSrcIdentity.initiableProcessKeys),
                             this.sliceOrNull( aSrcIdentity.participedProcessKeys),
-                            aSrcIdentity.key,
+                            aSrcIdentity.user,
                             this.sliceOrNull( aSrcIdentity.groups)
                         );
                         anApplication.addIdentity(anIdentity);

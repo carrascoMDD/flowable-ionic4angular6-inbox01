@@ -2,6 +2,7 @@
     {
         "_v_Type": "Application",
         "name": "Flowable Play 01",
+        "key": "appFlowableplay01",
         "processSpecs": [
             {
                 "_v_Type": "ProcessSpec",
@@ -50,6 +51,7 @@
     {
         "_v_Type": "Application",
         "name": "Shipping Exchange",
+        "key": "appShippingExchange",
         "processSpecs": [
             {
                 "_v_Type": "ProcessSpec",
@@ -57,7 +59,6 @@
                 "key": "proc_ShippingExchange_AnnouncePayload"
             }
         ],
-        "key": "proc_ShippingExchange_AnnouncePayload",
         "groups": [
             {
                 "_v_Type": "ApplicationGroup",

@@ -39,7 +39,6 @@ export abstract class ActiveFilter {
                 return;
             }
 
-            this.applicationsKeyed = new Map<string, ApplicationKeyed>();
 
             this.applicationsProvider.getAllApplications().subscribe(
                 (theApplications: IApplication[]) => {
@@ -52,11 +51,13 @@ export abstract class ActiveFilter {
                         return;
                     }
 
+                    this.applicationsKeyed = new Map<string, ApplicationKeyed>();
+
                     for (let anApplication of theApplications) {
                         if (!anApplication || !anApplication.key) {
                             continue;
                         }
-                        this.applicationsKeyed[anApplication.key] = new ApplicationKeyed(anApplication);
+                        this.applicationsKeyed.set( anApplication.key, new ApplicationKeyed(anApplication));
                     }
                     theObserver.next(this.applicationsKeyed);
                     theObserver.complete();
@@ -104,20 +105,20 @@ export abstract class ActiveFilter {
             if(    !anIdentityActivation
                 || !anIdentityActivation.applicationKey
                 || !anIdentityActivation.identityKey
-                || !anIdentityActivation.isActive) {
+                || !!anIdentityActivation.isActive) {
                 continue;
             }
 
 
             // Lookup an application by its key.
-            let anApplicationKeyed = this.applicationsKeyed[ anIdentityActivation.applicationKey];
+            let anApplicationKeyed = this.applicationsKeyed.get( anIdentityActivation.applicationKey);
             if( !anApplicationKeyed) {
                 // Login's LoginApplications refer to an unknown application key
                 continue;
             }
 
             // Acceptable process keys for the application shall be among the ones from process specs in the application
-            if( !anApplicationKeyed.processpecsByKey || !anApplicationKeyed.processpecsByKey.size()) {
+            if( !anApplicationKeyed.processpecsByKey || !anApplicationKeyed.processpecsByKey.size) {
                 // The application refered by the IdentityActivation does not hold any process specs
                 continue;
             }
@@ -127,7 +128,7 @@ export abstract class ActiveFilter {
                 continue;
             }
 
-            let anIdentity = anApplicationKeyed.identitiesByKey[ anIdentityActivation.identityKey];
+            let anIdentity = anApplicationKeyed.identitiesByKey.get( anIdentityActivation.identityKey);
             if( !anIdentity) {
                 // The application refered by the IdentityActivation does not hold the identity refered by its key from the identity activation
                 continue;
@@ -150,7 +151,7 @@ export abstract class ActiveFilter {
                         continue;
                     }
 
-                    let aGroup = anApplicationKeyed.groupsByKey[ aGroupKey];
+                    let aGroup = anApplicationKeyed.groupsByKey.get( aGroupKey);
                     if( !aGroup) {
                         continue;
                     }
@@ -170,6 +171,8 @@ export abstract class ActiveFilter {
 
         return someProcessSpecs;
     }
+
+
 
 
     processSpecsByKeyInto(
@@ -194,7 +197,7 @@ export abstract class ActiveFilter {
                 continue;
             }
 
-            let aProcessSpec = theApplicationKeyed.processpecsByKey[ aProcessKey];
+            let aProcessSpec = theApplicationKeyed.processpecsByKey.get( aProcessKey);
             if( aProcessSpec) {
                 if( theProcessSpecs.indexOf( aProcessSpec) < 0) {
                     theProcessSpecs.push( aProcessSpec);
@@ -211,7 +214,7 @@ export abstract class ActiveFilter {
 
 
 
-class ApplicationKeyed {
+export class ApplicationKeyed {
 
     identitiesByKey:    Map<string, IIdentity>;
     groupsByKey:        Map<string, IGroup>;
@@ -240,27 +243,17 @@ class ApplicationKeyed {
                     continue;
                 }
 
-                this.processpecsByKey[ aProcessSpec.key] = aProcessSpec;
-            }
-        }
-
-        if( this.application.groups) {
-            for( let aGroup of this.application.groups) {
-                if( !aGroup || !aGroup.key) {
-                    continue;
-                }
-
-                this.groupsByKey[ aGroup.key] = aGroup;
+                this.processpecsByKey.set( aProcessSpec.key, aProcessSpec);
             }
         }
 
         if( this.application.identities) {
             for( let anIdentity of this.application.identities) {
-                if( !anIdentity || !anIdentity.key) {
+                if( !anIdentity || !anIdentity.user) {
                     continue;
                 }
 
-                this.identitiesByKey[ anIdentity.key] = anIdentity;
+                this.identitiesByKey.set( anIdentity.user, anIdentity);
             }
         }
 
@@ -270,7 +263,7 @@ class ApplicationKeyed {
                     continue;
                 }
 
-                this.groupsByKey[ aGroup.key] = aGroup;
+                this.groupsByKey.set( aGroup.key, aGroup);
             }
         }
     }

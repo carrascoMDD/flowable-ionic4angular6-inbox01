@@ -42,7 +42,7 @@ export interface IGroup extends IProcessInitiator {
 
 export interface IIdentity extends IProcessInitiator {
     application: IApplication;
-    key: string;
+    user: string;
     groupKeys: string[];
 }
 
