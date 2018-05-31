@@ -16,6 +16,7 @@ import {UserData} from '../../../providers/user-data';
 import {ILogin} from '../../../interfaces/flow-ilogins';
 
 import {LoginPage} from '../../login/login';
+import {IdentitiesFilterPage} from "../identities-filter/identitites-filter";
 
 
 @Component({
@@ -37,6 +38,9 @@ export abstract class LoggedinPage {
     ) {
         console.log("(abstract)LoggedinPage constructor");
     }
+
+
+
 
 
     presentAlert() {
@@ -240,6 +244,18 @@ export abstract class LoggedinPage {
                         pheReject( theError);
                     }
                 );
+        });
+    }
+
+
+    presentFilter():void {
+        let modal = this.modalCtrl.create( IdentitiesFilterPage);
+        modal.present();
+
+        modal.onWillDismiss((data: any[]) => {
+            if (data) {
+                this.updateContent();
+            }
         });
     }
 

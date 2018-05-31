@@ -10,30 +10,27 @@ import {
 import { UserData} from '../../../providers/user-data';
 import {IIdentityActivation} from "../../../interfaces/flow-iidentityactivation";
 
-import {LoggedinPage} from '../loggedin/loggedin';
 
 
 @Component({
     selector: 'page-identities-filter',
     templateUrl: 'identities-filter.html'
 })
-export class IdentitiesFilterPage extends LoggedinPage{
+export class IdentitiesFilterPage {
 
     identityActivations: IIdentityActivation[];
     identityActivationCompositeKeys: string[];
 
     constructor(
-        theApp: App,
-        theAlertCtrl: AlertController,
-        theLoadingCtrl: LoadingController,
-        theModalCtrl: ModalController,
-        theNavCtrl: NavController,
-        theToastCtrl: ToastController,
-        theUserData: UserData,
+        public app: App,
+        public alertCtrl: AlertController,
+        public loadingCtrl: LoadingController,
+        public modalCtrl: ModalController,
+        public navCtrl: NavController,
+        public toastCtrl: ToastController,
+        public userData: UserData,
         public navParams: NavParams,
         public viewCtrl: ViewController) {
-
-        super(theApp, theAlertCtrl, theLoadingCtrl, theModalCtrl, theNavCtrl, theToastCtrl, theUserData);
 
         console.log("IdentitiesFilterPage constructor");
     }

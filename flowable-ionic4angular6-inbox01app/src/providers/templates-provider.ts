@@ -55,16 +55,6 @@ export class TemplatesProvider {
             this.templatespecs = null;
             let aURL = URL_SCHEMEHOSTPORT + URL_PROCESSDEFINITIONS;
             return this.httpc.get(aURL).map(this.parseProcessSpec, this);
-
-            /*
-             this.httpc.get(aURL)
-               .subscribe(data => {
-                 console.log(JSON.stringify( data, null, 4));
-               }, err => {
-                 console.log(err);
-               });
-             return null;
-          */
         }
     }
 
