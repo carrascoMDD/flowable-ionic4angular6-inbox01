@@ -360,9 +360,14 @@ export class UserData {
     };
 
     hasLoggedIn(): Promise<boolean> {
+        return new Promise<boolean>( (resolve) => {
+            resolve( !( typeof this.authenticatedLogin === "undefined") && !( this.authenticatedLogin === null));
+        });
+        /*
         return this.storage.get(this.HAS_LOGGED_IN).then((value) => {
             return value === true;
         });
+        */
     };
 
     checkHasSeenTutorial(): Promise<string> {

@@ -12,6 +12,7 @@ export class Authentication extends Result implements IAuthentication {
         theCondition?: string,
         theMessage?: string,
         theDetails?: any) {
+
         super(theSuccess, theCondition, theMessage, theDetails);
     };
 
