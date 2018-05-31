@@ -1,5 +1,4 @@
 import {Component, ViewChild} from '@angular/core';
-
 import {
     AlertController,
     App,
@@ -57,14 +56,6 @@ export class TemplatesPage extends LoggedinPage {
     }
 
 
-    presentAlert() {
-        let alert = this.alertCtrl.create({
-            title: 'You are not logged in, or your session expired',
-            subTitle: 'Please login',
-            buttons: ['Go to Login']
-        });
-        return alert.present();
-    }
 
     ionViewDidLoad() {
         console.log("TemplatesPage ionViewDidLoad");
