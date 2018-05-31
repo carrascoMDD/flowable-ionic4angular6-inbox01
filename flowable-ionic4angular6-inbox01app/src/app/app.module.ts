@@ -11,7 +11,7 @@ import {ConferenceApp} from './app.component';
 
 import {AboutPage} from '../pages/about/about';
 import {PopoverPage} from '../pages/about-popover/about-popover';
-import {AccountPage} from '../pages/account/account';
+import {AccountPage} from '../pages/flow/account/account';
 import {LoginPage} from '../pages/login/login';
 import {MapPage} from '../pages/map/map';
 import {SchedulePage} from '../pages/schedule/schedule';
@@ -26,7 +26,7 @@ import {SupportPage} from '../pages/support/support';
 
 import {UserData} from '../providers/user-data';
 
-
+import {LogoutPage} from '../pages/flow/logout/logout';
 import {FlowTabsPage} from '../pages/flow/flowtabs-page/flowtabs-page';
 import {InboxPage} from '../pages/flow/inbox/inbox';
 import {DraftsPage} from "../pages/flow/drafts/drafts";
@@ -61,6 +61,7 @@ import {TemplatesFilter} from "../filters/templates-filter";
         TutorialPage,
         SupportPage,
 
+        LogoutPage,
         FlowTabsPage,
         InboxPage,
         DraftsPage,
@@ -90,6 +91,7 @@ import {TemplatesFilter} from "../filters/templates-filter";
                 {component: AccountPage, name: 'AccountPage', segment: 'account'},
                 {component: SignupPage, name: 'SignupPage', segment: 'signup'},
 
+                {component: LogoutPage, name: 'LogoutPage', segment: 'logout'},
                 {component: FlowTabsPage, name: 'FlowTabsPage', segment: 'flowtabs-page'},
                 {component: InboxPage, name: 'Inbox', segment: 'inbox'},
                 {component: DraftsPage, name: 'Drafts', segment: 'drafts'},
@@ -120,6 +122,7 @@ import {TemplatesFilter} from "../filters/templates-filter";
         TutorialPage,
         SupportPage,
 
+        LogoutPage,
         FlowTabsPage,
         InboxPage,
         DraftsPage,

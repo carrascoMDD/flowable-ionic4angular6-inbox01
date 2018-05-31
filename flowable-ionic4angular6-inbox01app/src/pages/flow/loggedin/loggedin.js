@@ -34,12 +34,12 @@ var LoggedinPage = /** @class */ (function () {
     LoggedinPage.prototype.beLoggedinOrGoToLoginPage = function () {
         var _this = this;
         console.log("(abstract)LoggedinPage beLoggedinOrGoToLoginPage");
-        return new Promise(function (resolveTop) {
-            _this.userData.hasLoggedIn()
-                .then(function (theHasLoggedIn) {
-                if (theHasLoggedIn) {
-                    console.log("(abstract)LoggedinPage beLoggedinOrGoToLoginPage this.userData.hasLoggedIn() false");
-                    resolveTop(true);
+        return new Promise(function (pheResolve, pheReject) {
+            _this.userData.getAuthenticatedLogin()
+                .then(function (theAuthenticatedLogin) {
+                if (theAuthenticatedLogin) {
+                    console.log("(abstract)LoggedinPage beLoggedinOrGoToLoginPage this.userData.getAuthenticatedLogin() false");
+                    pheResolve(theAuthenticatedLogin);
                     return;
                 }
                 else {
@@ -60,10 +60,11 @@ var LoggedinPage = /** @class */ (function () {
                                 _this.app.getRootNav().setRoot(login_1.LoginPage)
                                     .then(function () {
                                     console.log("(abstract)LoggedinPage beLoggedinOrGoToLoginPage done this.app.getRootNav().setRoot( LoginPage)");
-                                    resolveTop(false);
+                                    pheReject("User not logged in");
                                 }, function (theError) {
-                                    console.log("(abstract)LoggedinPage beLoggedinOrGoToLoginPage ERROR in popToRoot() theError=" + theError);
-                                    resolveTop(false);
+                                    var aMsg = "(abstract)LoggedinPage beLoggedinOrGoToLoginPage ERROR in popToRoot() theError=" + theError;
+                                    console.log(aMsg);
+                                    pheReject("User not logged in\n" + aMsg);
                                 });
                             }, 0);
                         }
@@ -72,20 +73,23 @@ var LoggedinPage = /** @class */ (function () {
                             _this.app.getRootNav().setRoot(login_1.LoginPage)
                                 .then(function () {
                                 console.log("(abstract)LoggedinPage beLoggedinOrGoToLoginPage done this.app.getRootNav().setRoot( LoginPage)");
-                                resolveTop(false);
+                                pheReject(false);
                             }, function (theError) {
-                                console.log("(abstract)LoggedinPage beLoggedinOrGoToLoginPage ERROR in setRoot() theError=" + theError);
-                                resolveTop(false);
+                                var aMsg = "(abstract)LoggedinPage beLoggedinOrGoToLoginPage ERROR in setRoot() theError=" + theError;
+                                console.log(aMsg);
+                                pheReject("User not logged in\n" + aMsg);
                             });
                         }
                     }, function (theError) {
-                        console.log("TutorialPage ERROR on ALERT beLoggedinOrGoToLoginPage this.userData.hasLoggedIn() false theError=" + theError);
-                        resolveTop(false);
+                        var aMsg = "(abstract)LoggedinPage beLoggedinOrGoToLoginPage NO this.userData.getAuthenticatedLogin() theError=" + theError;
+                        console.log(aMsg);
+                        pheReject("User not logged in\n" + aMsg);
                     });
                 }
             }, function (theError) {
-                console.log("(abstract)LoggedinPage beLoggedinOrGoToLoginPage this.userData.hasLoggedIn() error=" + theError);
-                resolveTop(false);
+                var aMsg = "((abstract)LoggedinPage beLoggedinOrGoToLoginPage this.userData.getAuthenticatedLogin() error=" + theError;
+                console.log(aMsg);
+                pheReject("User not logged in\n" + aMsg);
             });
         });
     };

@@ -32,13 +32,11 @@ export class TemplatesPage extends LoggedinPage {
     // the List and not a reference to the element
     @ViewChild('templatesList', {read: List}) templatesList: List;
 
-    dayIndex = 0;
     queryText = '';
     segment = 'all';
     excludeTracks: any = [];
     shownTemplates: any = [];
     groups: any = [];
-    confDate: string;
 
     public templatespecs: Templatespec[];
 

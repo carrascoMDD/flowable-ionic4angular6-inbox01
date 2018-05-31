@@ -4,14 +4,15 @@ import {SplashScreen} from '@ionic-native/splash-screen';
 import {Storage} from '@ionic/storage';
 
 import {AboutPage} from '../pages/about/about';
-import {AccountPage} from '../pages/account/account';
 import {LoginPage} from '../pages/login/login';
 // import { MapPage } from '../pages/map/map';
 import {SignupPage} from '../pages/signup/signup';
-import {TabsPage} from '../pages/tabs-page/tabs-page';
 import {TutorialPage} from '../pages/tutorial/tutorial';
 import {SupportPage} from '../pages/support/support';
 
+
+import {LogoutPage} from '../pages/flow/logout/logout';
+import {AccountPage} from '../pages/flow/account/account';
 import {FlowTabsPage} from '../pages/flow/flowtabs-page/flowtabs-page';
 import {InboxPage} from '../pages/flow/inbox/inbox';
 import {DraftsPage} from "../pages/flow/drafts/drafts";
@@ -93,21 +94,15 @@ export class ConferenceApp {
 
     loggedInPages: PageInterface[] = [
         {title: 'Account', name: 'AccountPage', component: AccountPage, icon: 'person'},
+        {title: 'Logout', name: 'LogoutPage', component: LogoutPage, icon: 'exit'},
         {title: 'Support', name: 'SupportPage', component: SupportPage, icon: 'help'},
-        {
-            title: 'About',
-            name: 'TabsPage',
-            component: TabsPage,
-            tabComponent: AboutPage,
-            index: 3,
-            icon: 'information-circle'
-        },
+        {title: 'About', name: 'AboutPage', component: AboutPage, icon: 'information-circle'},
     ];
 
     loggedOutPages: PageInterface[] = [
         {title: 'Login', name: 'LoginPage', component: LoginPage, icon: 'log-in'},
-        {title: 'Support', name: 'SupportPage', component: SupportPage, icon: 'help'},
-        {title: 'Signup', name: 'SignupPage', component: SignupPage, icon: 'person-add'}
+        {title: 'Signup', name: 'SignupPage', component: SignupPage, icon: 'person-add'},
+        {title: 'About', name: 'AboutPage', component: AboutPage, icon: 'information-circle'}
     ];
     rootPage: any;
 
@@ -134,8 +129,8 @@ export class ConferenceApp {
 
         // decide which menu items should be hidden by current login status stored in local storage
         this.userData.hasLoggedIn().then(
-            ( hasLoggedIn ) => {
-                this.enableMenu(hasLoggedIn === true);
+            ( pheIsLoggedIn ) => {
+                this.enableMenu(pheIsLoggedIn === true);
             },
             ( theError) => {
                 console.log( "Error in app.component.ts constructor this.userData.hasLoggedIn()" + theError);
@@ -201,7 +196,7 @@ export class ConferenceApp {
 
 
     openTutorial() {
-        this.nav.setRoot(TutorialPage);
+        this.nav.setRoot(TutorialPage)/*CQT*/.then(()=>{});
     }
 
     listenToLoginEvents() {

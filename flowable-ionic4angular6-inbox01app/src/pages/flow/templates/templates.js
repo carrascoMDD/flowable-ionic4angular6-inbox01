@@ -23,8 +23,8 @@ var template_detail_1 = require("../template-detail/template-detail");
 var schedule_filter_1 = require("../../schedule-filter/schedule-filter");
 var TemplatesPage = /** @class */ (function (_super) {
     __extends(TemplatesPage, _super);
-    function TemplatesPage(theAlertCtrl, theApp, theLoadingCtrl, theModalCtrl, theNavCtrl, theToastCtrl, theUserData, templatesFilter) {
-        var _this = _super.call(this, theAlertCtrl, theApp, theLoadingCtrl, theModalCtrl, theNavCtrl, theToastCtrl, theUserData) || this;
+    function TemplatesPage(theApp, theAlertCtrl, theLoadingCtrl, theModalCtrl, theNavCtrl, theToastCtrl, theUserData, templatesFilter) {
+        var _this = _super.call(this, theApp, theAlertCtrl, theLoadingCtrl, theModalCtrl, theNavCtrl, theToastCtrl, theUserData) || this;
         _this.templatesFilter = templatesFilter;
         _this.dayIndex = 0;
         _this.queryText = '';

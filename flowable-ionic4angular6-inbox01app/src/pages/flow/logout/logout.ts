@@ -49,7 +49,7 @@ export class LogoutPage extends LoggedinPage {
 
 
     updateContent(): Promise<any> {
-        return new Promise<any>( ( pheResolve, pheReject) => { if(pheReject){}/*CQT*/pheResolve();});
+        return new Promise<any>(()=>{});
     }
 
 

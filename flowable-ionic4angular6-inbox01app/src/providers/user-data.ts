@@ -4,7 +4,7 @@ import {Events} from 'ionic-angular';
 import {Storage} from '@ionic/storage';
 import {IAuthentication} from "../interfaces/flow-iauthentication";
 
-import {LoginsProvider} from "../providers/logins-provider";
+import {LoginsProvider} from "./logins-provider";
 import {ILogin} from "../interfaces/flow-ilogins";
 import {IdentityActivation} from "../interfaces/flow-identityactivation";
 import {IIdentityActivation} from "../interfaces/flow-iidentityactivation";
@@ -43,6 +43,7 @@ export class UserData {
         this.logins = null;
         this.authenticatedLogin = null;
     }
+
 
 
 
@@ -95,7 +96,7 @@ export class UserData {
             after the change propagation completes.
             */
             for( let anIdentityActivationsChangedHandler of this.identityActivationsChangedHandlers) {
-                let aNextPromise = aPreviousPromise.then(
+                aPreviousPromise = aPreviousPromise.then(
                     () => {
                         return anIdentityActivationsChangedHandler( someIdentityActivationsToPropagate);
                     },
@@ -103,7 +104,6 @@ export class UserData {
                         return anIdentityActivationsChangedHandler( someIdentityActivationsToPropagate);
                     }
                 );
-                aPreviousPromise = aNextPromise;
             }
 
             /* ************************************************************
@@ -133,13 +133,6 @@ export class UserData {
     }
 
 
-
-
-    login(username: string): void {
-        this.storage.set(this.HAS_LOGGED_IN, true);
-        this.setUsername(username);
-        this.events.publish('user:login');
-    };
 
 
 
@@ -189,8 +182,6 @@ export class UserData {
 
         return new Promise<IAuthentication>( (resolve) => {
 
-            this.login( theAuthentication.login);
-
             this.loginsProvider.getAllLogins().subscribe(
 
                 ( theLogins: ILogin[]) => {
@@ -213,6 +204,7 @@ export class UserData {
                     if( !this.authenticatedLogin) {
                         this.processingLogin = false;
                         this.resolveAllWaitingForLoginProcessing();
+                        this.events.publish('user:logout');
                         resolve( theAuthentication);
                         return;
                     }
@@ -284,6 +276,7 @@ export class UserData {
 
                         this.processingLogin = false;
                         this.resolveAllWaitingForLoginProcessing();
+                        this.events.publish('user:login');
                         resolve( theAuthentication);
                     });
 
@@ -338,8 +331,8 @@ export class UserData {
 
 
     signup(username: string): void {
+        if(username){}/*CQT*/
         this.storage.set(this.HAS_LOGGED_IN, true);
-        this.setUsername(username);
         this.events.publish('user:signup');
     }
 
@@ -393,33 +386,40 @@ export class UserData {
 
 
 
-    setUsername(username: string): void {
-        this.storage.set('username', username);
-    }
 
 
-    getUsername(): Promise<string> {
-        return this.storage.get('username').then((value) => {
-            return value;
-        });
-    }
 
     hasLoggedIn(): Promise<boolean> {
-        return new Promise<boolean>( (resolve) => {
-            resolve( !( typeof this.authenticatedLogin === "undefined") && !( this.authenticatedLogin === null));
+        return new Promise<boolean>( ( pheResolve, pheReject) => {
+            this.getAuthenticatedLogin( )
+                .then(
+                    ( theLogin) => {
+                        pheResolve( !( typeof theLogin === "undefined") && !(theLogin === null));
+                    },
+                    ( theError) => {
+                        pheReject( theError);
+                    }
+                );
         });
-        /*
-        return this.storage.get(this.HAS_LOGGED_IN).then((value) => {
-            return value === true;
-        });
-        */
     }
+
+
+
+    getAuthenticatedLogin(): Promise<ILogin> {
+        return new Promise<ILogin>( (resolve) => {
+            resolve( this.authenticatedLogin);
+        });
+    }
+
+
 
     checkHasSeenTutorial(): Promise<string> {
         return this.storage.get(this.HAS_SEEN_TUTORIAL).then((value) => {
             return value;
         });
     }
+
+
 
 
 }

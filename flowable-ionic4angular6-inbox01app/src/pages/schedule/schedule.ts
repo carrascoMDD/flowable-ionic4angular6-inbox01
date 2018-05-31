@@ -27,7 +27,6 @@ export class SchedulePage {
 
   dayIndex = 0;
   queryText = '';
-  segment = 'all';
   excludeTracks: any = [];
   shownSessions: any = [];
   groups: any = [];

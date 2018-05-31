@@ -13,6 +13,8 @@ import {
 import {UserData} from '../../../providers/user-data';
 
 
+import {ILogin} from '../../../interfaces/flow-ilogins';
+
 import {LoginPage} from '../../login/login';
 
 
@@ -51,15 +53,15 @@ export abstract class LoggedinPage {
     }
 
 
-    beLoggedinOrGoToLoginPage() : Promise<any> {
+    beLoggedinOrGoToLoginPage() : Promise<ILogin> {
         console.log("(abstract)LoggedinPage beLoggedinOrGoToLoginPage");
-        return new Promise<Boolean>( (resolveTop) => {
-            this.userData.hasLoggedIn()
+        return new Promise<ILogin>( ( pheResolve, pheReject) => {
+            this.userData.getAuthenticatedLogin()
                 .then(
-                    (theHasLoggedIn) => {
-                        if (theHasLoggedIn) {
-                            console.log("(abstract)LoggedinPage beLoggedinOrGoToLoginPage this.userData.hasLoggedIn() false");
-                            resolveTop( true);
+                    ( theAuthenticatedLogin) => {
+                        if ( theAuthenticatedLogin) {
+                            console.log("(abstract)LoggedinPage beLoggedinOrGoToLoginPage this.userData.getAuthenticatedLogin() false");
+                            pheResolve( theAuthenticatedLogin);
                             return;
                         }
                         else {
@@ -82,12 +84,13 @@ export abstract class LoggedinPage {
                                                     .then(
                                                         () => {
                                                             console.log("(abstract)LoggedinPage beLoggedinOrGoToLoginPage done this.app.getRootNav().setRoot( LoginPage)");
-                                                            resolveTop( false);
+                                                            pheReject( "User not logged in");
 
                                                         },
                                                         ( theError) => {
-                                                            console.log("(abstract)LoggedinPage beLoggedinOrGoToLoginPage ERROR in popToRoot() theError=" + theError);
-                                                            resolveTop( false);
+                                                            const aMsg = "(abstract)LoggedinPage beLoggedinOrGoToLoginPage ERROR in popToRoot() theError=" + theError;
+                                                            console.log( aMsg);
+                                                            pheReject( "User not logged in\n" + aMsg);
                                                         }
                                                     );
                                             }, 0);
@@ -99,25 +102,28 @@ export abstract class LoggedinPage {
                                                 .then(
                                                     () => {
                                                         console.log("(abstract)LoggedinPage beLoggedinOrGoToLoginPage done this.app.getRootNav().setRoot( LoginPage)");
-                                                        resolveTop( false);
+                                                        pheReject( false);
                                                     },
                                                     ( theError) => {
-                                                        console.log("(abstract)LoggedinPage beLoggedinOrGoToLoginPage ERROR in setRoot() theError=" + theError);
-                                                        resolveTop( false);
+                                                        const aMsg = "(abstract)LoggedinPage beLoggedinOrGoToLoginPage ERROR in setRoot() theError=" + theError;
+                                                        console.log( aMsg);
+                                                        pheReject( "User not logged in\n" + aMsg);
                                                     }
                                                 );
                                         }
                                     },
                                     ( theError) => {
-                                        console.log("TutorialPage ERROR on ALERT beLoggedinOrGoToLoginPage this.userData.hasLoggedIn() false theError=" + theError);
-                                        resolveTop( false);
+                                        const aMsg = "(abstract)LoggedinPage beLoggedinOrGoToLoginPage NO this.userData.getAuthenticatedLogin() theError=" + theError;
+                                        console.log( aMsg);
+                                        pheReject( "User not logged in\n" + aMsg);
                                     }
                                 );
                         }
                     },
                     (theError) => {
-                        console.log("(abstract)LoggedinPage beLoggedinOrGoToLoginPage this.userData.hasLoggedIn() error=" + theError);
-                        resolveTop( false);
+                        const aMsg = "((abstract)LoggedinPage beLoggedinOrGoToLoginPage this.userData.getAuthenticatedLogin() error=" + theError;
+                        console.log( aMsg);
+                        pheReject( "User not logged in\n" + aMsg);
                     }
                 );
         });
