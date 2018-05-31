@@ -58,11 +58,8 @@ export class AccountPage extends LoggedinPage {
 
                         let alert = this.alertCtrl.create({
                             title: 'Change Username',
-                            buttons: [
-                                'Cancel'
-                            ]
+                            subTitle: pheAuthenticatedLogin.login
                         });
-                        alert.setMessage( pheAuthenticatedLogin.login);
                         alert.addInput({
                             name: 'name',
                             value: pheAuthenticatedLogin.name,

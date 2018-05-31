@@ -1,5 +1,13 @@
 
-page-account img {
-  max-width: 140px;
-  border-radius: 50%;
+page-account {
+    .logo {
+        padding: 10px 10px 10px 10px;
+        min-width: 100px;
+        text-align: center;
+
+        img {
+            min-width: 50px;
+            max-width: 300px;
+        }
+    }
 }

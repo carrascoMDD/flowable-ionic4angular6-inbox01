@@ -24,6 +24,7 @@ import {LoginPage} from '../../login/login';
 })
 export abstract class LoggedinPage {
 
+    authenticatedLogin: ILogin;
 
     constructor(
         public app: App,
@@ -60,6 +61,7 @@ export abstract class LoggedinPage {
                 .then(
                     ( theAuthenticatedLogin) => {
                         if ( theAuthenticatedLogin) {
+                            this.authenticatedLogin = theAuthenticatedLogin;
                             console.log("(abstract)LoggedinPage beLoggedinOrGoToLoginPage this.userData.getAuthenticatedLogin() false");
                             pheResolve( theAuthenticatedLogin);
                             return;
