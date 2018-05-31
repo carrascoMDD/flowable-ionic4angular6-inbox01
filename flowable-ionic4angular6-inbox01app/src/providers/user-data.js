@@ -220,7 +220,6 @@ var UserData = /** @class */ (function () {
             });
         });
     };
-    ;
     UserData.prototype.storeIdentityActivations = function () {
         var _this = this;
         if (!this.authenticatedLogin || this.processingLogin) {
@@ -248,29 +247,52 @@ var UserData = /** @class */ (function () {
             resolve(_this.identityActivations);
         });
     };
-    ;
     UserData.prototype.signup = function (username) {
         this.storage.set(this.HAS_LOGGED_IN, true);
         this.setUsername(username);
         this.events.publish('user:signup');
     };
-    ;
     UserData.prototype.logout = function () {
-        this.storage.remove(this.HAS_LOGGED_IN);
-        this.storage.remove('username');
-        this.events.publish('user:logout');
+        var _this = this;
+        return new Promise(function (pheResolve, pheReject) {
+            if (pheReject) { } /*CQT*/
+            _this.authenticatedLogin = null;
+            _this.processingLogin = false;
+            _this.waitingForLoginProcessing = null;
+            _this.identityActivationsChangedHandlers = null;
+            _this.identityActivations = null;
+            _this.storage.remove(_this.HAS_LOGGED_IN)
+                .then(function () {
+                return _this.storage.remove('username');
+            }, function (theError) {
+                console.log("UserData.logout() Error=" + theError);
+                throw theError;
+            })
+                .then(function () {
+                _this.events.publish('user:logout');
+                pheResolve();
+            }, function (theError) {
+                console.log("UserData.logout() Error=" + theError);
+                throw theError;
+            })
+                .catch(function (theError) {
+                if (theError) { } /*CQT*/
+                try {
+                    _this.events.publish('user:logout');
+                }
+                catch (anException) { }
+                pheResolve();
+            });
+        });
     };
-    ;
     UserData.prototype.setUsername = function (username) {
         this.storage.set('username', username);
     };
-    ;
     UserData.prototype.getUsername = function () {
         return this.storage.get('username').then(function (value) {
             return value;
         });
     };
-    ;
     UserData.prototype.hasLoggedIn = function () {
         var _this = this;
         return new Promise(function (resolve) {
@@ -282,13 +304,11 @@ var UserData = /** @class */ (function () {
         });
         */
     };
-    ;
     UserData.prototype.checkHasSeenTutorial = function () {
         return this.storage.get(this.HAS_SEEN_TUTORIAL).then(function (value) {
             return value;
         });
     };
-    ;
     UserData = __decorate([
         core_1.Injectable()
     ], UserData);

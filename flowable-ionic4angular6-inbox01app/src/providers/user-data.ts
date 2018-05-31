@@ -130,12 +130,8 @@ export class UserData {
             */
              aFirstResolve();
         });
-
-
-
-
-
     }
+
 
 
 
@@ -144,6 +140,7 @@ export class UserData {
         this.setUsername(username);
         this.events.publish('user:login');
     };
+
 
 
     resolveAllWaitingForLoginProcessing(): void {
@@ -293,7 +290,7 @@ export class UserData {
                 }
             );
         });
-    };
+    }
 
 
 
@@ -333,7 +330,10 @@ export class UserData {
         return new Promise<IIdentityActivation[]>( (resolve) => {
             resolve( this.identityActivations);
         });
-    };
+    }
+
+
+
 
 
 
@@ -341,23 +341,68 @@ export class UserData {
         this.storage.set(this.HAS_LOGGED_IN, true);
         this.setUsername(username);
         this.events.publish('user:signup');
-    };
+    }
 
-    logout(): void {
-        this.storage.remove(this.HAS_LOGGED_IN);
-        this.storage.remove('username');
-        this.events.publish('user:logout');
-    };
+
+
+
+
+    logout(): Promise<any> {
+        return new Promise<any>( ( pheResolve, pheReject) => {
+            if(pheReject){}/*CQT*/
+
+            this.authenticatedLogin = null;
+            this.processingLogin = false;
+            this.waitingForLoginProcessing = null;
+            this.identityActivationsChangedHandlers = null;
+            this.identityActivations = null;
+
+            this.storage.remove(this.HAS_LOGGED_IN)
+                .then(
+                    ( ) => {
+                        return this.storage.remove('username');
+                    },
+                    ( theError ) => {
+                        console.log( "UserData.logout() Error=" + theError);
+                        throw theError;
+                    }
+                )
+                .then(
+                    ( ) => {
+                        this.events.publish('user:logout');
+
+                        pheResolve();
+                    },
+                    ( theError) => {
+                        console.log( "UserData.logout() Error=" + theError);
+                        throw theError;
+                    }
+                )
+                .catch( ( theError) => {
+                    if(theError){}/*CQT*/
+                    try {
+                        this.events.publish('user:logout');
+                    }
+                    catch( anException) {}
+
+                    pheResolve();
+                });
+        });
+    }
+
+
+
 
     setUsername(username: string): void {
         this.storage.set('username', username);
-    };
+    }
+
 
     getUsername(): Promise<string> {
         return this.storage.get('username').then((value) => {
             return value;
         });
-    };
+    }
 
     hasLoggedIn(): Promise<boolean> {
         return new Promise<boolean>( (resolve) => {
@@ -368,11 +413,13 @@ export class UserData {
             return value === true;
         });
         */
-    };
+    }
 
     checkHasSeenTutorial(): Promise<string> {
         return this.storage.get(this.HAS_SEEN_TUTORIAL).then((value) => {
             return value;
         });
-    };
+    }
+
+
 }

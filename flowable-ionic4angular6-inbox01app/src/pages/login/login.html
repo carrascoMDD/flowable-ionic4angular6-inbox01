@@ -21,7 +21,7 @@
                 <ion-icon name="person" item-start></ion-icon>
                 <ion-label>Courtesy demo logins</ion-label>
                 <ion-select name="login_select" [(ngModel)]="selectedLogin" (ionChange)="courtesyLoginSelected()">
-                    <ion-option *ngFor="let aLogin of logins" [value]="aLogin" >{{ aLogin.name}} {{ aLogin.familyName}}</ion-option>
+                    <ion-option *ngFor="let aLogin of logins" [value]="aLogin" >{{ aLogin.login}}</ion-option>
                 </ion-select>
             </ion-item>
             

@@ -24,8 +24,8 @@ export abstract class LoggedinPage {
 
 
     constructor(
-        public alertCtrl: AlertController,
         public app: App,
+        public alertCtrl: AlertController,
         public loadingCtrl: LoadingController,
         public modalCtrl: ModalController,
         public navCtrl: NavController,
@@ -208,6 +208,33 @@ export abstract class LoggedinPage {
                 );
         });
     }
+
+
+
+    logout() : Promise<any> {
+        return new Promise<any>( ( pheResolve, pheReject) => {
+            if(pheReject){}/*CQT*/
+            this.userData.logout()
+                .then(
+                    ( ) => {
+                        return this.app.getRootNav().setRoot( LoginPage);
+                    },
+                    ( theError) => {
+                        if(theError){}/*CQT*/
+                        throw theError;
+                    }
+                )
+                .then(
+                    ( ) => {
+                        pheResolve();
+                    },
+                    ( theError) => {
+                        pheReject( theError);
+                    }
+                );
+        });
+    }
+
 
 
 

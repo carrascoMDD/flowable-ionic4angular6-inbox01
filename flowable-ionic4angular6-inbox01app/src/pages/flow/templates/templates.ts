@@ -43,8 +43,8 @@ export class TemplatesPage extends LoggedinPage {
     public templatespecs: Templatespec[];
 
     constructor(
-        theAlertCtrl: AlertController,
         theApp: App,
+        theAlertCtrl: AlertController,
         theLoadingCtrl: LoadingController,
         theModalCtrl: ModalController,
         theNavCtrl: NavController,
@@ -52,7 +52,7 @@ export class TemplatesPage extends LoggedinPage {
         theUserData: UserData,
         public templatesFilter: TemplatesFilter
     ) {
-        super( theAlertCtrl, theApp, theLoadingCtrl, theModalCtrl, theNavCtrl, theToastCtrl, theUserData);
+        super( theApp, theAlertCtrl, theLoadingCtrl, theModalCtrl, theNavCtrl, theToastCtrl, theUserData);
 
         this.templatespecs = [];
         console.log("TemplatesPage constructor");

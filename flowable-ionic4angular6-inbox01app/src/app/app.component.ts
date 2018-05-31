@@ -27,7 +27,6 @@ export interface PageInterface {
     name: string;
     component: any;
     icon: string;
-    logsOut?: boolean;
     index?: number;
     tabName?: string;
     tabComponent?: any;
@@ -103,7 +102,6 @@ export class ConferenceApp {
             index: 3,
             icon: 'information-circle'
         },
-        {title: 'Logout', name: 'TabsPage', component: TabsPage, icon: 'log-out', logsOut: true}
     ];
 
     loggedOutPages: PageInterface[] = [
@@ -171,13 +169,36 @@ export class ConferenceApp {
                 console.log(`Didn't set nav root: ${err}`);
             });
         }
-
-
-        if (page.logsOut === true) {
-            // Give the menu time to close before changing to logged out
-            this.userData.logout();
-        }
     }
+
+
+
+
+    logout() : Promise<any> {
+        return new Promise<any>( ( pheResolve, pheReject) => {
+            if(pheReject){}/*CQT*/
+            this.userData.logout()
+                .then(
+                    ( ) => {
+                        return this.nav.setRoot( LoginPage);
+                    },
+                    ( theError) => {
+                        if(theError){}/*CQT*/
+                        throw theError;
+                    }
+                )
+                .then(
+                    ( ) => {
+                        pheResolve();
+                    },
+                    ( theError) => {
+                        pheReject( theError);
+                    }
+                );
+        });
+    }
+
+
 
     openTutorial() {
         this.nav.setRoot(TutorialPage);

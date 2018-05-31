@@ -7,185 +7,168 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var ionic_angular_1 = require("ionic-angular");
 var login_1 = require("../../login/login");
-var template_detail_1 = require("../template-detail/template-detail");
-var schedule_filter_1 = require("../../schedule-filter/schedule-filter");
-var TemplatesPage = /** @class */ (function () {
-    function TemplatesPage(alertCtrl, app, loadingCtrl, modalCtrl, navCtrl, toastCtrl, userData, templatesFilter) {
-        this.alertCtrl = alertCtrl;
+var LoggedinPage = /** @class */ (function () {
+    function LoggedinPage(app, alertCtrl, loadingCtrl, modalCtrl, navCtrl, toastCtrl, userData) {
         this.app = app;
+        this.alertCtrl = alertCtrl;
         this.loadingCtrl = loadingCtrl;
         this.modalCtrl = modalCtrl;
         this.navCtrl = navCtrl;
         this.toastCtrl = toastCtrl;
         this.userData = userData;
-        this.templatesFilter = templatesFilter;
-        this.dayIndex = 0;
-        this.queryText = '';
-        this.segment = 'all';
-        this.excludeTracks = [];
-        this.shownTemplates = [];
-        this.groups = [];
-        this.templatespecs = [];
-        console.log("TemplatesPage constructor");
+        console.log("(abstract)LoggedinPage constructor");
     }
-    TemplatesPage.prototype.presentAlert = function () {
+    LoggedinPage.prototype.presentAlert = function () {
         var alert = this.alertCtrl.create({
-            title: 'You are not logged in, or your session expired',
-            subTitle: 'Please login',
-            buttons: ['Go to Login']
+            title: "You are not logged in, or your session expired",
+            subTitle: "Please login",
+            buttons: ["Go to Login"]
         });
         return alert.present();
     };
-    TemplatesPage.prototype.ionViewDidLoad = function () {
-        console.log("TemplatesPage ionViewDidLoad");
-        this.app.setTitle('Templates');
+    LoggedinPage.prototype.ionViewDidLoad = function () {
+        console.log("(abstract)LoggedinPage ionViewDidLoad");
+        this.app.setTitle("(abstract)LoggedinPage");
     };
-    //     this.app.getRootNav().push('SupportPage'); ???
-    TemplatesPage.prototype.ionViewCanEnter = function () {
+    LoggedinPage.prototype.beLoggedinOrGoToLoginPage = function () {
         var _this = this;
-        console.log("TemplatesPage ionViewCanEnter");
+        console.log("(abstract)LoggedinPage beLoggedinOrGoToLoginPage");
         return new Promise(function (resolveTop) {
             _this.userData.hasLoggedIn()
                 .then(function (theHasLoggedIn) {
                 if (theHasLoggedIn) {
-                    console.log("TemplatesPage ionViewCanEnter this.userData.hasLoggedIn() false");
+                    console.log("(abstract)LoggedinPage beLoggedinOrGoToLoginPage this.userData.hasLoggedIn() false");
                     resolveTop(true);
                     return;
                 }
                 else {
-                    console.log("TemplatesPage ionViewCanEnter FALSE theHasLoggedIn");
+                    console.log("(abstract)LoggedinPage beLoggedinOrGoToLoginPage FALSE theHasLoggedIn");
                     _this.presentAlert()
                         .then(function () {
-                        console.log("TemplatesPage ionViewCanEnter after alert");
-                        if (_this.navCtrl.length()) {
-                            console.log("TemplatesPage ionViewCanEnter this.navCtrl.length()=" + _this.navCtrl.length() + " about to popToRoot()");
+                        console.log("(abstract)LoggedinPage beLoggedinOrGoToLoginPage after alert");
+                        var aNavCtrlLength = 0;
+                        try {
+                            aNavCtrlLength = _this.navCtrl && _this.navCtrl.length();
+                        }
+                        catch (anException) {
+                            console.log("(abstract)LoggedinPage beLoggedinOrGoToLoginPage EXCEPTION during this.navCtrl && this.navCtrl.length()" + anException);
+                        }
+                        if (aNavCtrlLength) {
+                            console.log("(abstract)LoggedinPage beLoggedinOrGoToLoginPage this.navCtrl.length()=" + _this.navCtrl.length() + " about to popToRoot()");
                             setTimeout(function () {
                                 _this.app.getRootNav().setRoot(login_1.LoginPage)
                                     .then(function () {
-                                    console.log("TemplatesPage ionViewCanEnter done this.app.getRootNav().setRoot( LoginPage)");
+                                    console.log("(abstract)LoggedinPage beLoggedinOrGoToLoginPage done this.app.getRootNav().setRoot( LoginPage)");
                                     resolveTop(false);
                                 }, function (theError) {
-                                    console.log("TemplatesPage ionViewCanEnter ERROR in popToRoot() theError=" + theError);
+                                    console.log("(abstract)LoggedinPage beLoggedinOrGoToLoginPage ERROR in popToRoot() theError=" + theError);
                                     resolveTop(false);
                                 });
                             }, 0);
                         }
                         else {
-                            console.log("TemplatesPage ionViewCanEnter EMPTY this.navCtrl.length()" + " about to setRoot( LoginPage)");
+                            console.log("(abstract)LoggedinPage beLoggedinOrGoToLoginPage EMPTY this.navCtrl.length()" + " about to setRoot( LoginPage)");
                             _this.app.getRootNav().setRoot(login_1.LoginPage)
                                 .then(function () {
-                                console.log("TemplatesPage ionViewCanEnter done this.app.getRootNav().setRoot( LoginPage)");
+                                console.log("(abstract)LoggedinPage beLoggedinOrGoToLoginPage done this.app.getRootNav().setRoot( LoginPage)");
                                 resolveTop(false);
                             }, function (theError) {
-                                console.log("TemplatesPage ionViewCanEnter ERROR in setRoot() theError=" + theError);
+                                console.log("(abstract)LoggedinPage beLoggedinOrGoToLoginPage ERROR in setRoot() theError=" + theError);
                                 resolveTop(false);
                             });
                         }
                     }, function (theError) {
-                        console.log("TutorialPage ERROR on ALERT ionViewCanEnter this.userData.hasLoggedIn() false theError=" + theError);
+                        console.log("TutorialPage ERROR on ALERT beLoggedinOrGoToLoginPage this.userData.hasLoggedIn() false theError=" + theError);
                         resolveTop(false);
                     });
                 }
             }, function (theError) {
-                console.log("TemplatesPage ionViewCanEnter this.userData.hasLoggedIn() error=" + theError);
+                console.log("(abstract)LoggedinPage beLoggedinOrGoToLoginPage this.userData.hasLoggedIn() error=" + theError);
                 resolveTop(false);
             });
         });
     };
-    TemplatesPage.prototype.ionViewDidEnter = function () {
-        console.log("TemplatesPage ionViewDidEnter");
-        this.updateTemplates();
+    LoggedinPage.prototype.ionViewCanEnter = function () {
+        return this.beLoggedinOrGoToLoginPage();
     };
-    TemplatesPage.prototype.updateTemplates = function () {
+    LoggedinPage.prototype.ionViewDidEnter = function () {
         var _this = this;
-        console.log("TemplatesPage updateTemplates");
-        // Close any open sliding items when the schedule updates
-        this.templatesList && this.templatesList.closeSlidingItems();
-        this.templatesFilter.getTemplatespecs(this.queryText).subscribe(function (theTemplatespecs) {
-            _this.templatespecs = theTemplatespecs;
-            _this.shownTemplates = _this.templatespecs;
-            console.log("templates.ts updateTemplates theTemplatespecs.length=\n" + ((theTemplatespecs && theTemplatespecs.length) ? theTemplatespecs.length : 0));
+        console.log("(abstract)LoggedinPage ionViewDidEnter");
+        this.beLoggedinOrGoToLoginPage()
+            .then(function (pheIsLoggedIn) {
+            if (pheIsLoggedIn) {
+                return _this.updateContent();
+            }
+        }, function (pheError) {
+            throw pheError;
         });
     };
-    TemplatesPage.prototype.doRefresh = function (refresher) {
+    LoggedinPage.prototype.toast_Updated = function (theMessage, theMillisToToast) {
         var _this = this;
-        this.userData.hasLoggedIn()
-            .then(function (theHasLoggedIn) {
-            if (!theHasLoggedIn) {
-                console.log("TutorialPage doRefresh this.userData.hasLoggedIn() false");
-                _this.presentAlert()
-                    .then(function () {
-                    console.log("TutorialPage doRefresh after alert on this.userData.hasLoggedIn() false");
-                    _this.navCtrl.popToRoot();
-                }, function (theError) {
-                    console.log("TutorialPage ERROR on ALERT doRefresh  after alert on this.userData.hasLoggedIn() false theError=" + theError);
-                    _this.navCtrl.popToRoot();
-                });
-                return;
-            }
-            console.log("TutorialPage doRefresh this.userData.hasLoggedIn() true");
-            _this.app.setTitle('Templates');
-            _this.templatesFilter.getTemplatespecs(_this.queryText).subscribe(function (theTemplatespecs) {
-                _this.templatespecs = theTemplatespecs;
-                _this.shownTemplates = _this.templatespecs;
-                console.log("templates.ts doRefresh theTemplatespecs.length=\n" + ((theTemplatespecs && theTemplatespecs.length) ? theTemplatespecs.length : 0));
-                // simulate a network request that would take longer
-                // than just pulling from out local json file
-                setTimeout(function () {
-                    refresher.complete();
-                    var toast = _this.toastCtrl.create({
-                        message: 'Templates have been updated.',
-                        duration: 3000
-                    });
-                    toast.present();
-                }, 1000);
+        if (theMillisToToast === void 0) { theMillisToToast = 3000; }
+        return new Promise(function (pheResolveTop, pheRejectTop) {
+            if (pheRejectTop) { } /*CQT*/
+            _this.toastCtrl
+                .create({
+                message: (theMessage ? theMessage : "Updated"),
+                duration: (theMillisToToast <= 30000 ? theMillisToToast : 30000)
+            })
+                .present()
+                .then(function () {
+                pheResolveTop();
+            }, function () {
+                pheResolveTop();
             });
-        }, function (theError) {
-            console.log("TutorialPage doRefresh this.userData.hasLoggedIn() error=" + theError);
-            throw theError;
         });
     };
-    TemplatesPage.prototype.presentFilter = function () {
+    LoggedinPage.prototype.doRefresh = function (refresher) {
         var _this = this;
-        var modal = this.modalCtrl.create(schedule_filter_1.ScheduleFilterPage, this.excludeTracks);
-        modal.present();
-        modal.onWillDismiss(function (data) {
-            if (data) {
-                _this.excludeTracks = data;
-                _this.updateTemplates();
-            }
+        return new Promise(function (resolveTop, rejectTop) {
+            _this.beLoggedinOrGoToLoginPage()
+                .then(function (pheIsLoggedIn) {
+                if (pheIsLoggedIn) { } /*CQT*/
+                return _this.updateContent();
+            }, function (pheError) {
+                throw pheError;
+            })
+                .then(function (pheResult) {
+                refresher.complete();
+                /* ************************************************
+                FireAndForget: Let this one run on its own,
+                hopefully suffling pages while still open shall not break or break it !
+                 */
+                _this.toast_Updated("Updated", 3000) /*CQT*/.then(function () { });
+                resolveTop(pheResult);
+            }, function (pheError) {
+                rejectTop(pheError);
+            });
         });
     };
-    TemplatesPage.prototype.goToTemplateDetail = function (theTemplatespec) {
-        // go to the session detail page
-        // and pass in the session data
-        this.navCtrl.push(template_detail_1.TemplateDetailPage, {
-            templatespec: theTemplatespec,
-            name: theTemplatespec.name,
-            key: theTemplatespec.key
+    LoggedinPage.prototype.logout = function () {
+        var _this = this;
+        return new Promise(function (pheResolve, pheReject) {
+            if (pheReject) { } /*CQT*/
+            _this.userData.logout()
+                .then(function () {
+                return _this.app.getRootNav().setRoot(login_1.LoginPage);
+            }, function (theError) {
+                if (theError) { } /*CQT*/
+                throw theError;
+            })
+                .then(function () {
+                pheResolve();
+            }, function (theError) {
+                pheReject(theError);
+            });
         });
     };
-    TemplatesPage.prototype.openSocial = function (network, fab) {
-        var loading = this.loadingCtrl.create({
-            content: "Posting to " + network,
-            duration: (Math.random() * 1000) + 500
-        });
-        loading.onWillDismiss(function () {
-            fab.close();
-        });
-        loading.present();
-    };
-    __decorate([
-        core_1.ViewChild('templatesList', { read: ionic_angular_1.List })
-    ], TemplatesPage.prototype, "templatesList", void 0);
-    TemplatesPage = __decorate([
+    LoggedinPage = __decorate([
         core_1.Component({
-            selector: 'page-templates',
-            templateUrl: 'templates.html'
+            selector: 'page-loggedin',
+            templateUrl: 'loggedin.html'
         })
-    ], TemplatesPage);
-    return TemplatesPage;
+    ], LoggedinPage);
+    return LoggedinPage;
 }());
-exports.TemplatesPage = TemplatesPage;
+exports.LoggedinPage = LoggedinPage;
