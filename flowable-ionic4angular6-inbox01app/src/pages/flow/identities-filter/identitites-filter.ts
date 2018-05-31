@@ -1,45 +1,94 @@
 import {Component} from '@angular/core';
-import {NavParams, ViewController} from 'ionic-angular';
+import {
+    AlertController, App,
+    LoadingController, ModalController,
+    NavController,
+    NavParams,
+    ToastController,
+    ViewController
+} from 'ionic-angular';
 import { UserData} from '../../../providers/user-data';
 import {IIdentityActivation} from "../../../interfaces/flow-iidentityactivation";
 
+import {LoggedinPage} from '../loggedin/loggedin';
+
+
 @Component({
-    selector: 'page-roles-filter',
+    selector: 'page-identities-filter',
     templateUrl: 'identities-filter.html'
 })
-export class IdentitiesFilterPage {
+export class IdentitiesFilterPage extends LoggedinPage{
 
     identityActivations: IIdentityActivation[];
 
     constructor(
-        public userData: UserData,
+        theApp: App,
+        theAlertCtrl: AlertController,
+        theLoadingCtrl: LoadingController,
+        theModalCtrl: ModalController,
+        theNavCtrl: NavController,
+        theToastCtrl: ToastController,
+        theUserData: UserData,
         public navParams: NavParams,
-        public viewCtrl: ViewController
-    ) {}
+        public viewCtrl: ViewController) {
 
+        super(theApp, theAlertCtrl, theLoadingCtrl, theModalCtrl, theNavCtrl, theToastCtrl, theUserData);
+
+        console.log("IdentitiesFilterPage constructor");
+    }
 
 
     ionViewDidLoad() {
-        this.userData.getIdentityActivations().then( ( theIdentityActivations: IIdentityActivation[]) => {
-            this.identityActivations = theIdentityActivations;
+        console.log("ArchivedPage ionViewDidLoad");
+        this.app.setTitle('Archived');
+    }
+
+    ionViewDidEnter() {
+        console.log("TemplatesPage ionViewDidEnter");
+        this.updateContent();
+    }
+
+
+    updateContent(): Promise<IIdentityActivation[]> {
+        return new Promise( ( pheResolve, pheReject) => {
+            this.userData.getIdentityActivations()
+                .then(
+                    ( theIdentityActivations: IIdentityActivation[]) => {
+                        this.identityActivations = theIdentityActivations;
+                        pheResolve( theIdentityActivations);
+                    },
+                    ( theError ) => {
+                        pheReject( theError);
+                    }
+                );
         });
     }
 
 
 
-    deactivateAllIdentities() {
-        this.setActiveAllIdentities( false);
+
+
+    identityActiveChanged( theApplicationKey: string, theIdentityKey: string): Promise<IIdentityActivation[]> {
+        console.log( "identityActiveChanged applicationKey=" + theApplicationKey + " identityKey=" + theIdentityKey);
+
+        return this.storeAndPropagageIdentityActivations();
     }
 
 
 
-    activateAllIdentities() {
-        this.setActiveAllIdentities( true);
+    deactivateAllIdentities(): Promise<IIdentityActivation[]> {
+        return this.setActiveAllIdentities( false);
     }
 
 
 
-    setActiveAllIdentities( theActive: boolean) {
+    activateAllIdentities(): Promise<IIdentityActivation[]> {
+        return this.setActiveAllIdentities( true);
+    }
+
+
+
+    setActiveAllIdentities( theActive: boolean): Promise<IIdentityActivation[]> {
         if( !this.identityActivations) {
             return;
         }
@@ -47,24 +96,40 @@ export class IdentitiesFilterPage {
         for( let anActivityActivation of this.identityActivations) {
             anActivityActivation.setActive( theActive);
         }
-        this.userData.storeIdentityActivations();
+
+        return this.storeAndPropagageIdentityActivations();
     }
 
 
 
 
-    identityActiveChanged( theApplicationKey: string, theIdentityKey: string) {
-        console.log( "identityActiveChanged applicationKey=" + theApplicationKey + " identityKey=" + theIdentityKey);
 
-        this.userData.propagate_IdentityActivationsChanged();
+
+    applyFilters(): Promise<IIdentityActivation[]> {
+        return new Promise<IIdentityActivation[]>( ( pheResolve, pheReject) => {
+            this.storeAndPropagageIdentityActivations()
+                .then(
+                    ( theIdentityActivations: IIdentityActivation[]) => {
+                        this.dismiss( this.identityActivations);
+                        pheResolve( theIdentityActivations);
+                    },
+                    ( theError) => {
+                        pheReject( theError);
+                    }
+                );
+        });
     }
 
 
-    applyFilters() {
-        this.userData.propagate_IdentityActivationsChanged();
-        this.dismiss( this.identityActivations);
-    }
 
+
+
+    storeAndPropagageIdentityActivations(): Promise<IIdentityActivation[]> {
+        if( !this.identityActivations) {
+            return;
+        }
+        return this.userData.storeAndPropagageIdentityActivations();
+    }
 
 
     dismiss(data?: any) {

@@ -15,7 +15,7 @@ import {UserData} from '../../../providers/user-data';
 import {LoggedinPage} from '../loggedin/loggedin';
 
 import {TemplateDetailPage} from '../template-detail/template-detail';
-import {ScheduleFilterPage} from '../../schedule-filter/schedule-filter';
+import {IdentitiesFilterPage} from '../identities-filter/identitites-filter';
 
 import {Templatespec} from '../../../interfaces/flow-templatespecs';
 import {TemplatesFilter} from "../../../filters/templates-filter";
@@ -97,7 +97,7 @@ export class TemplatesPage extends LoggedinPage {
 
 
     presentFilter() {
-        let modal = this.modalCtrl.create(ScheduleFilterPage, this.excludeTracks);
+        let modal = this.modalCtrl.create( IdentitiesFilterPage);
         modal.present();
 
         modal.onWillDismiss((data: any[]) => {

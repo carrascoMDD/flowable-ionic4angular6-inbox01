@@ -288,18 +288,47 @@ export class UserData {
 
 
 
-
-    storeIdentityActivations(): PromiseLike<void> {
+    storeAndPropagageIdentityActivations(): Promise<IIdentityActivation[]> {
         if( !this.authenticatedLogin || this.processingLogin) {
-            return new Promise<void>( (resolve) => {
-                resolve();
+            return new Promise<IIdentityActivation[]>( (resolve) => {
+                resolve( null);
             });
         }
 
-        return new Promise<void>( (resolve) => {
+        return new Promise<IIdentityActivation[]>( (pheResolve, pheReject) => {
             let aStorageKey = STOREKEYPREFIX +  this.authenticatedLogin.login.replace(STOREKEYSEPARATORTOREPLACE, STOREKEYSEPARATORTOREPLACEMENT);
-            this.storage.set( aStorageKey, this.identityActivations);
-            resolve();
+            this.storage.set( aStorageKey, this.identityActivations)
+                .then(
+                    () => {
+                        pheResolve( this.identityActivations);
+                    },
+                    ( theError) => {
+                        pheReject( theError);
+                    }
+                );
+        });
+    }
+
+
+
+    storeIdentityActivations(): Promise<IIdentityActivation[]> {
+        if( !this.authenticatedLogin || this.processingLogin) {
+            return new Promise<IIdentityActivation[]>( (resolve) => {
+                resolve( null);
+            });
+        }
+
+        return new Promise<IIdentityActivation[]>( (pheResolve, pheReject) => {
+            let aStorageKey = STOREKEYPREFIX +  this.authenticatedLogin.login.replace(STOREKEYSEPARATORTOREPLACE, STOREKEYSEPARATORTOREPLACEMENT);
+            this.storage.set( aStorageKey, this.identityActivations)
+                .then(
+                    () => {
+                        pheResolve( this.identityActivations);
+                    },
+                    ( theError) => {
+                        pheReject( theError);
+                    }
+                );
         });
     }
 

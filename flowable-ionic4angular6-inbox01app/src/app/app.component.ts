@@ -10,7 +10,6 @@ import {SignupPage} from '../pages/signup/signup';
 import {TutorialPage} from '../pages/tutorial/tutorial';
 import {SupportPage} from '../pages/support/support';
 
-
 import {LogoutPage} from '../pages/flow/logout/logout';
 import {AccountPage} from '../pages/flow/account/account';
 import {FlowTabsPage} from '../pages/flow/flowtabs-page/flowtabs-page';

@@ -19,9 +19,9 @@
   <ion-list>
     <ion-list-header>Tracks</ion-list-header>
 
-    <ion-item *ngFor="let identityActivation of identityActivations" [attr.track]="track.name | lowercase">
+    <ion-item *ngFor="let identityActivation of identityActivations" >
       <span item-start class="dot"></span>
-      <ion-label>{{identityActivation.applicationKey, identityActivation.identityKey}}</ion-label>
+      <ion-label>{{identityActivation.applicationKey}} {{identityActivation.identityKey}}</ion-label>
       <ion-toggle [(ngModel)]="identityActivation.active" (click)="resetFilters()" color="secondary"></ion-toggle>
     </ion-item>
 
