@@ -1,36 +1,64 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-buttons start>
-      <button ion-button (click)="dismiss()">Cancel</button>
-    </ion-buttons>
-
-    <ion-title>
-      Active user Roles
-    </ion-title>
-
-    <ion-buttons end>
-      <button ion-button (click)="applyFilters()" strong>Done</button>
-    </ion-buttons>
-  </ion-toolbar>
+    <ion-toolbar>
+        <ion-buttons start>
+            <button ion-button (click)="dismiss()">Cancel</button>
+        </ion-buttons>
+        <ion-title>
+            Active user Application Identities
+        </ion-title>
+        <ion-buttons end>
+            <button ion-button (click)="applyFilters()" strong>Done</button>
+        </ion-buttons>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content class="outer-content">
-
-  <ion-list>
-    <ion-list-header>Tracks</ion-list-header>
-
-    <ion-item *ngFor="let identityActivation of identityActivations" >
-      <span item-start class="dot"></span>
-      <ion-label>{{identityActivation.applicationKey}} {{identityActivation.identityKey}}</ion-label>
-      <ion-toggle [(ngModel)]="identityActivation.active" (click)="resetFilters()" color="secondary"></ion-toggle>
-    </ion-item>
-
-  </ion-list>
-
-  <ion-list>
-    <button ion-item (click)="resetFilters()" detail-none class="reset-filters">
-      Reset All Filters
-    </button>
-  </ion-list>
+    
+    
+    <ion-row responsive-sm>
+        <ion-col width-50>
+            <div text-center>
+                <div padding>
+                    <button ion-button round color="secondary" (click)="activateAllIdentities()">
+                        <ion-icon name="done-all"></ion-icon>
+                        &emsp; Activate All
+                    </button>
+                </div>
+            </div>
+        </ion-col>
+        <ion-col width-50>
+            <div text-center>
+                <div padding>
+                    <button ion-button round color="danger" (click)="deactivateAllIdentities()">
+                        <ion-icon name="eye-off"></ion-icon>
+                        &emsp; Deactivate All
+                    </button>
+                </div>
+            </div>
+        </ion-col>
+    </ion-row>
+    <!--
+    <ion-list>
+        <button ion-item (click)="activateAllIdentities()" detail-none class="reset-filters">
+            Activate All Identities
+        </button>
+        <button ion-item (click)="deactivateAllIdentities()" detail-none class="reset-filters">
+            Deactivate All Identities
+        </button>
+    </ion-list>
+    -->
+    
+    <ion-list>
+        <ion-list-header>Applications and Identities</ion-list-header>
+        
+        <ion-item *ngFor="let identityActivation of identityActivations" [attr.compositeKey]="(identityActivation.applicationKey + '_-_' + identityActivation.identityKey) | lowercase">
+            <span item-start class="dot"></span>
+            <ion-label>{{identityActivation.applicationKey}} {{identityActivation.identityKey}}</ion-label>
+            <ion-toggle [(ngModel)]="identityActivation.isActive"
+                        (click)="identityActiveChanged(identityActivation.applicationKey, identityActivation.identityKey)"
+                        color="secondary"></ion-toggle>
+        </ion-item>
+    
+    </ion-list>
 
 </ion-content>

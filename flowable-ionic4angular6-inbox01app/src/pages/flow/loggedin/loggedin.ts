@@ -62,12 +62,12 @@ export abstract class LoggedinPage {
                     ( theAuthenticatedLogin) => {
                         if ( theAuthenticatedLogin) {
                             this.authenticatedLogin = theAuthenticatedLogin;
-                            console.log("(abstract)LoggedinPage beLoggedinOrGoToLoginPage this.userData.getAuthenticatedLogin() false");
+                            console.log("(abstract)LoggedinPage LOGGED IN beLoggedinOrGoToLoginPage this.userData.getAuthenticatedLogin()");
                             pheResolve( theAuthenticatedLogin);
                             return;
                         }
                         else {
-                            console.log( "(abstract)LoggedinPage beLoggedinOrGoToLoginPage FALSE theHasLoggedIn");
+                            console.log( "(abstract)LoggedinPage NOT logged in beLoggedinOrGoToLoginPage FALSE theHasLoggedIn");
                             this.presentAlert()
                                 .then(
                                     () => {

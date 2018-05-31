@@ -3,9 +3,9 @@
   color: color($colors, danger);
 }
 
-@each $track, $value in auxiliary-categories() {
+@each $compositeKey, $value in identityActivationCompositeKeys  {
 
-  ion-item[track=#{$track}] .dot {
+  ion-item[compositeKey=#{$compositeKey}] .dot {
     height: 10px;
     display: inline-block;
     width: 10px;

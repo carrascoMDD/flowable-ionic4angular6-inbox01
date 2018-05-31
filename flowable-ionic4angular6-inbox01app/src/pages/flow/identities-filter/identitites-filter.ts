@@ -20,6 +20,7 @@ import {LoggedinPage} from '../loggedin/loggedin';
 export class IdentitiesFilterPage extends LoggedinPage{
 
     identityActivations: IIdentityActivation[];
+    identityActivationCompositeKeys: string[];
 
     constructor(
         theApp: App,
@@ -55,6 +56,12 @@ export class IdentitiesFilterPage extends LoggedinPage{
                 .then(
                     ( theIdentityActivations: IIdentityActivation[]) => {
                         this.identityActivations = theIdentityActivations;
+                        this.identityActivationCompositeKeys =
+                            this.identityActivations.map(
+                                ( theIdentityActivation):string => {
+                                    return theIdentityActivation.applicationKey + "_-_" + theIdentityActivation.identityKey;
+                                }
+                            );
                         pheResolve( theIdentityActivations);
                     },
                     ( theError ) => {
@@ -69,20 +76,22 @@ export class IdentitiesFilterPage extends LoggedinPage{
 
 
     identityActiveChanged( theApplicationKey: string, theIdentityKey: string): Promise<IIdentityActivation[]> {
-        console.log( "identityActiveChanged applicationKey=" + theApplicationKey + " identityKey=" + theIdentityKey);
-
-        return this.storeAndPropagageIdentityActivations();
+        console.log( "IdentitiesFilterPage identityActiveChanged applicationKey=" + theApplicationKey + " identityKey=" + theIdentityKey);
+        return new Promise<IIdentityActivation[]>( (resolve)=>{resolve();});
+        // return this.storeAndPropagageIdentityActivations();
     }
 
 
 
     deactivateAllIdentities(): Promise<IIdentityActivation[]> {
+        console.log( "IdentitiesFilterPage deactivateAllIdentities");
         return this.setActiveAllIdentities( false);
     }
 
 
 
     activateAllIdentities(): Promise<IIdentityActivation[]> {
+        console.log( "IdentitiesFilterPage deactivateAllIdentities");
         return this.setActiveAllIdentities( true);
     }
 
