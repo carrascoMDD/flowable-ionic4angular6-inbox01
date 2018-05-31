@@ -84,7 +84,7 @@ import {TemplatesFilter} from "../filters/templates-filter";
                 {component: SpeakerListPage, name: 'SpeakerList', segment: 'speakerList'},
                 {component: SpeakerDetailPage, name: 'SpeakerDetail', segment: 'speakerDetail/:speakerId'},
                 {component: MapPage, name: 'Map', segment: 'map'},
-                {component: AboutPage, name: 'About', segment: 'about'},
+                {component: AboutPage, name: 'AboutPage', segment: 'about'},
                 {component: TutorialPage, name: 'Tutorial', segment: 'tutorial'},
                 {component: SupportPage, name: 'SupportPage', segment: 'support'},
                 {component: LoginPage, name: 'LoginPage', segment: 'login'},

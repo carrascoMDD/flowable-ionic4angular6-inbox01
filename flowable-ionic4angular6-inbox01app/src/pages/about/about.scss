@@ -1,5 +1,16 @@
+.logo {
+    padding: 10px 10px 10px 10px;
+    min-width: 100px;
+    text-align: center;
+
+    img {
+        min-width: 50px;
+        max-width: 80%;
+    }
+}
+
 .about-header {
-  background-color: #434954;
+  background-color: white;
   padding: 16px;
   width: 100%;
   min-height: 150px;
