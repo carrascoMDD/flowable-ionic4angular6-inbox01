@@ -7,39 +7,30 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var SessionDetailPage = /** @class */ (function () {
-    function SessionDetailPage(dataProvider, navParams) {
-        this.dataProvider = dataProvider;
+var TemplateDetailPage = /** @class */ (function () {
+    function TemplateDetailPage(templatesProvider, navParams) {
+        this.templatesProvider = templatesProvider;
         this.navParams = navParams;
+        console.log("TemplateDetailPage constructor");
     }
-    SessionDetailPage.prototype.ionViewWillEnter = function () {
+    TemplateDetailPage.prototype.ionViewWillEnter = function () {
         var _this = this;
-        this.dataProvider.load().subscribe(function (data) {
-            if (data &&
-                data.schedule &&
-                data.schedule[0] &&
-                data.schedule[0].groups) {
-                for (var _i = 0, _a = data.schedule[0].groups; _i < _a.length; _i++) {
-                    var group = _a[_i];
-                    if (group && group.sessions) {
-                        for (var _b = 0, _c = group.sessions; _b < _c.length; _b++) {
-                            var session = _c[_b];
-                            if (session && session.id === _this.navParams.data.sessionId) {
-                                _this.session = session;
-                                break;
-                            }
-                        }
-                    }
+        this.templatesProvider.load().subscribe(function (theTemplatespecs) {
+            for (var _i = 0, theTemplatespecs_1 = theTemplatespecs; _i < theTemplatespecs_1.length; _i++) {
+                var aTemplatespec = theTemplatespecs_1[_i];
+                if (aTemplatespec && aTemplatespec.key === _this.navParams.data.key) {
+                    _this.template = aTemplatespec;
+                    break;
                 }
             }
         });
     };
-    SessionDetailPage = __decorate([
+    TemplateDetailPage = __decorate([
         core_1.Component({
-            selector: 'page-session-detail',
-            templateUrl: 'session-detail.html'
+            selector: 'page-template-detail',
+            templateUrl: 'template-detail.html'
         })
-    ], SessionDetailPage);
-    return SessionDetailPage;
+    ], TemplateDetailPage);
+    return TemplateDetailPage;
 }());
-exports.SessionDetailPage = SessionDetailPage;
+exports.TemplateDetailPage = TemplateDetailPage;

@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var IvariableType;
-(function (IvariableType) {
-    IvariableType["Vstring"] = "string";
-    IvariableType["Vnumber"] = "number";
-    IvariableType["Vboolean"] = "boolean";
-    IvariableType["Vdate"] = "date";
-    IvariableType["Vtime"] = "time";
-    IvariableType["Vdatetime"] = "datetime";
-})(IvariableType = exports.IvariableType || (exports.IvariableType = {}));
+var IVariableType;
+(function (IVariableType) {
+    IVariableType["Vstring"] = "string";
+    IVariableType["Vnumber"] = "number";
+    IVariableType["Vboolean"] = "boolean";
+    IVariableType["Vdate"] = "date";
+    IVariableType["Vtime"] = "time";
+    IVariableType["Vdatetime"] = "datetime";
+})(IVariableType = exports.IVariableType || (exports.IVariableType = {}));
