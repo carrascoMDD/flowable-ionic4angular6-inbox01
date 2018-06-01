@@ -69,8 +69,7 @@ export class IdentitiesFilterPage {
 
 
     ionViewDidLoad() {
-        console.log("ArchivedPage ionViewDidLoad");
-        this.app.setTitle('Archived');
+        console.log("IdentitiesFilterPage ionViewDidLoad");
     }
 
     ionViewDidEnter() {

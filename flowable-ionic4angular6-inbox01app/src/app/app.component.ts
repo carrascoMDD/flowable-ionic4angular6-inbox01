@@ -72,6 +72,9 @@ export class WorkOFlowApp {
     // @ViewChild(Nav) gets a reference to the app's root nav
     @ViewChild(Nav) nav: Nav;
 
+
+    rootPage: any;
+
     flowPages: PageInterface[] = [
         {
             title: 'Inbox',
@@ -135,7 +138,8 @@ export class WorkOFlowApp {
         {title: 'Signup', name: 'SignupPage', component: SignupPage, icon: 'person-add'},
         {title: 'About', name: 'AboutPage', component: AboutPage, icon: 'information-circle'}
     ];
-    rootPage: any;
+
+
 
 
     constructor(

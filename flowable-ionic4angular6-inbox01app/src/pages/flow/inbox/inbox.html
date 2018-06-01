@@ -32,52 +32,12 @@ permissions and limitations under the Licence.
 
 <flow-header></flow-header>
 
-<!--
-<ion-header>
-    <ion-navbar no-border-bottom>
-        <button ion-button menuToggle>
-            <ion-icon name="menu"></ion-icon>
-        </button>
-        
-        <ion-segment [(ngModel)]="segment" (ionChange)="updateSchedule()">
-            <ion-title class="hide-sms" >
-                <ion-icon item-start name="mail" ></ion-icon>
-                <span class="hide-sm">Inbox</span><span class="hide-md">- workOflow</span>
-            </ion-title>
-            
-            <ion-segment-button value="all">
-                <ion-icon item-start name="reorder" ></ion-icon>
-                <span class="hide-sms">&nbsp;All</span>
-            </ion-segment-button>
-            <ion-segment-button value="favorites">
-                <ion-icon item-start name="star" ></ion-icon>
-                <span class="hide-sms">&nbsp;Favorites</span>
-            </ion-segment-button>
-        </ion-segment>
-        
-        <ion-buttons end>
-            <button ion-button icon-only (click)="presentFilter()">
-                <ion-icon ios="ios-options-outline" md="md-options"></ion-icon>
-            </button>
-        </ion-buttons>
-    </ion-navbar>
-    
-    <ion-toolbar no-border-top>
-        <ion-searchbar color="primary"
-                       [(ngModel)]="queryText"
-                       (ionInput)="updateSchedule()"
-                       placeholder="Search">
-        </ion-searchbar>
-    </ion-toolbar>
-</ion-header>
--->
-
 <ion-content>
     <ion-refresher (ionRefresh)="doRefresh($event)">
         <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
     
-    <ion-list #scheduleList [hidden]="shownSessions === 0">
+    <ion-list #contentsListView [hidden]="shownContentItems === 0">
         
         <ion-item-group *ngFor="let group of groups" [hidden]="group.hide">
             
@@ -116,7 +76,7 @@ permissions and limitations under the Licence.
     
     </ion-list>
     
-    <ion-list-header [hidden]="shownSessions > 0">
+    <ion-list-header [hidden]="shownContentItems > 0">
         Nothing found in Inbox
     </ion-list-header>
     

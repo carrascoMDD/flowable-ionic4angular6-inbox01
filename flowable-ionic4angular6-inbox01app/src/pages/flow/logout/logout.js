@@ -27,7 +27,7 @@ var LogoutPage = /** @class */ (function (_super) {
     }
     LogoutPage.prototype.ionViewDidLoad = function () {
         console.log("LogoutPage ionViewDidLoad");
-        this.app.setTitle('Templates');
+        this.app.setTitle('Logout');
     };
     LogoutPage.prototype.ionViewDidEnter = function () {
         console.log("LogoutPage ionViewDidEnter");

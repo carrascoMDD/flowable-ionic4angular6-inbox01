@@ -38,31 +38,31 @@ permissions and limitations under the Licence.
         
         
         <ion-segment *ngIf="flowpage"
-             [(ngModel)]="flowpage.segment" (ionChange)="flowpage.updateContent()">
+                     [(ngModel)]="flowpage.segment" (ionChange)="flowpage.updateContent()">
             
-            <ion-title class="hide-sms" >
-                <ion-icon item-start name="mail" ></ion-icon>
-                <span class="hide-sm">Inbox</span><span class="hide-md">- workOflow</span>
+            <ion-title class="hide-sms">
+                <ion-icon item-start name="mail"></ion-icon>
+                <span class="hide-sm">{{flowpage.flowboxTitle}}</span><span class="hide-md">- workOflow</span>
             </ion-title>
             
             <ion-segment-button value="all">
-                <ion-icon item-start name="reorder" ></ion-icon>
+                <ion-icon item-start name="reorder"></ion-icon>
                 <span class="hide-sms">&nbsp;All</span>
             </ion-segment-button>
             <ion-segment-button value="favorites">
-                <ion-icon item-start name="star" ></ion-icon>
+                <ion-icon item-start name="star"></ion-icon>
                 <span class="hide-sms">&nbsp;Favorites</span>
             </ion-segment-button>
         </ion-segment>
         
-        <ion-buttons end *ngIf="flowpage" >
+        <ion-buttons end *ngIf="flowpage">
             <button ion-button icon-only (click)="flowpage.presentFilter()">
                 <ion-icon ios="ios-options-outline" md="md-options"></ion-icon>
             </button>
         </ion-buttons>
     </ion-navbar>
     
-    <ion-toolbar no-border-top *ngIf="flowpage" >
+    <ion-toolbar no-border-top *ngIf="flowpage">
         <ion-searchbar color="primary"
                        [(ngModel)]="flowpage.queryText"
                        (ionInput)="flowpage.updateContent()"

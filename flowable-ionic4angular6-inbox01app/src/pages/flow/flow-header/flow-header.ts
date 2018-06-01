@@ -47,7 +47,7 @@ export class FlowHeader {
     }
 
 
-    setFlowPage(theLoggedinPage: LoggedinPage) {
+    setFlowPage( theLoggedinPage: LoggedinPage) {
         this.flowpage = theLoggedinPage;
     }
 

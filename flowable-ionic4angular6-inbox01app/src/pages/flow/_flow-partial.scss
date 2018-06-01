@@ -30,16 +30,3 @@ permissions and limitations under the Licence.
  *
  */
 
-@each $size, $size-value in $screen-breakpoints {
-    .hide-#{$size} {
-        @media (max-width: $size-value) {
-            display: none;
-        }
-    }
-}
-
-.hide-sms {
-    @media (max-width: 400px) {
-        display: none;
-    }
-}

@@ -68,6 +68,7 @@ import {LoginsProvider} from "../providers/logins-provider";
 import {ApplicationsProvider} from "../providers/applications-provider";
 import {TemplatesProvider} from "../providers/templates-provider";
 import {TemplatesFilter} from "../filters/templates-filter";
+import {FlowboxPage} from "../pages/flow/flowbox/flowbox";
 
 
 @NgModule({
@@ -85,6 +86,7 @@ import {TemplatesFilter} from "../filters/templates-filter";
         FlowTabsPage,
         IdentitiesFilterPage,
         FlowHeader,
+        FlowboxPage,
         InboxPage,
         DraftsPage,
         ArchivedPage,
@@ -130,9 +132,10 @@ import {TemplatesFilter} from "../filters/templates-filter";
         TutorialPage,
         SupportPage,
 
+        FlowTabsPage,
         LogoutPage,
         FlowHeader,
-        FlowTabsPage,
+        FlowboxPage,
         IdentitiesFilterPage,
         InboxPage,
         DraftsPage,

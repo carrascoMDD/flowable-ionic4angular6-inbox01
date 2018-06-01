@@ -39,7 +39,7 @@ import {
     NavController,
     ToastController,
     LoadingController,
-    Refresher, FabContainer
+    FabContainer
 } from 'ionic-angular';
 
 import {UserData} from '../../../providers/user-data';
@@ -48,7 +48,6 @@ import {UserData} from '../../../providers/user-data';
 import {ILogin} from '../../../interfaces/flow-ilogins';
 
 import {LoginPage} from '../../login/login';
-import {IdentitiesFilterPage} from "../identities-filter/identitites-filter";
 
 
 @Component({
@@ -73,9 +72,6 @@ export abstract class LoggedinPage {
 
 
 
-    abstract updateContent() : Promise<any>;
-
-
     ionViewDidLoad() {
         console.log("(abstract)LoggedinPage ionViewDidLoad");
         this.app.setTitle( "(abstract)LoggedinPage");
@@ -87,57 +83,6 @@ export abstract class LoggedinPage {
         return this.beLoggedinOrGoToLoginPage();
     }
 
-
-
-    ionViewDidEnter() {
-        console.log("(abstract)LoggedinPage ionViewDidEnter");
-        this.beLoggedinOrGoToLoginPage()
-            .then(
-                ( pheIsLoggedIn) => {
-                    if( pheIsLoggedIn) {
-                        return this.updateContent();
-                    }
-                },
-                ( pheError) => {
-                    throw pheError;
-                }
-            )
-    }
-
-
-
-
-
-    doRefresh(refresher: Refresher) {
-        return new Promise<any>( ( resolveTop, rejectTop) => {
-            this.beLoggedinOrGoToLoginPage()
-                .then(
-                    ( pheIsLoggedIn) => {
-                        if(pheIsLoggedIn){}/*CQT*/
-                        return this.updateContent();
-                    },
-                    ( pheError) => {
-                        throw pheError;
-                    }
-                )
-                .then(
-                    ( pheResult) => {
-                        refresher.complete();
-
-                        /* ************************************************
-                        FireAndForget: Let this one run on its own,
-                        hopefully suffling pages while still open shall not break or break it !
-                         */
-                        this.toast_Updated( "Updated", 3000)/*CQT*/.then(()=>{});
-
-                        resolveTop( pheResult);
-                    },
-                    ( pheError) => {
-                        rejectTop( pheError);
-                    }
-                );
-        });
-    }
 
 
 
@@ -282,18 +227,6 @@ export abstract class LoggedinPage {
                         pheReject( theError);
                     }
                 );
-        });
-    }
-
-
-    presentFilter():void {
-        let modal = this.modalCtrl.create( IdentitiesFilterPage);
-        modal.present();
-
-        modal.onWillDismiss((data: any[]) => {
-            if (data) {
-                this.updateContent();
-            }
         });
     }
 

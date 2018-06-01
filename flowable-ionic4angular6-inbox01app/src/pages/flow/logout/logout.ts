@@ -69,7 +69,7 @@ export class LogoutPage extends LoggedinPage {
 
     ionViewDidLoad() {
         console.log("LogoutPage ionViewDidLoad");
-        this.app.setTitle('Templates');
+        this.app.setTitle('Logout');
     }
 
 

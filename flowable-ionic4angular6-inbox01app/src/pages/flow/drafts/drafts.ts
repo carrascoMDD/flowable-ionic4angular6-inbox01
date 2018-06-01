@@ -34,7 +34,6 @@ import {Component, ViewChild} from '@angular/core';
 import {
     AlertController,
     App,
-    FabContainer,
     List,
     ModalController,
     NavController,
@@ -44,20 +43,17 @@ import {
 
 import {UserData} from '../../../providers/user-data';
 
-import {LoggedinPage} from '../loggedin/loggedin';
+import {FlowboxPage} from "../flowbox/flowbox";
 
 @Component({
     selector: 'page-drafts',
     templateUrl: 'drafts.html'
 })
-export class DraftsPage extends LoggedinPage {
-    // the list is a child of the schedule page
-    // @ViewChild('scheduleList') gets a reference to the list
-    // with the variable #scheduleList, `read: List` tells it to return
-    // the List and not a reference to the element
-    @ViewChild('draftsList', {read: List}) scheduleList: List;
+export class DraftsPage extends FlowboxPage {
+    // Get the inboxList List and not a reference to the controller element
+    @ViewChild('contentsListView', {read: List}) contentsList: List;
 
-    segment = 'drafts';
+
 
     constructor(
         theApp: App,
@@ -70,35 +66,19 @@ export class DraftsPage extends LoggedinPage {
     ) {
         super(theApp, theAlertCtrl, theLoadingCtrl, theModalCtrl, theNavCtrl, theToastCtrl, theUserData);
 
-        console.log("DraftsPage constructor");
+        this.flowboxTitle = "Drafts";
+        this.segment = "all";
+        this.queryText = "";
+
+        console.log( this.flowboxTitle + " constructor");
     }
 
-    ionViewDidLoad() {
-        console.log("DraftsPage ionViewDidLoad");
-        this.app.setTitle('Archived');
-    }
-
-    ionViewDidEnter() {
-        console.log("TemplatesPage ionViewDidEnter");
-        this.updateContent();
-    }
 
 
     updateContent(): Promise<any> {
         return new Promise<any>((resolve) => {
             resolve();
         });
-    }
-
-    openSocial(network: string, fab: FabContainer) {
-        let loading = this.loadingCtrl.create({
-            content: `Posting to ${network}`,
-            duration: (Math.random() * 1000) + 500
-        });
-        loading.onWillDismiss(() => {
-            fab.close();
-        });
-        loading.present();
     }
 
 }

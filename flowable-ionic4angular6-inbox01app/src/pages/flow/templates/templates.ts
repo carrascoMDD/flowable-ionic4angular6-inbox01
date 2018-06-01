@@ -34,7 +34,6 @@ import {Component, ViewChild} from '@angular/core';
 import {
     AlertController,
     App,
-    FabContainer,
     List,
     ModalController,
     NavController,
@@ -44,7 +43,7 @@ import {
 
 import {UserData} from '../../../providers/user-data';
 
-import {LoggedinPage} from '../loggedin/loggedin';
+import {FlowboxPage} from "../flowbox/flowbox";
 
 import {TemplateDetailPage} from '../template-detail/template-detail';
 
@@ -55,20 +54,13 @@ import {TemplatesFilter} from "../../../filters/templates-filter";
     selector: 'page-templates',
     templateUrl: 'templates.html'
 })
-export class TemplatesPage extends LoggedinPage {
-    // the list is a child of the schedule page
-    // @ViewChild('templatesList') gets a reference to the list
-    // with the variable #templatesList, `read: List` tells it to return
-    // the List and not a reference to the element
-    @ViewChild('templatesList', {read: List}) templatesList: List;
+export class TemplatesPage extends FlowboxPage {
+    // Get the inboxList List and not a reference to the controller element
+    @ViewChild('contentsListView', {read: List}) contentsList: List;
 
-    queryText = '';
-    segment = 'all';
-    excludeTracks: any = [];
-    shownTemplates: any = [];
-    groups: any = [];
 
     public templatespecs: Templatespec[];
+    public shownTemplates: Templatespec[];
 
     constructor(
         theApp: App,
@@ -82,24 +74,17 @@ export class TemplatesPage extends LoggedinPage {
     ) {
         super( theApp, theAlertCtrl, theLoadingCtrl, theModalCtrl, theNavCtrl, theToastCtrl, theUserData);
 
-        this.templatespecs = [];
-        console.log("TemplatesPage constructor");
+        this.flowboxTitle = "Templates";
+        this.segment = "all";
+        this.queryText = "";
+
+        this.templatespecs  = [];
+        this.shownTemplates = [];
+
+        console.log( this.flowboxTitle + " constructor");
     }
 
 
-
-    ionViewDidLoad() {
-        console.log("TemplatesPage ionViewDidLoad");
-        this.app.setTitle('Templates');
-    }
-
-
-
-
-    ionViewDidEnter() {
-        console.log("TemplatesPage ionViewDidEnter");
-        this.updateTemplates();
-    }
 
 
     updateContent(): Promise<any> {
@@ -112,7 +97,7 @@ export class TemplatesPage extends LoggedinPage {
         console.log("TemplatesPage updateTemplates");
         // Close any open sliding items when the schedule updates
         // seem to be synchronous! - probably just touches some variables
-        this.templatesList && this.templatesList.closeSlidingItems();
+        this.contentsList && this.contentsList.closeSlidingItems();
 
         return new Promise<any>( ( resolver) => {
             this.templatesFilter.getTemplatespecs(this.queryText).subscribe((theTemplatespecs: Templatespec[]) => {
@@ -138,16 +123,5 @@ export class TemplatesPage extends LoggedinPage {
         });
     }
 
-
-    openSocial(network: string, fab: FabContainer) {
-        let loading = this.loadingCtrl.create({
-            content: `Posting to ${network}`,
-            duration: (Math.random() * 1000) + 500
-        });
-        loading.onWillDismiss(() => {
-            fab.close();
-        });
-        loading.present();
-    }
 
 }

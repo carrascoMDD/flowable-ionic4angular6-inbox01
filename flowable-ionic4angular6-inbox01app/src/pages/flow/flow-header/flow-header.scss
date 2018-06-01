@@ -1,5 +1,5 @@
 /*
- * inbox.scss
+ * flow-header.scss
  *
  * Created @author Antonio Carrasco Valero 201806012216
  *
@@ -32,4 +32,25 @@ permissions and limitations under the Licence.
 
 page-flow-header {
     @import '../_flow-partial';
+
+    /*
+      xs: 0,
+      sm: 576px,
+      md: 768px,
+      lg: 992px,
+      xl: 1200px
+   */
+    @each $size, $size-value in $screen-breakpoints {
+        .hide-#{$size} {
+            @media (max-width: $size-value) {
+                display: none;
+            }
+        }
+    }
+
+    .hide-sms {
+        @media (max-width: 400px) {
+            display: none;
+        }
+    }
 }

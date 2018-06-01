@@ -30,48 +30,14 @@ permissions and limitations under the Licence.
 *
 -->
 
-<ion-header>
-    <ion-navbar no-border-bottom>
-        <button ion-button menuToggle>
-            <ion-icon name="menu"></ion-icon>
-        </button>
-        
-        
-        
-        <ion-segment [(ngModel)]="segment" (ionChange)="updateTemplates()">
-            
-            <ion-title>Templates - workOflow</ion-title>
-            
-            <ion-segment-button value="all">
-                All
-            </ion-segment-button>
-            <ion-segment-button value="favorites">
-                Favorites
-            </ion-segment-button>
-        </ion-segment>
-        
-        <ion-buttons end>
-            <button ion-button icon-only (click)="presentFilter()">
-                <ion-icon ios="ios-options-outline" md="md-options"></ion-icon>
-            </button>
-        </ion-buttons>
-    </ion-navbar>
-    
-    <ion-toolbar no-border-top>
-        <ion-searchbar color="primary"
-                       [(ngModel)]="queryText"
-                       (ionInput)="updateTemplates()"
-                       placeholder="Search">
-        </ion-searchbar>
-    </ion-toolbar>
-</ion-header>
+<flow-header></flow-header>
 
 <ion-content>
     <ion-refresher (ionRefresh)="doRefresh($event)">
         <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
     
-    <ion-list #templatesList [hidden]="!templatespecs || ( templatespecs.length === 0)">
+    <ion-list #contentsListView [hidden]="!templatespecs || ( templatespecs.length === 0)">
         
         <ion-item-sliding *ngFor="let aTemplatespec of templatespecs" #slidingItem
                           [attr.track]="aTemplatespec.key | lowercase" [hidden]="aTemplatespec.hide">

@@ -43,22 +43,17 @@ import {
 
 import {UserData} from '../../../providers/user-data';
 
-import {LoggedinPage} from "../loggedin/loggedin";
-import {FlowHeader} from "../flow-header/flow-header";
+import {FlowboxPage} from "../flowbox/flowbox";
 
 
 @Component({
     selector: 'page-inbox',
     templateUrl: 'inbox.html'
 })
-export class InboxPage extends LoggedinPage {
+export class InboxPage extends FlowboxPage {
     // Get the inboxList List and not a reference to the controller element
-    @ViewChild('inboxList', {read: List}) scheduleList: List;
-    @ViewChild( FlowHeader) flowheader: FlowHeader;
+    @ViewChild('contentsListView', {read: List}) contentsList: List;
 
-
-    queryText = '';
-    segment = 'inbox';
 
     constructor(
         theApp: App,
@@ -71,14 +66,13 @@ export class InboxPage extends LoggedinPage {
     ) {
         super(theApp, theAlertCtrl, theLoadingCtrl, theModalCtrl, theNavCtrl, theToastCtrl, theUserData);
 
-        console.log("DraftsPage constructor");
+        this.flowboxTitle = "Inbox";
+        this.segment = "all";
+        this.queryText = "";
+
+        console.log( this.flowboxTitle + " constructor");
     }
 
-    ionViewDidLoad() {
-        console.log("DraftsPage ionViewDidLoad");
-        this.app.setTitle('Archived');
-        this.flowheader.setFlowPage( this);
-    }
 
 
     updateContent(): Promise<any> {
