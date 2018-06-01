@@ -125,7 +125,7 @@ export class WorkOFlowApp {
 
     loggedInPages: PageInterface[] = [
         {title: 'Account', name: 'AccountPage', component: AccountPage, icon: 'person'},
-        {title: 'Logout', name: 'LogoutPage', component: LogoutPage, icon: 'exit'},
+        {title: 'Logout', name: 'LogoutPage', component: LogoutPage, icon: 'log-out'},
         {title: 'Support', name: 'SupportPage', component: SupportPage, icon: 'help'},
         {title: 'About', name: 'AboutPage', component: AboutPage, icon: 'information-circle'},
     ];
