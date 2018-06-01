@@ -1,3 +1,35 @@
+/*
+ * app.module.ts
+ *
+ * Created @author Antonio Carrasco Valero 201805252222
+ *
+ *
+ ***************************************************************************
+
+ Copyright 2018 Antonio Carrasco Valero
+ workOflow Single-page-application and hybrid Android/iOS app playground with Ionic3 Angularx6 on  Flowable REST API as Spring Boot Java application.
+
+Licensed under the EUPL, Version 1.1 only (the "Licence");
+You may not use this work except in compliance with the
+Licence.
+You may obtain a copy of the Licence at:
+https://joinup.ec.europa.eu/software/page/eupl/licence-eupl
+Unless required by applicable law or agreed to in
+writing, software distributed under the Licence is
+distributed on an "AS IS" basis,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+express or implied.
+See the Licence for the specific language governing
+permissions and limitations under the Licence.
+ {{License2}}
+
+ {{Licensed1}}
+ {{Licensed2}}
+
+ ***************************************************************************
+ *
+ */
+
 import {BrowserModule} from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
 import {HttpClientModule} from '@angular/common/http';
@@ -13,14 +45,7 @@ import {AboutPage} from '../pages/about/about';
 import {PopoverPage} from '../pages/about-popover/about-popover';
 import {AccountPage} from '../pages/flow/account/account';
 import {LoginPage} from '../pages/login/login';
-import {MapPage} from '../pages/map/map';
-import {SchedulePage} from '../pages/schedule/schedule';
-import {ScheduleFilterPage} from '../pages/schedule-filter/schedule-filter';
-import {SessionDetailPage} from '../pages/session-detail/session-detail';
 import {SignupPage} from '../pages/signup/signup';
-import {SpeakerDetailPage} from '../pages/speaker-detail/speaker-detail';
-import {SpeakerListPage} from '../pages/speaker-list/speaker-list';
-import {TabsPage} from '../pages/tabs-page/tabs-page';
 import {TutorialPage} from '../pages/tutorial/tutorial';
 import {SupportPage} from '../pages/support/support';
 
@@ -50,15 +75,8 @@ import {TemplatesFilter} from "../filters/templates-filter";
         AboutPage,
         AccountPage,
         LoginPage,
-        MapPage,
         PopoverPage,
-        SchedulePage,
-        ScheduleFilterPage,
-        SessionDetailPage,
         SignupPage,
-        SpeakerDetailPage,
-        SpeakerListPage,
-        TabsPage,
         TutorialPage,
         SupportPage,
 
@@ -79,13 +97,6 @@ import {TemplatesFilter} from "../filters/templates-filter";
         HttpClientModule,
         IonicModule.forRoot(ConferenceApp, {}, {
             links: [
-                {component: TabsPage, name: 'TabsPage', segment: 'tabs-page'},
-                {component: SchedulePage, name: 'Schedule', segment: 'schedule'},
-                {component: SessionDetailPage, name: 'SessionDetail', segment: 'sessionDetail/:sessionId'},
-                {component: ScheduleFilterPage, name: 'ScheduleFilter', segment: 'scheduleFilter'},
-                {component: SpeakerListPage, name: 'SpeakerList', segment: 'speakerList'},
-                {component: SpeakerDetailPage, name: 'SpeakerDetail', segment: 'speakerDetail/:speakerId'},
-                {component: MapPage, name: 'Map', segment: 'map'},
                 {component: AboutPage, name: 'AboutPage', segment: 'about'},
                 {component: TutorialPage, name: 'Tutorial', segment: 'tutorial'},
                 {component: SupportPage, name: 'SupportPage', segment: 'support'},
@@ -112,15 +123,8 @@ import {TemplatesFilter} from "../filters/templates-filter";
         AboutPage,
         AccountPage,
         LoginPage,
-        MapPage,
         PopoverPage,
-        SchedulePage,
-        ScheduleFilterPage,
-        SessionDetailPage,
         SignupPage,
-        SpeakerDetailPage,
-        SpeakerListPage,
-        TabsPage,
         TutorialPage,
         SupportPage,
 
