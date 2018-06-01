@@ -53,6 +53,7 @@ import {UserData} from '../providers/user-data';
 
 import {LogoutPage} from '../pages/flow/logout/logout';
 import {IdentitiesFilterPage} from "../pages/flow/identities-filter/identitites-filter";
+import {FlowHeader} from "../pages/flow/flow-header/flow-header";
 import {FlowTabsPage} from '../pages/flow/flowtabs-page/flowtabs-page';
 import {InboxPage} from '../pages/flow/inbox/inbox';
 import {DraftsPage} from "../pages/flow/drafts/drafts";
@@ -83,13 +84,14 @@ import {TemplatesFilter} from "../filters/templates-filter";
         LogoutPage,
         FlowTabsPage,
         IdentitiesFilterPage,
+        FlowHeader,
         InboxPage,
         DraftsPage,
         ArchivedPage,
         BouncedPage,
         TemplatesPage,
         TemplateDetailPage,
-        OutboxPage
+        OutboxPage,
     ],
     imports: [
         BrowserModule,
@@ -129,6 +131,7 @@ import {TemplatesFilter} from "../filters/templates-filter";
         SupportPage,
 
         LogoutPage,
+        FlowHeader,
         FlowTabsPage,
         IdentitiesFilterPage,
         InboxPage,

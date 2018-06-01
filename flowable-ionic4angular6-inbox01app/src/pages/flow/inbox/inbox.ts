@@ -34,7 +34,6 @@ import {Component, ViewChild} from '@angular/core';
 import {
     AlertController,
     App,
-    FabContainer,
     List,
     ModalController,
     NavController,
@@ -45,6 +44,7 @@ import {
 import {UserData} from '../../../providers/user-data';
 
 import {LoggedinPage} from "../loggedin/loggedin";
+import {FlowHeader} from "../flow-header/flow-header";
 
 
 @Component({
@@ -52,19 +52,13 @@ import {LoggedinPage} from "../loggedin/loggedin";
     templateUrl: 'inbox.html'
 })
 export class InboxPage extends LoggedinPage {
-    // the list is a child of the schedule page
-    // @ViewChild('inboxList') gets a reference to the list
-    // with the variable #scheduleList, `read: List` tells it to return
-    // the List and not a reference to the element
+    // Get the inboxList List and not a reference to the controller element
     @ViewChild('inboxList', {read: List}) scheduleList: List;
+    @ViewChild( FlowHeader) flowheader: FlowHeader;
 
-    dayIndex = 0;
+
     queryText = '';
     segment = 'inbox';
-    excludeTracks: any = [];
-    shownSessions: any = [];
-    groups: any = [];
-    confDate: string;
 
     constructor(
         theApp: App,
@@ -83,11 +77,7 @@ export class InboxPage extends LoggedinPage {
     ionViewDidLoad() {
         console.log("DraftsPage ionViewDidLoad");
         this.app.setTitle('Archived');
-    }
-
-    ionViewDidEnter() {
-        console.log("DraftsPage ionViewDidEnter");
-        this.updateContent();
+        this.flowheader.setFlowPage( this);
     }
 
 
@@ -97,15 +87,5 @@ export class InboxPage extends LoggedinPage {
         });
     }
 
-    openSocial(network: string, fab: FabContainer) {
-        let loading = this.loadingCtrl.create({
-            content: `Posting to ${network}`,
-            duration: (Math.random() * 1000) + 500
-        });
-        loading.onWillDismiss(() => {
-            fab.close();
-        });
-        loading.present();
-    }
 
 }

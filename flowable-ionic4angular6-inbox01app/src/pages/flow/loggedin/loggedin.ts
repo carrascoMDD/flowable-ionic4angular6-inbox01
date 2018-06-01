@@ -39,7 +39,7 @@ import {
     NavController,
     ToastController,
     LoadingController,
-    Refresher
+    Refresher, FabContainer
 } from 'ionic-angular';
 
 import {UserData} from '../../../providers/user-data';
@@ -73,21 +73,74 @@ export abstract class LoggedinPage {
 
 
 
+    abstract updateContent() : Promise<any>;
 
-
-    presentAlert() {
-        let alert = this.alertCtrl.create({
-            title: "You are not logged in, or your session expired",
-            subTitle: "Please login",
-            buttons: ["Go to Login"]
-        });
-        return alert.present();
-    }
 
     ionViewDidLoad() {
         console.log("(abstract)LoggedinPage ionViewDidLoad");
         this.app.setTitle( "(abstract)LoggedinPage");
     }
+
+
+
+    ionViewCanEnter() : Promise<any> {
+        return this.beLoggedinOrGoToLoginPage();
+    }
+
+
+
+    ionViewDidEnter() {
+        console.log("(abstract)LoggedinPage ionViewDidEnter");
+        this.beLoggedinOrGoToLoginPage()
+            .then(
+                ( pheIsLoggedIn) => {
+                    if( pheIsLoggedIn) {
+                        return this.updateContent();
+                    }
+                },
+                ( pheError) => {
+                    throw pheError;
+                }
+            )
+    }
+
+
+
+
+
+    doRefresh(refresher: Refresher) {
+        return new Promise<any>( ( resolveTop, rejectTop) => {
+            this.beLoggedinOrGoToLoginPage()
+                .then(
+                    ( pheIsLoggedIn) => {
+                        if(pheIsLoggedIn){}/*CQT*/
+                        return this.updateContent();
+                    },
+                    ( pheError) => {
+                        throw pheError;
+                    }
+                )
+                .then(
+                    ( pheResult) => {
+                        refresher.complete();
+
+                        /* ************************************************
+                        FireAndForget: Let this one run on its own,
+                        hopefully suffling pages while still open shall not break or break it !
+                         */
+                        this.toast_Updated( "Updated", 3000)/*CQT*/.then(()=>{});
+
+                        resolveTop( pheResult);
+                    },
+                    ( pheError) => {
+                        rejectTop( pheError);
+                    }
+                );
+        });
+    }
+
+
+
 
 
     beLoggedinOrGoToLoginPage() : Promise<ILogin> {
@@ -169,31 +222,17 @@ export abstract class LoggedinPage {
 
 
 
-    ionViewCanEnter() : Promise<any> {
-        return this.beLoggedinOrGoToLoginPage();
+
+    presentAlert() {
+        let alert = this.alertCtrl.create({
+            title: "You are not logged in, or your session expired",
+            subTitle: "Please login",
+            buttons: ["Go to Login"]
+        });
+        return alert.present();
     }
 
 
-
-    ionViewDidEnter() {
-        console.log("(abstract)LoggedinPage ionViewDidEnter");
-        this.beLoggedinOrGoToLoginPage()
-            .then(
-                ( pheIsLoggedIn) => {
-                    if( pheIsLoggedIn) {
-                        return this.updateContent();
-                    }
-                },
-                ( pheError) => {
-                    throw pheError;
-                }
-            )
-    }
-
-
-
-
-    abstract updateContent() : Promise<any>;
 
 
 
@@ -219,39 +258,6 @@ export abstract class LoggedinPage {
     }
 
 
-
-
-
-    doRefresh(refresher: Refresher) {
-        return new Promise<any>( ( resolveTop, rejectTop) => {
-            this.beLoggedinOrGoToLoginPage()
-                .then(
-                    ( pheIsLoggedIn) => {
-                        if(pheIsLoggedIn){}/*CQT*/
-                        return this.updateContent();
-                    },
-                    ( pheError) => {
-                        throw pheError;
-                    }
-                )
-                .then(
-                    ( pheResult) => {
-                        refresher.complete();
-
-                        /* ************************************************
-                        FireAndForget: Let this one run on its own,
-                        hopefully suffling pages while still open shall not break or break it !
-                         */
-                        this.toast_Updated( "Updated", 3000)/*CQT*/.then(()=>{});
-
-                        resolveTop( pheResult);
-                    },
-                    ( pheError) => {
-                        rejectTop( pheError);
-                    }
-                );
-        });
-    }
 
 
 
@@ -292,6 +298,16 @@ export abstract class LoggedinPage {
     }
 
 
+    openSocial(network: string, fab: FabContainer) {
+        let loading = this.loadingCtrl.create({
+            content: `Posting to ${network}`,
+            duration: (Math.random() * 1000) + 500
+        });
+        loading.onWillDismiss(() => {
+            fab.close();
+        });
+        loading.present();
+    }
 
 
 }

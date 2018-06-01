@@ -32,8 +32,8 @@ permissions and limitations under the Licence.
 
 page-logout {
     .logo {
-        padding: 10px 10px 10px 10px;
-        min-width: 100px;
+        padding:    10px 10px 10px 10px;
+        min-width:  100px;
         text-align: center;
 
         img {
@@ -41,4 +41,6 @@ page-logout {
             max-width: 80%;
         }
     }
+
+    @import '../_flow-partial';
 }

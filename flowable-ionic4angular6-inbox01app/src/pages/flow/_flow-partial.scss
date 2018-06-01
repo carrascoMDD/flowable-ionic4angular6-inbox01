@@ -1,7 +1,7 @@
 /*
- * outbox.scss
+ * _flow-partial.scss
  *
- * Created @author Antonio Carrasco Valero 201805252222
+ * Created @author Antonio Carrasco Valero 201806012204
  *
  *
  ***************************************************************************
@@ -30,7 +30,16 @@ permissions and limitations under the Licence.
  *
  */
 
-page-outbox {
-    @import '../_flow-partial';
+@each $size, $size-value in $screen-breakpoints {
+    .hide-#{$size} {
+        @media (max-width: $size-value) {
+            display: none;
+        }
+    }
 }
 
+.hide-sms {
+    @media (max-width: 400px) {
+        display: none;
+    }
+}

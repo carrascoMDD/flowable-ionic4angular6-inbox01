@@ -30,6 +30,9 @@ permissions and limitations under the Licence.
 *
 -->
 
+<flow-header></flow-header>
+
+<!--
 <ion-header>
     <ion-navbar no-border-bottom>
         <button ion-button menuToggle>
@@ -37,14 +40,18 @@ permissions and limitations under the Licence.
         </button>
         
         <ion-segment [(ngModel)]="segment" (ionChange)="updateSchedule()">
-            
-            <ion-title>Inbox - workOflow</ion-title>
+            <ion-title class="hide-sms" >
+                <ion-icon item-start name="mail" ></ion-icon>
+                <span class="hide-sm">Inbox</span><span class="hide-md">- workOflow</span>
+            </ion-title>
             
             <ion-segment-button value="all">
-                All
+                <ion-icon item-start name="reorder" ></ion-icon>
+                <span class="hide-sms">&nbsp;All</span>
             </ion-segment-button>
             <ion-segment-button value="favorites">
-                Favorites
+                <ion-icon item-start name="star" ></ion-icon>
+                <span class="hide-sms">&nbsp;Favorites</span>
             </ion-segment-button>
         </ion-segment>
         
@@ -63,6 +70,7 @@ permissions and limitations under the Licence.
         </ion-searchbar>
     </ion-toolbar>
 </ion-header>
+-->
 
 <ion-content>
     <ion-refresher (ionRefresh)="doRefresh($event)">

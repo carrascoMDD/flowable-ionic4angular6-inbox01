@@ -1,7 +1,7 @@
 /*
- * outbox.scss
+ * inbox.ts
  *
- * Created @author Antonio Carrasco Valero 201805252222
+ * Created @author Antonio Carrasco Valero 201806012216
  *
  *
  ***************************************************************************
@@ -30,7 +30,29 @@ permissions and limitations under the Licence.
  *
  */
 
-page-outbox {
-    @import '../_flow-partial';
-}
+import {Component} from '@angular/core';
 
+import {LoggedinPage} from "../loggedin/loggedin";
+
+@Component({
+    selector: 'flow-header',
+    templateUrl: 'flow-header.html'
+})
+export class FlowHeader {
+
+    flowpage: LoggedinPage;
+
+    constructor() {
+        console.log("FlowHeader constructor");
+    }
+
+
+    setFlowPage(theLoggedinPage: LoggedinPage) {
+        this.flowpage = theLoggedinPage;
+    }
+
+    getFlowPage(): LoggedinPage{
+        return this.flowpage;
+    }
+
+}
