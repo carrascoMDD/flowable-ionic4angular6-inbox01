@@ -38,10 +38,7 @@ import { App, NavController, ModalController, ViewController } from 'ionic-angul
 @Component({
   template: `
     <ion-list>
-      <button ion-item (click)="close('http://ionicframework.com/docs/v2/getting-started')">Learn Ionic</button>
-      <button ion-item (click)="close('http://ionicframework.com/docs/v2')">Documentation</button>
-      <button ion-item (click)="close('http://showcase.ionicframework.com')">Showcase</button>
-      <button ion-item (click)="close('https://github.com/ionic-team/ionic')">GitHub Repo</button>
+      <button ion-item (click)="close('https://github.com/carrascoMDD/flowable-ionic4angular6-inbox01')">GitHub Repo</button>
       <button ion-item (click)="support()">Support</button>
     </ion-list>
   `
