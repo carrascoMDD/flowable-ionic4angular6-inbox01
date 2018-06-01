@@ -1,4 +1,6 @@
-# flowable-ionic4angular6-inbox01
+# workOflow :  flowable-ionic4angular6-inbox01 outer install
+**workOflow Installer for a Single-page-application and hybrid Android/iOS app playground with Ionic3 Angularx6 on  Flowable REST API as Spring Boot Java application.**
+
 Local installs of cordova and ionic to avoid breaking this or other ionic apps upon any update of global install (it's known to happen).
 
 In support and containing a Single-page-application and hybrid Android/iOS app playground with Ionic3 Angularx6 on  Flowable REST API as Spring Boot Java application.
@@ -27,4 +29,28 @@ Then to run the application:
 ~~~~
 cd flowable-ionic4angular6-inbox01app
  ../node_modules/.bin/ionic serve
- ~~~~
+~~~~
+ 
+
+http://workOflow.org
+
+Created @author Antonio Carrasco Valero 201805252222
+
+Copyright 2018 Antonio Carrasco Valero
+
+Licensed under the EUPL, Version 1.1 only (the "Licence");
+
+You may not use this work except in compliance with the
+Licence.
+
+You may obtain a copy of the Licence at:
+https://joinup.ec.europa.eu/software/page/eupl/licence-eupl
+
+Unless required by applicable law or agreed to in
+writing, software distributed under the Licence is
+distributed on an "AS IS" basis,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+express or implied.
+
+See the Licence for the specific language governing
+permissions and limitations under the Licence.
