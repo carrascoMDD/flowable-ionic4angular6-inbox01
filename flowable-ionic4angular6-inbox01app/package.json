@@ -2,7 +2,7 @@
     "name": "flowable-ionic4angular6-inbox01app",
     "private": true,
     "version": "0.0.1",
-    "description": "Single-page-application and hybrid Android/iOS app playground with Ionic3 Angularx6 on  Flowable REST API as Spring Boot Java application.",
+    "description": "Single-page-application and hybrid Android/iOS app playground with Ionic3 Angular6 on  Flowable REST API as Spring Boot Java application.",
     "keywords": [
         "flowable",
         "ionic",
