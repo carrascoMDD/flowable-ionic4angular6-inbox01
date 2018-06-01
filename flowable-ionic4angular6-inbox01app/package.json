@@ -11,7 +11,10 @@
         "single page application",
         "android",
         "iOS",
-        "conference"
+        "workOflow",
+        "ionic3",
+        "angular6",
+        "cordova"
     ],
     "homepage": "http://github.com/carrascoMDD/flowable-ionic4angular6-inbox01",
     "bugs": {

@@ -39,7 +39,7 @@ import {InAppBrowser} from '@ionic-native/in-app-browser';
 import {SplashScreen} from '@ionic-native/splash-screen';
 import {IonicStorageModule} from '@ionic/storage';
 
-import {ConferenceApp} from './app.component';
+import {WorkOFlowApp} from './app.component';
 
 import {AboutPage} from '../pages/about/about';
 import {PopoverPage} from '../pages/about-popover/about-popover';
@@ -71,7 +71,7 @@ import {TemplatesFilter} from "../filters/templates-filter";
 
 @NgModule({
     declarations: [
-        ConferenceApp,
+        WorkOFlowApp,
         AboutPage,
         AccountPage,
         LoginPage,
@@ -95,7 +95,7 @@ import {TemplatesFilter} from "../filters/templates-filter";
         BrowserModule,
         HttpModule,
         HttpClientModule,
-        IonicModule.forRoot(ConferenceApp, {}, {
+        IonicModule.forRoot(WorkOFlowApp, {}, {
             links: [
                 {component: AboutPage, name: 'AboutPage', segment: 'about'},
                 {component: TutorialPage, name: 'Tutorial', segment: 'tutorial'},
@@ -119,7 +119,7 @@ import {TemplatesFilter} from "../filters/templates-filter";
     ],
     bootstrap: [IonicApp],
     entryComponents: [
-        ConferenceApp,
+        WorkOFlowApp,
         AboutPage,
         AccountPage,
         LoginPage,
