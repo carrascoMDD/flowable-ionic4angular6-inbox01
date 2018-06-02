@@ -66,6 +66,7 @@ export class ArchivedPage extends FlowboxPage {
         super(theApp, theAlertCtrl, theLoadingCtrl, theModalCtrl, theNavCtrl, theToastCtrl, theUserData);
 
         this.flowboxTitle = "Archived";
+        this.flowboxIcon  = "done-all";
         this.segment = "all";
         this.queryText = "";
 

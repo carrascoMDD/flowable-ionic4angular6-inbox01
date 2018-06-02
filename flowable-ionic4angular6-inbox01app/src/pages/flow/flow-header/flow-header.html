@@ -30,7 +30,7 @@ permissions and limitations under the Licence.
 *
 -->
 
-<ion-header>
+<ion-header class="page-flow-header">
     <ion-navbar no-border-bottom>
         <button ion-button menuToggle>
             <ion-icon name="menu"></ion-icon>
@@ -41,17 +41,17 @@ permissions and limitations under the Licence.
                      [(ngModel)]="flowpage.segment" (ionChange)="flowpage.updateContent()">
             
             <ion-title class="hide-sms">
-                <ion-icon item-start name="mail"></ion-icon>
-                <span class="hide-sm">{{flowpage.flowboxTitle}}</span><span class="hide-md">- workOflow</span>
+                <ion-icon item-start [name]="flowpage.flowboxIcon" class="valignmiddle"></ion-icon>
+                <span class="hide-sm valignmiddle">{{flowpage.flowboxTitle}}</span><span class="hide-md valignmiddle">- workOflow</span>
             </ion-title>
             
             <ion-segment-button value="all">
-                <ion-icon item-start name="reorder"></ion-icon>
-                <span class="hide-sms">&nbsp;All</span>
+                <ion-icon item-start name="reorder" class="valignmiddle"></ion-icon>
+                <span class="hide-sms valignmiddle">&nbsp;All</span>
             </ion-segment-button>
             <ion-segment-button value="favorites">
-                <ion-icon item-start name="star"></ion-icon>
-                <span class="hide-sms">&nbsp;Favorites</span>
+                <ion-icon item-start name="star" class="valignmiddle"></ion-icon>
+                <span class="hide-sms valignmiddle">&nbsp;Favorites</span>
             </ion-segment-button>
         </ion-segment>
         

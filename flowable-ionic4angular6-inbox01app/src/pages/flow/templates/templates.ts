@@ -75,6 +75,7 @@ export class TemplatesPage extends FlowboxPage {
         super( theApp, theAlertCtrl, theLoadingCtrl, theModalCtrl, theNavCtrl, theToastCtrl, theUserData);
 
         this.flowboxTitle = "Templates";
+        this.flowboxIcon  = "create";
         this.segment = "all";
         this.queryText = "";
 

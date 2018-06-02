@@ -68,6 +68,7 @@ export class BouncedPage extends FlowboxPage {
         super(theApp, theAlertCtrl, theLoadingCtrl, theModalCtrl, theNavCtrl, theToastCtrl, theUserData);
 
         this.flowboxTitle = "Bounced";
+        this.flowboxIcon  = "undo";
         this.segment = "all";
         this.queryText = "";
 

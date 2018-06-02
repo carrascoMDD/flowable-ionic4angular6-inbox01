@@ -1,13 +1,15 @@
+flow-header {
+/* ACV OJO the name had to be flow-header to match the tag of injected by the FlowHeader class */
 /*
- * flow-header.scss
- *
- * Created @author Antonio Carrasco Valero 201806012216
- *
- *
- ***************************************************************************
+* flow-header.scss
+*
+* Created @author Antonio Carrasco Valero 201806012216
+*
+*
+***************************************************************************
 
- Copyright 2018 Antonio Carrasco Valero
- workOflow Single-page-application and hybrid Android/iOS app playground with Ionic3 Angular6 on  Flowable REST API as Spring Boot Java application.
+Copyright 2018 Antonio Carrasco Valero
+workOflow Single-page-application and hybrid Android/iOS app playground with Ionic3 Angular6 on  Flowable REST API as Spring Boot Java application.
 
 Licensed under the EUPL, Version 1.1 only (the "Licence");
 You may not use this work except in compliance with the
@@ -21,16 +23,15 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
 express or implied.
 See the Licence for the specific language governing
 permissions and limitations under the Licence.
- {{License2}}
+{{License2}}
 
- {{Licensed1}}
- {{Licensed2}}
+{{Licensed1}}
+{{Licensed2}}
 
- ***************************************************************************
- *
- */
+***************************************************************************
+*
+*/
 
-page-flow-header {
     @import '../_flow-partial';
 
     /*
@@ -40,6 +41,9 @@ page-flow-header {
       lg: 992px,
       xl: 1200px
    */
+
+
+
     @each $size, $size-value in $screen-breakpoints {
         .hide-#{$size} {
             @media (max-width: $size-value) {
@@ -48,9 +52,15 @@ page-flow-header {
         }
     }
 
+    /* Additional measure smaller than the smallest sm from screen-breakpoints */
+
     .hide-sms {
         @media (max-width: 400px) {
             display: none;
         }
+    }
+
+    .valignmiddle {
+        vertical-align: middle;
     }
 }

@@ -67,6 +67,7 @@ export class DraftsPage extends FlowboxPage {
         super(theApp, theAlertCtrl, theLoadingCtrl, theModalCtrl, theNavCtrl, theToastCtrl, theUserData);
 
         this.flowboxTitle = "Drafts";
+        this.flowboxIcon  = "mail-open";
         this.segment = "all";
         this.queryText = "";
 

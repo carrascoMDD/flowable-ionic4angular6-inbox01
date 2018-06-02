@@ -67,6 +67,7 @@ export class InboxPage extends FlowboxPage {
         super(theApp, theAlertCtrl, theLoadingCtrl, theModalCtrl, theNavCtrl, theToastCtrl, theUserData);
 
         this.flowboxTitle = "Inbox";
+        this.flowboxIcon  = "mail";
         this.segment = "all";
         this.queryText = "";
 

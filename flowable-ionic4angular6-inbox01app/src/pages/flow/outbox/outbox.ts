@@ -66,6 +66,7 @@ export class OutboxPage extends FlowboxPage {
         super(theApp, theAlertCtrl, theLoadingCtrl, theModalCtrl, theNavCtrl, theToastCtrl, theUserData);
 
         this.flowboxTitle = "Outbox";
+        this.flowboxIcon  = "send";
         this.segment = "all";
         this.queryText = "";
 

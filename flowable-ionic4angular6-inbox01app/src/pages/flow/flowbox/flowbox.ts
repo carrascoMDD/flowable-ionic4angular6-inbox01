@@ -43,8 +43,8 @@ import {
 import {UserData} from '../../../providers/user-data';
 
 import {LoggedinPage} from "../loggedin/loggedin";
-import {FlowHeader} from "../flow-header/flow-header";
 import {IdentitiesFilterPage} from "../identities-filter/identitites-filter";
+import {FlowHeader} from "../flow-header/flow-header";
 
 
 @Component({
@@ -59,6 +59,7 @@ export class FlowboxPage extends LoggedinPage {
 
 
     flowboxTitle:   string;
+    flowboxIcon:    string;
     segment:        string;
     queryText :     string;
 
@@ -76,6 +77,7 @@ export class FlowboxPage extends LoggedinPage {
         super(theApp, theAlertCtrl, theLoadingCtrl, theModalCtrl, theNavCtrl, theToastCtrl, theUserData);
 
         this.flowboxTitle = "(abstract)Flowbox";
+        this.flowboxIcon  = "grid";
         this.segment = "all";
         this.queryText = "";
 
